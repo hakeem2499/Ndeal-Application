@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+enum UserType {
+  Professional
+  Company
+  Admin
+}
+
+enum CompanyEmployeeRange {
+  SMALL   // 1-10 employees
+  MEDIUM  // 11-50 employees
+  LARGE   // 51-200 employees
+  ENTERPRISE // 201+ employees
+}
+
+model User {
+  id                 Int                  @id @default(autoincrement())
+  email              String               @unique
+  firstName          String?
+  lastName           String? // Updated field name for consistency
+  phoneNumber        String?
+  userType           UserType             
+  isAdmin            Boolean              @default(false)
+  Professional       Professional?
+  Company            Company?
+  createdAt          DateTime             @default(now())
+}
+
+model Professional {
+  id                Int    @id @default(autoincrement())
+  jobTitle             String
+  organizationName   String
+  queryResponse   String
+  user              User   @relation(fields: [userId], references: [id])
+  userId            Int    @unique
+}
+
+model Company {
+  id                Int      @id @default(autoincrement())
+  companyLocation String
+  companyWebsite    String
+  industry          String
+  companySize       CompanyEmployeeRange
+  user              User     @relation(fields: [userId], references: [id])
+  userId            Int       @unique
+}
+

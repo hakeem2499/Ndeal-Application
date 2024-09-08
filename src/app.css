@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--color-primary: #171717;
+	--color-secondary: #d1cdc2;
+	--color-accent: #ffe5b4;
+	--color-tertiary:#f4f4f4;
+	--color-background: #ffff;
+	--color-text: #333;
+	--color-text-light: #777;
+	--color-border: #ddd;
+  
+	/* Alert colors */
+	--color-success: #2ecc71;
+	--color-warning: #f39c12;
+	--color-error: #e74c3c;
+  }
+
+@font-face {
+	font-family: 'Francy';
+	src: url('/fonts/Francy.woff');
+}
+
+@font-face {
+	font-family: 'grillagesbold';
+	src: url('/fonts/grillagesbold-webfont.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+
+}
+
+@font-face {
+	font-family: 'Orlean';
+	src: url('/fonts/Orlean-SemiBold.woff');
+}
+
+body {
+	font-family: 'DM Sans Variable', sans-serif;
+	@apply grid bg-[--color-background] bg-repeat text-[#171717];
+	font-weight: normal;
+	line-height: 1.6;
+}
+
+h1 {
+	font-family: 'grillagesbold', sans-serif;
+	font-size: 3rem;
+	/* 48px */
+	margin-bottom: 1.25rem;
+	/* 20px */
+	line-height: 1.2;
+}
+
+p {
+	font-size: 1.125rem; /* 18px */
+
+  }
+
+h2,
+h3,h4 {
+	font-family: 'Orlean', sans-serif;
+}
+
+h2 {
+	font-size: 2.25rem; /* 36px */
+	margin-bottom: 1rem; /* 16px */
+  }
+  
+  h3 {
+	font-size: 1.75rem; /* 28px */
+	margin-bottom: 0.875rem; /* 14px */
+  }
+  
+  h4 {
+	font-size: 1.5rem; /* 24px */
+  }
+
+.glass-container {
+	position: relative;
+}
+
+.glass-container::before {
+	@apply absolute -inset-[10px] -z-10 rounded-xl border border-gray-100/20 bg-gray-200/10 backdrop-blur-md;
+	content: '';
+}
+
+.signal-line {
+	--rotation: 0deg;
+	@apply h-[20px] w-[1.5px] bg-gradient-to-t md:h-[1.5px] md:w-[30px] lg:w-[40px] xl:w-[50px];
+	background-color: hsla(0, 0%, 100%, 0.1);
+	background-image: linear-gradient(var(--rotation),
+			rgba(255, 255, 255, 0) 50%,
+			#51e5f9 50%,
+			rgba(255, 255, 255, 0) 70%);
+	background-size: 500% 500%;
+}
+
+@media (max-width: 767px) {
+	.signal-line {
+		--rotation: 0deg;
+	}
+}
