@@ -9,6 +9,9 @@ export default defineConfig({
 			autoInstall: true,
 		})
 	],
+	json: {
+		namedExports: true,
+	  },
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	}

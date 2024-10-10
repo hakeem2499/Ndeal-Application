@@ -1,6 +1,8 @@
 <script lang="ts">
 	import clsx from 'clsx';
 	import { createEventDispatcher } from 'svelte';
+	import {handleInput} from '../Forms/validation';
+	import type { Writable } from 'svelte/store';
 
 	// Props
 	export let id: string | undefined = undefined;
@@ -17,16 +19,30 @@
 	export let maxLength: number | undefined = undefined;
 	export let pattern: string | undefined = undefined;
 	export let customValidityMessage: string = '';
+	export let step: string;
+	export let field: string;
+	export let formStore: Writable<any>;
 
 	// Event dispatcher
 	const dispatch = createEventDispatcher();
 
-	const handleInput = (event: Event) => {
-		const target = event.target as HTMLInputElement;
-		value = target.value;
-		validateInput(target);
-		dispatch('input', value);
-	};
+	// const handleInput = (event: Event) => {
+	//     const target = event.target as HTMLInputElement;
+	//     if (target) {
+	//         value = target.value;
+	//         console.log('🚀 ~ handleInput ~ target:', target);
+	//         console.log('🚀 ~ handleInput ~ valueForinput:', value);
+	//         validateInput(target);
+	//         dispatch('input', value);
+	//     } else {
+	//         console.error('Target is null');
+	//     }
+	// };
+
+	function onInput(event: Event) {
+		handleInput(event, step, field, formStore);
+		dispatch('input', event);
+	}
 
 	const handleBlur = (event: FocusEvent) => {
 		const target = event.target as HTMLInputElement;
@@ -61,10 +77,10 @@
 			maxlength={maxLength}
 			{pattern}
 			class={clsx(
-				'peer mt-2 w-full border-b-2 border-r-background  border-l-background border-t-background  bg-background rounded-sm hover:border-b-black  px-2 py-3 focus:border-none focus:outline-none',
+				'peer mt-2 w-full border-b-2  border-r-transparent  border-l-transparent border-t-transparent  bg-transparent rounded-sm hover:border-b-black  px-2 py-3 focus:outline-offset-0 focus:outline-0 focus:border-none focus:outline-none',
 				className
 			)}
-			on:input={handleInput}
+			on:input={onInput}
 			on:blur={handleBlur}
 			on:focus={handleFocus}
 			{...$$restProps}
@@ -85,7 +101,7 @@
 				'peer mt-2 w-full rounded-sm hover:border-primary hover:border-1 focus:border-1 px-2 py-3 focus:border-primary focus:outline-none',
 				className
 			)}
-			on:input={handleInput}
+			on:input={onInput}
 			on:blur={handleBlur}
 			on:focus={handleFocus}
 			{...$$restProps}
@@ -106,7 +122,7 @@
 				'peer mt-2 w-full rounded-sm hover:border-primary hover:border-1 focus:border-none px-2 py-3  focus:outline-none',
 				className
 			)}
-			on:input={handleInput}
+			on:input={onInput}
 			on:blur={handleBlur}
 			on:focus={handleFocus}
 			{...$$restProps}
@@ -116,10 +132,15 @@
 	<label
 		for={id}
 		class={clsx(
-			'pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-black opacity-75 transition-all duration-300 ease-in-out peer-placeholder-shown:top-2/3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-[30%] peer-focus:text-[0.7rem] peer-focus:text-gray-800 px-2',
+			'pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-black opacity-75 transition-all duration-300 ease-in-out peer-placeholder-shown:top-2/3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-[30%] peer-focus:text-[0.7rem]  peer-focus:text-gray-800 px-2',
 			labelClass
 		)}
 	>
 		{label}
 	</label>
 </div>
+<style>
+	input:focus{
+		outline: none !important;
+	}
+</style>

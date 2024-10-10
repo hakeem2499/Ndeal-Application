@@ -1,5 +1,5 @@
 <script>
-	import Image from '$lib/images/heroimage.webp';
+	//import Image from '$lib/images/heroimage.webp';
 
 	import Bounded from './Bounded.svelte';
 	import ButtonLink from './ButtonLink.svelte';

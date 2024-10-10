@@ -6,17 +6,17 @@
 	--color-primary: #171717;
 	--color-secondary: #d1cdc2;
 	--color-accent: #ffe5b4;
-	--color-tertiary:#f4f4f4;
+	--color-tertiary: #f4f4f4;
 	--color-background: #ffff;
 	--color-text: #333;
 	--color-text-light: #777;
 	--color-border: #ddd;
-  
+
 	/* Alert colors */
 	--color-success: #2ecc71;
 	--color-warning: #f39c12;
 	--color-error: #e74c3c;
-  }
+}
 
 @font-face {
 	font-family: 'Francy';
@@ -53,28 +53,35 @@ h1 {
 }
 
 p {
-	font-size: 1.125rem; /* 18px */
+	font-size: 1.125rem;
+	/* 18px */
 
-  }
+}
 
 h2,
-h3,h4 {
+h3,
+h4 {
 	font-family: 'Orlean', sans-serif;
 }
 
 h2 {
-	font-size: 2.25rem; /* 36px */
-	margin-bottom: 1rem; /* 16px */
-  }
-  
-  h3 {
-	font-size: 1.75rem; /* 28px */
-	margin-bottom: 0.875rem; /* 14px */
-  }
-  
-  h4 {
-	font-size: 1.5rem; /* 24px */
-  }
+	font-size: 2.25rem;
+	/* 36px */
+	margin-top: .5rem;
+	/* 16px */
+}
+
+h3 {
+	font-size: 1.75rem;
+	/* 28px */
+	margin-top: 0.25rem;
+	/* 14px */
+}
+
+h4 {
+	font-size: 1.5rem;
+	/* 24px */
+}
 
 .glass-container {
 	position: relative;
@@ -87,8 +94,8 @@ h2 {
 
 .signal-line {
 	--rotation: 0deg;
-	@apply h-[20px] w-[1.5px] bg-gradient-to-t md:h-[1.5px] md:w-[30px] lg:w-[40px] xl:w-[50px];
-	background-color: hsla(0, 0%, 100%, 0.1);
+	@apply h-[40px] w-[1.5px] bg-gradient-to-t md:h-[7.5px] md:w-[30px] lg:w-[40px] xl:w-[50px];
+	background-color: hsla(0, 100%, 40%, 0.1);
 	background-image: linear-gradient(var(--rotation),
 			rgba(255, 255, 255, 0) 50%,
 			#51e5f9 50%,
@@ -100,4 +107,13 @@ h2 {
 	.signal-line {
 		--rotation: 0deg;
 	}
+}
+
+.top {
+	clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2rem), 50% 100%, 0 calc(100% - 2rem));
+}
+
+.bottom {
+	clip-path: polygon(0 0, 50% 2rem, 100% 0, 100% 100%, 0 100%);
+	margin-top: 0rem;
 }

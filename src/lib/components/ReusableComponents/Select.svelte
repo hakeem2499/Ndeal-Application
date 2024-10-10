@@ -1,6 +1,7 @@
 <!-- SelectFilter.svelte -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+  import clsx from 'clsx';
 
   // Define a type for the options
    type Option = {
@@ -9,6 +10,7 @@
   };
 
   // Props
+  export let className: string | undefined = undefined;
   export let options: Option[] = []; // Array of Option objects
   export let selected: string = ''; // Selected option's value
   export let placeholder: string = 'Search...'; // Placeholder for the search input
@@ -56,12 +58,12 @@
   }
 </script>
 
-<div>
+<div class="relative">
   <!-- Input for filtering options or displaying selected label -->
   <input
     type="text"
     value={selectedOptionLabel || searchQuery} 
-    class="peer mt-2 w-full border-b-2 border-r-background border-l-background border-t-background bg-background rounded-sm hover:border-b-black px-2 py-3 focus:border-none focus:outline-none"
+    class="peer mt-2 h-fit w-full  border-b-2 border-r-background border-l-background border-t-background bg-background rounded-sm hover:border-b-black px-2 py-3 focus:border-none focus:outline-none"
     {placeholder}
     on:focus={handleFocus}
     on:input={handleInput}
@@ -70,12 +72,12 @@
   <!-- Select element, only shown when the input is focused or query is changing -->
   {#if showSelect}
     <select
-      class="mt-2 w-full bg-transparent border-t border-gray-300 rounded-sm px-2 py-3 focus:outline-none"
+      class={clsx("mt-16   absolute right-0 z-40 w-full max-w-md  bg-white border-t border-gray-300 rounded-md px-2 py-3 focus:outline-none", className)}
       on:change={handleSelect}
       bind:value={selected}
       size={Math.min(filteredOptions.length, 5)}
     >
-      <option disabled selected value="">-- Select an industry --</option>
+      <!-- <option disabled selected value=""></option> -->
       {#each filteredOptions as option}
         <option value={option.value}>{option.label}</option>
       {/each}
@@ -91,5 +93,6 @@
   select {
     max-height: 200px;
     overflow-y: auto;
+    scrollbar-width: none;
   }
 </style>

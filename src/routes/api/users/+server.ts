@@ -12,6 +12,19 @@ export const POST: RequestHandler = async ({ request }) => {
 
         console.log('Parsed Data:', parsedData);
 
+        // Check if the user already exists
+        const existingUser = await prisma.user.findUnique({
+            where: { email: parsedData.email },
+        });
+
+        if (existingUser) {
+            return new Response(JSON.stringify({ error: 'User already exists' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
+
+
         let newUser;
 
         if (parsedData.userType === 'Professional') {

@@ -30,12 +30,12 @@
 	this={tag}
 	{...dynamicProps}
 	class={clsx(
-		'relative inline-flex gap-2 items-center group h-fit w-fit rounded-5px border border-gray-950 bg-transparent px-4 py-2 text-black active:bg-black active:text-orange-300 outline-none ring-orange-300 transition-colors hover:border-violet-100/20 hover:text-orange-300 hover:bg-black focus:ring-2',
+		'relative inline-flex gap-2 items-center group h-fit  w-fit rounded-5px border border-gray-950 bg-transparent px-4 py-2 text-black active:bg-black active:text-orange-300 outline-none ring-orange-300 transition-colors hover:border-violet-100/20 hover:text-orange-300 hover:bg-black focus:ring-2',
 		className
 	)}
 >
 	<slot />
 	{#if !iconCheck}
-		<Icon class="text-black group-hover:text-orange-300 duration-200  group-hover:translate-x-2  text-xl mr-2" />
+		<Icon class="text-black   group-hover:text-orange-300 duration-500  group-hover:translate-x-2  text-xl mr-2" />
 	{/if}
 </svelte:element>

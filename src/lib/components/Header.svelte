@@ -1,11 +1,14 @@
-<script>
+<script lang="ts">
 	// your script goes here
 	import { page } from '$app/stores';
 	import logo from '$lib/images/svelte-logo.svg';
 	import ButtonLink from '$lib/components/ButtonLink.svelte';
 	import clsx from 'clsx';
+	import type { Content } from '@prismicio/client';
 	import { createEventDispatcher, onMount } from 'svelte';
 
+	// Define the prop with the correct type
+	export let settings: Content.SettingsDocument;
 	let isOpen = false;
 	const dispatch = createEventDispatcher();
 
@@ -45,13 +48,16 @@
 	};
 </script>
 
-<header class="sticky  top-0 bg-white lg:h-22 h-20 z-50 lg:items-center p-1 lg:p-3 text-black">
+<header class="sticky top-0 bg-white lg:h-22 h-20 z-50 lg:items-center p-1 lg:p-3 text-black">
 	<nav
 		class="mx-auto flex max-w-7xl flex-col justify-between py-2 md:py-0 font-medium lg:flex-row lg:items-center"
 		aria-label="main"
 	>
 		<div class="flex items-center z-50 justify-between">
-			<a class="mt-2  scale-75 transition-all duration-300 lg:scale-100 md:px-0 md:py-2 md:mt-0" href="/">
+			<a
+				class="mt-2 scale-75 transition-all duration-300 lg:scale-100 md:px-0 md:py-2 md:mt-0"
+				href="/"
+			>
 				<img src={logo} alt="Ndeal" />
 			</a>
 			<div class=" lg:hidden">
@@ -85,26 +91,20 @@
 
 		<ul class="hidden lg:flex mb-2 items-center gap-14">
 			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a
-					class="border border-transparent rounded-full inline-flex hover:ring-2 focus:bg-slate-200 ring-slate-500 px-4 py-2 focus:text-black hover:text-green-950 h-fit w-fit"
-					on:click={close}
-					href="/">who we are</a
-				>
+				<a class=" nav-link inline-flex relative" on:click={close} href="/">who we are</a>
 			</li>
 			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-				<a
-					class=" rounded-full inline-flex hover:ring-2 focus:bg-slate-200  ring-slate-500 px-4 py-2 focus:text-black hover:text-gray-800 h-fit w-fit"
-					href="/about">what we do</a
-				>
+				<a class="nav-link inline-flex relative" href="/about">what we do</a>
 			</li>
 			<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-				<a
-					class="border border-transparent rounded-full inline-flex hover:ring-2 focus:bg-slate-200 ring-slate-500 px-4 py-2 focus:text-black hover:text-gray-600 h-fit w-fit"
-					href="/sverdle">how we do it</a
-				>
+				<a class="nav-link inline-flex relative" href="/sverdle">how we do it</a>
 			</li>
 		</ul>
-		<ButtonLink aria-current={$page.url.pathname.startsWith('/founder') ? 'page' : undefined} class="hidden mb-2 lg:flex" href="/founder">Become one of us</ButtonLink>
+		<ButtonLink
+			aria-current={$page.url.pathname.startsWith('/founder') ? 'page' : undefined}
+			class="hidden mb-2 lg:flex"
+			href="/founder">Become one of us</ButtonLink
+		>
 	</nav>
 </header>
 
@@ -178,5 +178,20 @@
 
 	.burger.burger-3.is-closed::after {
 		transform: rotate(45deg) translate(-4px, 2px);
+	}
+
+	[aria-current='page'] .nav-link::after {
+		content: '';
+		position: absolute;
+		height: 2px;
+		left: 0;
+		bottom: -0.5rem;
+		width: 100%;
+		background: black;
+		transform: scaleX(50%);
+		transition: transform 300ms ease;
+	}
+	.nav-link:hover::after {
+		transform: scaleX(100%);
 	}
 </style>

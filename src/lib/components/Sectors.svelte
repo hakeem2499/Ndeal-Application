@@ -271,13 +271,15 @@
 
 <script>
 	import Image from '$lib/images/heroimage.webp';
+	import BgNoise from '$lib/images/education.jpg';
 	import Bounded from './Bounded.svelte';
 </script>
 
-<div class="flex md:mx-6 md:max-h-[90dvh] flex-col  gap-4 md:gap-10 lg:gap-20 justify-between md:flex-row">
-	<div class="sectors max-w-[90dvw]   m-2 mx-auto md:m-0 md:w-[50dvw] flex-1">
+<div class="flex md:mx-6 flex-col gap-4 md:gap-10 lg:gap-20 justify-between md:flex-row">
+	<div class="sectors max-w-[90dvw] m-2 mx-auto md:m-0 md:w-[50dvw] flex-1">
 		<Bounded
-			class="sector-element bg-background rounded-md m-4 border-t-4  border-slate-700 hover:bg-primary active:bg-primary active:text-white hover:text-white justify-between transition-colors duration-500 "
+			class="sector-element h-fit    rounded-md m-4 border-t-8  border-primary   text-white  justify-between transition-colors duration-500 "
+			style="background-image: url({BgNoise})"
 		>
 			<h3>Some heaeding 3 Text</h3>
 			<img src={Image} alt="" />
@@ -323,38 +325,29 @@
 			<img src={Image} alt="" />
 			<p>
 				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab placeat unde eligendi odio nisi
-				aliquam illum iste dolorum dolorem, architecto ea facilis ut repudiandae vero fugiat id aut,
-				accusamus rerum.
 			</p>
 			<a href="">Expand</a>
 		</div>
 	</div>
-	<div class="flex flex-col md:max-h-[90dvh]  flex-1 gap-4 md:mt-4 w-full md:w-[30dvw]">
+	<div class="flex flex-col  md:max-h-[90dvh] md:h-full flex-1  items-center gap-4 md:mt-4 md:w-[30dvw]">
 		<div class="div">
 			<h3>Lorem ipsum dolor</h3>
 			<p>
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio consectetur architecto
-				illo quam voluptatem exercitationem error pariatur tempora ad ex sapiente magni, magnam
-				blanditiis nulla incidunt, doloribus ut, tempore harum? \f
 			</p>
 		</div>
 		<div class="div">
 			<h3>Lorem ipsum dolor sit</h3>
 			<p>
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio consectetur architecto
-				illo quam voluptatem exercitationem error pariatur tempora ad ex sapiente magni, magnam
-				blanditiis nulla incidunt, doloribus ut, tempore harum? \f
 			</p>
 		</div>
 		<div class="div">
 			<h3>Lorem ipsum dolor, sit</h3>
 			<p>
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio consectetur architecto
-				illo quam voluptatem exercitationem error pariatur tempora ad ex sapiente magni, magnam
-				blanditiis nulla incidunt, doloribus ut, tempore harum? \f
 			</p>
 		</div>
-		
 	</div>
 </div>
 
@@ -367,16 +360,12 @@
 		transform-origin: right;
 		background-color: var(--color-background);
 		border: 4rem;
-		@apply ring-1 ring-primary m-2 md:m-0;
-		justify-items: center;
-		border-color: var(--color-primary);
+		@apply ring-1 w-[90dvw] h-fit  max-h-[15dvh] md:min-h-[25dvh] text-sm md:font-normal  md:w-full ring-primary m-1 md:m-0;
 		color: var(--color-primary);
 	}
 
-	@media (max-width: 768px) {
-		.div {
-			max-width: 100dvw;
-		}
+	.div :nth-child(2) {
+		@apply justify-self-end;
 	}
 
 	.div:hover,

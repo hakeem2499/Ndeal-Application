@@ -1,9 +1,11 @@
 <script>
 	import Image from '$lib/images/heroimage.webp';
+	import DisplayImage from '$lib/images/DisplayImage.png';
 	import Bounded from './Bounded.svelte';
 	import ButtonLink from './ButtonLink.svelte';
 	import AnchorLink from './ReusableComponents/AnchorLink.svelte';
 	import YoutubeVideoEmbed from './YoutubeVideoEmbed.svelte';
+	import RegistrationSection from './RegistrationSection.svelte';
 </script>
 
 <Bounded>
@@ -23,7 +25,7 @@
 				<h3 class="card-heading relative text-center mt-2 text-white font-semibold text-2xl">
 					Plaster of Paris
 				</h3>
-				<p class="prose  text-white text-pretty">
+				<p class="prose text-white text-pretty">
 					Nigeria's healthcare sector faces challenges like brain drain, high employee turnover, and
 					limited resources. HR solutions can help manage talent, ensure compliance with
 					regulations, and enhance employee engagement to improve patient care.
@@ -35,9 +37,26 @@
 			<AnchorLink href="">Expand</AnchorLink>
 		</div>
 	</div>
-	<div class="p-8">
+	<!-- <div class="p-8">
 		<YoutubeVideoEmbed />
-	</div>
+	</div> -->
+
+	<h2
+		class="hero_heading max-w-3xl mt-16 md:mt-20 mx-auto text-center text-balance text-4xl font-medium md:text-7xl"
+	>
+		Streamline Operations, Simplify Tasks, Maximize Productivity
+	</h2>
+	<Bounded class="hero_image  w-fit">
+		<picture>
+			<img
+				class="rounded-lg border-4"
+				src={DisplayImage}
+				alt="A beautiful sunset over the mountains"
+				loading="lazy"
+			/>
+			<RegistrationSection />
+		</picture>
+	</Bounded>
 </Bounded>
 
 <style>

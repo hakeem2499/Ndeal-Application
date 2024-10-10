@@ -1,18 +1,16 @@
 <script lang="ts">
-	import Counter from './Counter.svelte';
 	import herowave from '$lib/images/herowave.svg';
 	import Bounded from '$lib/components/Bounded.svelte';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
 
 	import { onMount } from 'svelte';
-	import { Points } from '../store/contents';
+	import { Points } from '../../store/contents';
 	import RegisterForm from '$lib/components/RegisterForm.svelte';
 	import TestimonialCard from '$lib/components/TestimonialCard.svelte';
 	import Bento from '$lib/components/Bento.svelte';
 	import wave from '$lib/images/solutionswave.svg';
 
 	import WaveSvg from '$lib/images/whitewave2.svg';
-	import ProfessionScroller from '$lib/components/ProfessionScroller.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import YoutubeVideoEmbed from '$lib/components/YoutubeVideoEmbed.svelte';
 	import Sectors from '$lib/components/Sectors.svelte';
@@ -21,6 +19,9 @@
 	import OnBoarding from '$lib/components/OnBoarding.svelte';
 	import Solutions from '$lib/components/Solutions.svelte';
 	import RegistrationSection from '$lib/components/RegistrationSection.svelte';
+	import { PrismicImage } from '@prismicio/svelte';
+
+	export let data;
 </script>
 
 <svelte:head>
@@ -28,7 +29,6 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 <Hero />
-<RegistrationSection/>
 <Showcase />
 <Sectors />
 <!-- <div class=" md:w-full">
@@ -51,6 +51,10 @@
 			<TestimonialCard />
 		</div>
 	</div>
+</div>
+<div>
+	<!-- <PrismicImage field={data.image} class="h-fit" /> -->
+
 </div>
 
 <!-- <style>

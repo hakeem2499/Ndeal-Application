@@ -1,3 +1,4 @@
+import { writable } from 'svelte/store';
 import { z } from 'zod';
 
 // Enum for user types
@@ -12,6 +13,8 @@ const ProfessionalSchema = z.object({
   organizationName: z.string(),
   queryResponse: z.string(),
 });
+
+export const isError = writable<{ [key: string]: string }>({});
 
 // Schema for Company
 const CompanySchema = z.object({
