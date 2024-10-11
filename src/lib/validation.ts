@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import { z } from 'zod';
 
 // Enum for user types
-const UserTypeEnum = z.enum(['Professional', 'Company', 'Admin']);
+const UserTypeEnum = z.enum(['Professional', 'Company', 'Founder', 'Admin']);
 
 // Enum for company employee range
 const CompanyEmployeeRangeEnum = z.enum(['SMALL', 'MEDIUM', 'LARGE', 'ENTERPRISE']);
@@ -12,6 +12,10 @@ const ProfessionalSchema = z.object({
   jobTitle: z.string(),
   organizationName: z.string(),
   queryResponse: z.string(),
+});
+// Schema for Founder
+const FounderSchema = z.object({
+  employmentStatus: z.string(),
 });
 
 export const isError = writable<{ [key: string]: string }>({});
@@ -32,6 +36,7 @@ export const UserSchema = z.object({
   phoneNumber: z.string(), // Corrected to string
   userType: UserTypeEnum,
   isAdmin: z.boolean().optional(),
+  Founder: FounderSchema.optional(),
   Professional: ProfessionalSchema.optional(),
   Company: CompanySchema.optional(),
 }).refine(data => {
@@ -41,11 +46,20 @@ export const UserSchema = z.object({
   if (data.userType === 'Company' && !data.Company) {
     return false;
   }
+  if (data.userType === 'Founder' && !data.Founder) {
+    return false;
+  }
   if (data.userType === 'Admin') {
     return !data.Professional && !data.Company;
   }
   return true;
 }, {
   message: "Invalid data based on user type",
-  path: ["Professional", "Company"],
+  path: ["Professional", "Company", "Founder"],
 });
+
+export const newsletterSignUpSchema = z.object(
+  {
+    email: z.string().email(),
+  }
+)

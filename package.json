@@ -17,6 +17,7 @@
 		"@fontsource/fira-mono": "^5.0.0",
 		"@iconify-json/ph": "^1.1.13",
 		"@iconify-json/solar": "^1.1.9",
+		"@iconify-json/subway": "^1.2.0",
 		"@neoconfetti/svelte": "^2.0.0",
 		"@prismicio/types": "^0.2.9",
 		"@slicemachine/adapter-sveltekit": "^0.3.51",

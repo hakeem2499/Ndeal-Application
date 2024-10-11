@@ -18,6 +18,7 @@ datasource db {
 enum UserType {
   Professional
   Company
+  Founder
   Admin
 }
 
@@ -62,13 +63,13 @@ model Company {
 }
 model Founder {
   id                Int      @id @default(autoincrement())
+  employmentStatus  String
   user              User     @relation(fields: [userId], references: [id])
   userId            Int      @unique
 }
 
 model NewsletterSignup{
-  id                 Int       @id @default(autoincrement())
-  email              String
+  email              String    @unique
   createdAt          DateTime             @default(now())
 }
 

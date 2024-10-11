@@ -53,6 +53,19 @@ export const POST: RequestHandler = async ({ request }) => {
                     },
                 },
             });
+        } else if (parsedData.userType === 'Founder') {
+            newUser = await prisma.user.create({
+                data: {
+                    email: parsedData.email,
+                    firstName: parsedData.firstName,
+                    lastName: parsedData.lastName,
+                    phoneNumber: parsedData.phoneNumber,
+                    userType: parsedData.userType,
+                    Founder: {
+                        create: parsedData.Founder,
+                    },
+                },
+            });
         } else if (parsedData.userType === 'Admin') {
             newUser = await prisma.user.create({
                 data: {
