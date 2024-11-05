@@ -31,7 +31,7 @@
 		<ButtonLink class="text-white ">Learn More about our services</ButtonLink>
 	</div>
 	<div
-		class="mt-16 grid max-w-7xl text-white grid-rows-[auto_auto_auto] gap-4   md:grid-cols-2 lg:grid-cols-4 md:gap-2 lg:gap-4"
+		class="mt-16 grid max-w-7xl text-white grid-rows-[auto_auto_auto] gap-4   grid-cols-2 lg:grid-cols-4 md:gap-2 lg:gap-4"
 	>
 		<div
 			class="card group border-2 border-accent  relative hover:-translate-y-1 text-white active:-translate-y-1 duration-500 md:py-6 p-6 md:px-6 row-span-2 grid grid-rows-subgrid gap-10 md:gap-16 rounded-[5px] bg-primary" 
@@ -45,7 +45,7 @@
 				<p
 					class="lg:translate-x-[100%] mt-6 group-hover:translate-x-[100] duration-300 group-hover:block prose text-white text-pretty"
 				>
-					Nigeria's healthcare sector faces challenges like brain drain, high employee turnover, and
+					Nigeria's healthcare sector faces challenges like bain drain, high employee turnover, and
 					limited resources. HR solutions can help manage talent, ensure compliance with
 					regulations, and enhance employee engagement to improve patient care.
 				</p>

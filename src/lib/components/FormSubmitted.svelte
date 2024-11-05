@@ -2,40 +2,70 @@
 	import { isError } from '$lib/validation';
 	import { onMount } from 'svelte';
 	import Button from './ReusableComponents/Button.svelte';
+	import ThankYouSvg from './ThankYouSvg.svelte';
+	import ErrorAlert from './ErrorAlert.svelte';
+	import SocialLinks from './SocialLinks.svelte';
 
 	export let showModal = false;
 	const closeShowModal = () => {
 		showModal = false;
-		console.log("🚀 ~ closeShowModal ~ showModal:", showModal)
+		console.log('🚀 ~ closeShowModal ~ showModal:', showModal);
 	};
 
-    onMount(()=> {
-        console.log("mounting")
-    });
+	onMount(() => {
+		console.log('mounting');
+	});
 </script>
 
 {#if showModal}
-    <div class="modal-overlay" on:click={closeShowModal}>
-        <!-- Modal Content -->
-        <div class="modal-content w-[90%] md:w-[25%] bg-[#c6c9d1] transition-opacity duration-300" on:click|stopPropagation>
-            <div id="player " class="flex rounded-lg items-center justif-center bg-slate-900  text-white" style="width: 100%; height: 100%;">
-                {#if $isError['login-successful']}
-                    <p class="error p-4 text-green-700 text-balance ">{$isError['login-successful']}</p>
-                {/if}
-                {#if $isError['user-exists']}
-                    <p class="error p-4 text-orange-700">{$isError['user-exists']}</p>
-                {/if}
-                
-                {#if $isError['general-error']}
-                    <p class="error px-4 text-red-700">{$isError['general-error']}</p>
-                {/if}
-                {#if $isError['network-error']}
-                    <p class="error text-red-700">{$isError['network-error']}</p>
-                {/if}
-            </div>
-            <button class="close-button hover:text-white hover:bg-slate-900 text-accent" on:click={closeShowModal}>X</button>
-        </div>
-    </div>
+	<div class="modal-overlay" on:click={closeShowModal}>
+		<!-- Modal Content -->
+		<div
+			class="modal-content glass-container w-[90%] md:w-[60%] h-fit bg-slate-950 transition-opacity duration-300"
+			on:click|stopPropagation
+		>
+			<div
+				id="player "
+				class="flex text-sm text-balance gap-2 md:gap-4 md:text-base flex-col py-8 lg:px-10 rounded-lg items-center justify-center text-white"
+				style="width: 100%; height: 100%;"
+			>
+				{#if $isError['login-successful']}
+					<div class="flex gap-2 items-center">
+						<h5 class="error font-semibold text-green-700 text-balance">
+							{$isError['login-successful']}
+						</h5>
+						<ThankYouSvg />
+					</div>
+					<div class="prose prose-lg text-pretty text-gray-300">
+						<span class="block text-lg">Lets Get Started!</span> We’re excited you’re here! You’ve
+						just taken an important step toward transforming your HR processes. We’re here to help
+						make things easier for you. <span class="block">💡 Here’s what happens next:</span> One of
+						our team members will get in touch with you shortly to schedule a demo that’s tailored to
+						your needs. We’ll show you how Ndeal can make your HR operations smoother and more efficient.
+						Keep an eye on your inbox for an email with more details on what’s coming next!
+					</div>
+					<SocialLinks />
+				{/if}
+				{#if $isError['user-exists']}
+					<p class="error text-orange-700">{$isError['user-exists']}</p>
+					<ErrorAlert />
+				{/if}
+
+				{#if $isError['general-error']}
+					<p class="error text-red-700">{$isError['general-error']}</p>
+					<ErrorAlert />
+				{/if}
+				{#if $isError['network-error']}
+					<p class="error text-red-700">{$isError['network-error']}</p>
+					<ErrorAlert />
+				{/if}
+			</div>
+			<button
+				class="close-button hover:text-white hover:bg-slate-900 text-accent"
+				on:click={closeShowModal}>X</button
+			>
+		</div>
+	</div>
 {/if}
 
 <style>
@@ -59,16 +89,14 @@
 		padding: 20px;
 		border-radius: 8px;
 		max-width: 720px;
-		height: 300px;
 	}
-
 
 	.close-button {
 		position: absolute;
 		top: 20px;
 		right: 20px;
 		background-color: transparent;
-		
+
 		border: none;
 		border-radius: 5px;
 		padding: 5px 10px;
@@ -79,7 +107,7 @@
 		background-color: var(--color-primary);
 	}
 
-    .error{
-        @apply text-2xl  mx-auto text-center ;
-    }
+	.error {
+		@apply text-2xl md:text-2xl   mx-auto text-center;
+	}
 </style>

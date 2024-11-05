@@ -28,31 +28,6 @@
 					"thumbnails": []
 				}
 			},
-			"navigation": {
-				"type": "Group",
-				"config": {
-					"label": "Navigation",
-					"repeat": true,
-					"fields": {
-						"nav_link": {
-							"type": "Link",
-							"config": {
-								"label": "Nav Link",
-								"placeholder": "",
-								"allowTargetBlank": false,
-								"select": null
-							}
-						},
-						"nav_label": {
-							"type": "Text",
-							"config": {
-								"label": "nav_label",
-								"placeholder": ""
-							}
-						}
-					}
-				}
-			},
 			"policies_navigation": {
 				"type": "Group",
 				"config": {
@@ -78,37 +53,15 @@
 					}
 				}
 			},
-			"grouped_navigation": {
-				"type": "Group",
-				"config": {
-					"label": "Grouped Navigation",
-					"repeat": true,
-					"fields": {
-						"nav_link": {
-							"type": "Link",
-							"config": {
-								"label": "nav link",
-								"placeholder": "",
-								"allowTargetBlank": true,
-								"select": null,
-								"allowText": false
-							}
-						},
-						"nav_label": {
-							"type": "Text",
-							"config": {
-								"label": "nav label",
-								"placeholder": ""
-							}
-						}
-					}
-				}
-			},
 			"slices": {
 				"type": "Slices",
 				"fieldset": "Slice Zone",
 				"config": {
-					"choices": {}
+					"choices": {
+						"navigation_heading": {
+							"type": "SharedSlice"
+						}
+					}
 				}
 			}
 		}

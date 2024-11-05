@@ -1,0 +1,73 @@
+{
+  "id": "tools",
+  "type": "SharedSlice",
+  "name": "Tools",
+  "description": "Tools",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "heading": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Heading",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "heading1,heading2,heading3,heading4,heading5"
+          }
+        },
+        "body": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Body",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "paragraph,preformatted,strong"
+          }
+        },
+        "link_to_tools": {
+          "type": "Link",
+          "config": {
+            "label": "Link to Tools",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "select": null,
+            "allowText": true
+          }
+        },
+        "tools": {
+          "type": "Group",
+          "config": {
+            "label": "Tools",
+            "repeat": true,
+            "fields": {
+              "tool": {
+                "type": "Link",
+                "config": {
+                  "label": "tool",
+                  "select": "document",
+                  "customtypes": [
+                    "tools"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "label": {
+          "type": "Text",
+          "config": {
+            "label": "label",
+            "placeholder": ""
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

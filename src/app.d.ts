@@ -3,7 +3,11 @@
 
 import type { PrismicDocument } from '@prismicio/types';
 import type { PrismicSlice } from '@prismicio/react';
+import { PrismaClient } from '@prisma/client';
+
+
 declare global {
+	var prisma: PrismaClient | undefined;
 	namespace App {
 		// interface Error {}
 		// interface Locals {}

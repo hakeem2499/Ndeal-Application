@@ -20,38 +20,36 @@
 	import Solutions from '$lib/components/Solutions.svelte';
 	import RegistrationSection from '$lib/components/RegistrationSection.svelte';
 	import { PrismicImage } from '@prismicio/svelte';
+	import { components } from '$lib/slices';
+	import { SliceZone } from '@prismicio/svelte';
 
 	export let data;
+	
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>Ndeal</title>
+	<meta name="Ndeal" content="Leading HR software" />
 </svelte:head>
-<Hero />
-<Showcase />
-<Sectors />
+<!-- <Hero /> -->
+<SliceZone slices={data.slices} {components} />
+
+<!-- <Sectors />
 <!-- <div class=" md:w-full">
 	<SliderLogo />
 </div> -->
 
-<Bento />
-<Services />
-<div class="sectioned-layer">
-	<div>
+<!-- <Bento /> --> 
+<!-- <Services /> -->
+<!-- <div class="sectioned-layer">
+	<!-- <div>
 		<Solutions />
 		<img src={wave} alt="" />
 	</div>
-	<OnBoarding />
+	<OnBoarding /> -->
 
-	<div>
-		<img src={WaveSvg} alt="" />
+<!-- </div> -->
 
-		<div class=" bg-[#171717] p-2 md:w-full">
-			<TestimonialCard />
-		</div>
-	</div>
-</div>
 <div>
 	<!-- <PrismicImage field={data.image} class="h-fit" /> -->
 

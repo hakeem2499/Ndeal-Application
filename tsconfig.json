@@ -14,7 +14,7 @@
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	// except $lib which is handled by https://kit.svelte.dev/docs/configuration#files
 	//
-	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.svelte"],
+	"include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.svelte", "src/lib/slices/mapper.js", "src/lib/slices/mapper.js", "src/lib/slices/WhatWeDo/mapper.js", "src/lib/slices/WhatWeDo/mapper.js", "src/lib/slices/ServicesSlice/mapper.ts", "src/lib/slices/ServicesSlice/mapper.ts", "src/lib/slices/Tools/mapper.js", "src/lib/slices/Tools/mapper.js"],
 	// If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes
 	// from the referenced tsconfig.json - TypeScript does not merge them in
 }

@@ -3,7 +3,7 @@
 
 <ul>
 	<li class="item-content">
-		<a href="https://youtube.com/@ImportCode" target="_blank" data-social="youtube">
+		<a href="https://youtube.com/@ndeal" target="_blank" data-social="youtube">
 			<div class="filled"></div>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +22,7 @@
 		</a>
 	</li>
 	<li class="item-content">
-		<a href="https://www.linkedin.com/company/importcode/" target="_blank" data-social="linkedin">
+		<a href="https://www.linkedin.com/company/ndeal/" target="_blank" data-social="linkedin">
 			<div class="filled"></div>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@
 		</a>
 	</li>
 	<li class="item-content ">
-		<a href="https://x.com/import_code" target="_blank" data-social="twitter">
+		<a href="https://x.com/Ndeal_org" target="_blank" data-social="twitter">
 			<div class="filled"></div>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

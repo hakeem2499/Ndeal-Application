@@ -3,7 +3,22 @@ import { z } from 'zod';
 import { PrismaClient } from '@prisma/client';
 import type { RequestHandler } from '@sveltejs/kit';
 
-const prisma = new PrismaClient();
+const prisma = global.prisma || new PrismaClient();
+if (process.env.NODE_ENV === 'development') global.prisma = prisma;
+
+const allowedOrigin = import.meta.env.VITE_ALLOWED_ORIGIN;
+
+
+export const OPTIONS: RequestHandler = async () => {
+    return new Response(null, {
+        status: 204,
+        headers: {
+            'Access-Control-Allow-Origin': allowedOrigin,
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        }
+    });
+};
 
 export const POST: RequestHandler = async ({ request }) => {
     try {

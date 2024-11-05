@@ -3,14 +3,18 @@
 	import Bounded from './Bounded.svelte';
 
 	import CheckList from '~icons/ph/circle-wavy-check-bold';
-	import { onMount } from 'svelte';
-	import HeroTransition from '$lib/images/herosvg.svg';
-	import { fade } from 'svelte/transition';
-	import HeroAnimation from './HeroAnimation.svelte';
-	import ButtonLink from './ButtonLink.svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
+
 	import Button from './ReusableComponents/Button.svelte';
+	import RegistrationSection from './RegistrationSection.svelte';
+	import clsx from 'clsx';
+
 
 	let items = ['Hiring', 'old days', 'MakeanImpact', 'stayaloone'];
+	const dispatch = createEventDispatcher();
+	const openLoginModal = () => {
+		dispatch('openLoginModal');
+	};
 
 	// The index of the currently displayed item
 	let currentIndex = 0;
@@ -35,6 +39,14 @@
 		}
 	}
 
+	let showForm = false;
+
+	const handleOpenFormModal = () => {
+		showForm = true;
+	};
+	const closeOpenFormModal = () => {
+		showForm = false;
+	};
 	// Use onMount to start the interval when the component is mounted
 	onMount(() => {
 		updateItem(); // Display the first item immediately
@@ -43,12 +55,20 @@
 	});
 </script>
 
+{#if showForm}
+	<div class="modal-overlay" on:click={closeOpenFormModal}>
+		<div class={clsx(showForm ? 'animate-flipInY' : 'animate-flipOutY')} on:click|stopPropagation>
+			<RegistrationSection bind:showForm />
+		</div>
+	</div>
+{/if}
 <div class="lg:relative">
 	<Bounded class="bg-accent   border-b border-primary lg:relative">
-		<div
-			class="absolute hidden lg:flex lg:left-[50%] lg:inset-0 lg:bg-cover bg-center bg-no-repeat"
-			style="background-image: url('/src/lib/images/heroimage.webp');"
-		></div>
+		<div class="absolute hidden lg:flex lg:left-[50%] lg:inset-0 lg:bg-cover bg-center bg-no-repeat">
+			
+		</div>
+		
+
 		<!-- Fade Overlay -->
 		<div
 			class="lg:absolute lg:left-[50%] inset-0 bg-gradient-to-l from-gray-800 via-transparent to-accent"
@@ -77,7 +97,7 @@
 					</ul>
 				{/each}
 			</div>
-			
+
 			<div class="flex flex-col justify-center items-center gap-3">
 				<!-- <h2 class="form-header animate-fadeHero relative z-10 text-2xl text-green-900">
 				{currentItem}
@@ -107,10 +127,11 @@
 	<Counter /> -->
 	</Bounded>
 	<div
-		class="flex w-[80dvw] lg:px-6 lg:ml-24 lg:absolute lg:-bottom-8 px-4 lg:w-[50%] justify-between lg:justify-evenly items-center mx-auto gap-6"
+		class="flex w-[80dvw] mt-8 lg:mt-auto lg:px-6 lg:ml-24 lg:absolute lg:-bottom-8 px-4 lg:w-[50%] justify-between lg:justify-evenly items-center mx-auto gap-6"
 	>
 		<Button
 			className="rounded-sm px-2 text-sm text-start  flex items-center justify-center gap-2 md:gap-4 md:text-xl h-full"
+			onClick={handleOpenFormModal}
 			><span
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -338,6 +359,7 @@
 			> Schedule a demo</Button
 		>
 		<Button
+			onClick={handleOpenFormModal}
 			className="rounded-sm px-2 flex text-sm items-center justify-center gap-2 md:gap-4 md:text-xl h-full"
 		>
 			<span
@@ -466,5 +488,17 @@
 		background: #fff; /* Set background color */
 		z-index: -1;
 		transform: skew(-10deg); /* Skew to create parallelogram */
+	}
+	.modal-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.7);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 1000;
 	}
 </style>

@@ -24,7 +24,7 @@
 </svelte:head>
 
 <div class="app">
-	<Header />
+	<Header settings={$page.data.settings} />
 
 	<main>
 		<slot />

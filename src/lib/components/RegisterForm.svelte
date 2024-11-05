@@ -13,6 +13,7 @@
 	} from './Forms/validation';
 	import StartIcon from '~icons/ph/bell-simple-ringing-fill';
 	import FinishedIcon from '~icons/ph/shield-check-fill';
+	import growthImage from '../images/growth.svg'
 	import Input from './ReusableComponents/Input.svelte';
 	import Select from './ReusableComponents/Select.svelte';
 	import clsx from 'clsx';
@@ -27,6 +28,7 @@
 	} from '../../store/contents';
 	import { createEventDispatcher } from 'svelte';
 	import { isError } from '$lib/validation';
+	import GoldText from './GoldText.svelte';
 
 	// Form state
 	export const userType = writable('Professional'); // 'Professional' or 'Company'
@@ -183,7 +185,7 @@
 				const result = await response.json();
 				console.log('Submission successful:', result);
 				success = true;
-				isError.set({ 'login-successful': 'You are now a Ndeal Pioneeer' });
+				isError.set({ 'login-successful': 'Welcome Aboard' });
 			} else {
 				const errorData = await response.json();
 				if (response.status === 400 && errorData.error === 'User already exists') {
@@ -245,32 +247,25 @@
 	}
 </script>
 
-<div class="flex flex-col gap-4 max-w-md mx-auto md:w-full w-[80dvw]  p-2">
-	<div class=" mx-auto  px-2 justify-center  text-white max-w-60">
-		{#if $userType === 'Professional'}
-			<span
-				class="bg-gradient-to-b from-orange-500 to-yellow-900 bg-clip-text italic text-transparent text-2xl"
-				>Save a seat</span
-			>
-		{/if}
+<div class="flex items-center py-4 gap-4  flex-col m-auto md:w-fit  md:m-0 md:p-6">
+	<div class=" mx-auto p-2 justify-center text-2xl font-semibold  max-w-xl">
+		
 		{#if $userType === 'Company'}
-			<span
-				class="bg-gradient-to-b from-yellow-900 to-primary bg-clip-text not-italic text-transparent text-2xl"
-				>Schedule a demo</span
+		
+			<div class="rounded-full bg-primary text-background p-4"
+				
+				>Schedule a demo</div
 			>
 		{/if}
 	</div>
-
-	<div class="flex items-center justify-between w-full">
-		<StartIcon class={clsx(formChecker ? 'hidden' : 'text-red-600')} />
-		<progress
-			class="w-full duration-300 h-1 rounded-lg bg-gray-200"
-			style={`--progress-color: ${getProgressColor($progressValue)}`}
-			value={$progressValue}
-			max="1"
-		/>
-		<FinishedIcon class={clsx(formChecker ? 'text-green-900' : '')} />
-	</div>
+	{#if $userType === 'Professional'}
+		 
+		 <div class="flex p-2 bg-slate-200 rounded-2xl  gap-5 items-center justify-center w-80">
+			 <img src={growthImage} alt="" class="w-10 h-10">
+			 <span class="text-2xl">|</span>
+			 <GoldText >200+ SIGNUPS</GoldText>
+		 </div>
+	{/if}
 
 	<div class="flex w-full flex-col">
 		<div class="flex justify-center">
@@ -300,268 +295,269 @@
 			</div>
 		</div>
 	</div>
+	<div class="w-[90dvw] md:w-[550px]">
+		{#if $userType === 'Professional'}
+			<form on:submit={handleSubmit}>
+				{#if $currentStep === 1}
+					<div class="space-y-4  p-2 ">
+						<div class="flex justify-between mt-4">
+							<div class="flex flex-col">
+								<Input
+									id="firstName"
+									label="First Name"
+									step="step1"
+									field="firstName"
+									formStore={professionalForm}
+								/>
+								{#if $errorMessages.firstName}
+									<p class="text-red-600 text-sm">{$errorMessages.firstName}</p>
+								{/if}
+							</div>
+							<div class="flex flex-col">
+								<Input
+									id="lastName"
+									label="Last Name"
+									type="text"
+									step="step1"
+									field="lastName"
+									formStore={professionalForm}
+								/>
+								{#if $errorMessages.lastName}
+									<p class="text-red-600 text-sm">{$errorMessages.lastName}</p>
+								{/if}
+							</div>
+						</div>
 
-	{#if $userType === 'Professional'}
-		<form on:submit={handleSubmit}>
-			{#if $currentStep === 1}
-				<div class="space-y-4 p-2 md:p-4">
-					<div class="flex gap-2 mt-4">
-						<div class="flex flex-col">
+						<div>
 							<Input
-								id="firstName"
-								label="First Name"
+								id="email"
+								label="email address"
+								type="email"
 								step="step1"
-								field="firstName"
+								field="email"
 								formStore={professionalForm}
 							/>
-							{#if $errorMessages.firstName}
-								<p class="text-red-600 text-sm">{$errorMessages.firstName}</p>
+							{#if $errorMessages.email}
+								<p class="text-red-600 text-sm">{$errorMessages.email}</p>
 							{/if}
 						</div>
-						<div class="flex flex-col">
+						<div>
 							<Input
-								id="lastName"
-								label="Last Name"
-								type="text"
+								id="phoneNumber"
+								label="Phone Number"
+								type="tel"
 								step="step1"
-								field="lastName"
+								field="phoneNumber"
 								formStore={professionalForm}
 							/>
-							{#if $errorMessages.lastName}
-								<p class="text-red-600 text-sm">{$errorMessages.lastName}</p>
+							{#if $errorMessages.phoneNumber}
+								<p class="text-red-600 text-sm">{$errorMessages.phoneNumber}</p>
 							{/if}
 						</div>
+						<Button onClick={() => goToNextStep()} disabled={!$allFieldsValid}>Next</Button>
 					</div>
+				{/if}
 
-					<div>
-						<Input
-							id="email"
-							label="email address"
-							type="email"
-							step="step1"
-							field="email"
-							formStore={professionalForm}
-						/>
-						{#if $errorMessages.email}
-							<p class="text-red-600 text-sm">{$errorMessages.email}</p>
-						{/if}
-					</div>
-					<div>
-						<Input
-							id="phoneNumber"
-							label="Phone Number"
-							type="tel"
-							step="step1"
-							field="phoneNumber"
-							formStore={professionalForm}
-						/>
-						{#if $errorMessages.phoneNumber}
-							<p class="text-red-600 text-sm">{$errorMessages.phoneNumber}</p>
-						{/if}
-					</div>
-					<Button onClick={() => goToNextStep()} disabled={!$allFieldsValid}>Next</Button>
-				</div>
-			{/if}
-
-			{#if $currentStep === 2}
-				<div class="space-y-4 p-4">
-					<div>
-						<Select
-							options={organizationNameOptions}
-							placeholder="Industry you work with"
-							className="absolute"
-							bind:selected={$professionalForm.step2.organizationName}
-							on:select={(e) => handleInput(e, 'step1', 'organizationName', professionalForm)}
-						/>
-					</div>
-					<div>
-						<Select
-							options={jobTitlesOptions}
-							placeholder="what is your job Title"
-							bind:selected={$professionalForm.step2.jobTitle}
-							on:select={(e) => handleInput(e, 'step1', 'jobTitle', professionalForm)}
-						/>
-					</div>
-					<div>
-						<Select
-							options={queryResponseOptions}
-							placeholder="Do You think Ndeal can improve Nigeria's work compensation? "
-							bind:selected={$professionalForm.step2.queryResponse}
-							on:select={(e) => handleInput(e, 'step1', 'queryResponse', professionalForm)}
-						/>
-					</div>
-					<div class="flex gap-1 justify-center">
-						<!-- <Button
+				{#if $currentStep === 2}
+					<div class="space-y-4 p-4">
+						<div>
+							<Select
+								options={organizationNameOptions}
+								placeholder="Industry you work with"
+								className="absolute"
+								bind:selected={$professionalForm.step2.organizationName}
+								on:select={(e) => handleInput(e, 'step1', 'organizationName', professionalForm)}
+							/>
+						</div>
+						<div>
+							<Select
+								options={jobTitlesOptions}
+								placeholder="what is your job Title"
+								bind:selected={$professionalForm.step2.jobTitle}
+								on:select={(e) => handleInput(e, 'step1', 'jobTitle', professionalForm)}
+							/>
+						</div>
+						<div>
+							<Select
+								options={queryResponseOptions}
+								placeholder="Do You think Ndeal can improve Nigeria's work compensation? "
+								bind:selected={$professionalForm.step2.queryResponse}
+								on:select={(e) => handleInput(e, 'step1', 'queryResponse', professionalForm)}
+							/>
+						</div>
+						<div class="flex gap-1 justify-center">
+							<!-- <Button
 							type="button"
 							onClick={goToPreviousStep}
 							className="bg-gray-600 max-w-[20%] rounded-e-none "
 							><span class="text-xl"><Previous /></span></Button
 						> -->
-						<Button
-							type="submit"
-							disabled={isLoading || success}
-							className="min-w-[80%] text-center"
-							>{#if isLoading}
-								<span class="inline-flex load"></span>
-							{:else if success}
-								<span
-									class="inline-flex items-center gap-x-1 rounded-full bg-green-600/20 px-2.5 py-1 text-sm font-semibold leading-5 text-green-600"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-5 w-5"
-										viewBox="0 0 24 24"
-										stroke-width="2"
-										stroke="currentColor"
-										fill="none"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+							<Button
+								type="submit"
+								disabled={isLoading || success}
+								className="min-w-[80%] text-center"
+								>{#if isLoading}
+									<span class="inline-flex load"></span>
+								{:else if success}
+									<span
+										class="inline-flex items-center gap-x-1 rounded-full bg-green-600/20 px-2.5 py-1 text-sm font-semibold leading-5 text-green-600"
 									>
-										<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-										<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
-										<path d="M9 12l2 2l4 -4"></path>
-									</svg>
-									Success
-								</span>
-							{:else}
-								submit
-							{/if}</Button
-						>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											class="h-5 w-5"
+											viewBox="0 0 24 24"
+											stroke-width="2"
+											stroke="currentColor"
+											fill="none"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										>
+											<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+											<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+											<path d="M9 12l2 2l4 -4"></path>
+										</svg>
+										Success
+									</span>
+								{:else}
+									submit
+								{/if}</Button
+							>
+						</div>
 					</div>
-				</div>
-			{/if}
-		</form>
-	{/if}
+				{/if}
+			</form>
+		{/if}
 
-	{#if $userType === 'Company'}
-		<form on:submit={handleSubmit}>
-			{#if $currentStep === 1}
-				<div class="space-y-4 p-2 md:p-4">
-					<div class="mt-4">
-						<Select
-							options={companySizeOptions}
-							placeholder="Number of Employees "
-							bind:selected={$companyForm.step1.numberOfEmployees}
-							on:select={(e) => handleInput(e, 'step1', 'numberOfEmployees', companyForm)}
-						/>
-					</div>
-					<div class="mt-4">
-						<Select
-							options={companyHeadquatersOptions}
-							placeholder="Company's Location "
-							bind:selected={$companyForm.step1.companyHeadquaters}
-							on:select={(e) => handleInput(e, 'step1', 'numberOfEmployees', companyForm)}
-						/>
-					</div>
+		{#if $userType === 'Company'}
+			<form on:submit={handleSubmit}>
+				{#if $currentStep === 1}
+					<div class="space-y-4 p-2">
+						<div class="mt-4">
+							<Select
+								options={companySizeOptions}
+								placeholder="Number of Employees "
+								bind:selected={$companyForm.step1.numberOfEmployees}
+								on:select={(e) => handleInput(e, 'step1', 'numberOfEmployees', companyForm)}
+							/>
+						</div>
+						<div class="mt-4">
+							<Select
+								options={companyHeadquatersOptions}
+								placeholder="Company's Location "
+								bind:selected={$companyForm.step1.companyHeadquaters}
+								on:select={(e) => handleInput(e, 'step1', 'numberOfEmployees', companyForm)}
+							/>
+						</div>
 
-					<Button onClick={goToNextStep}>Next</Button>
-				</div>
-			{/if}
-
-			{#if $currentStep === 2}
-				<div class="space-y-4 p-2 md:p-4">
-					<div class="flex gap-2">
-						<Input
-							id="firstName"
-							label="First Name"
-							type="text"
-							step="step2"
-							field="firstName"
-							formStore={companyForm}
-						/>
-
-						<Input
-							id="lastName"
-							label="Last Name"
-							type="password"
-							step="step2"
-							field="lastName"
-							formStore={companyForm}
-						/>
+						<Button onClick={goToNextStep}>Next</Button>
 					</div>
-					<div></div>
-					<div class="flex gap-2">
-						<Input
-							id="email"
-							label="Work Email"
-							type="email"
-							step="step2"
-							field="email"
-							formStore={companyForm}
-						/>
+				{/if}
 
-						<Input
-							id="phoneNumber"
-							label="Phone Number"
-							type="tel"
-							step="step2"
-							field="phoneNumber"
-							formStore={companyForm}
-						/>
-					</div>
+				{#if $currentStep === 2}
+					<div class="space-y-4 p-2 md:p-4">
+						<div class="flex gap-2">
+							<Input
+								id="firstName"
+								label="First Name"
+								type="text"
+								step="step2"
+								field="firstName"
+								formStore={companyForm}
+							/>
 
-					<div>
-						<Input
-							id="companyWebsite"
-							label="company website"
-							type="text"
-							step="step2"
-							field="companyWebsite"
-							formStore={companyForm}
-						/>
-					</div>
-					<div>
-						<Input
-							id="industry"
-							label="Industry"
-							type="text"
-							step="step2"
-							field="industry"
-							formStore={companyForm}
-						/>
-					</div>
-					<div class="flex gap-1 rounded-full border border-black justify-between">
-						<!-- <Button
+							<Input
+								id="lastName"
+								label="Last Name"
+								type="password"
+								step="step2"
+								field="lastName"
+								formStore={companyForm}
+							/>
+						</div>
+						<div></div>
+						<div class="flex gap-2">
+							<Input
+								id="email"
+								label="Work Email"
+								type="email"
+								step="step2"
+								field="email"
+								formStore={companyForm}
+							/>
+
+							<Input
+								id="phoneNumber"
+								label="Phone Number"
+								type="tel"
+								step="step2"
+								field="phoneNumber"
+								formStore={companyForm}
+							/>
+						</div>
+
+						<div>
+							<Input
+								id="companyWebsite"
+								label="company website"
+								type="text"
+								step="step2"
+								field="companyWebsite"
+								formStore={companyForm}
+							/>
+						</div>
+						<div>
+							<Input
+								id="industry"
+								label="Industry"
+								type="text"
+								step="step2"
+								field="industry"
+								formStore={companyForm}
+							/>
+						</div>
+						<div class="flex gap-1 rounded-full border border-black justify-between">
+							<!-- <Button
 							type="button"
 							onClick={goToPreviousStep}
 							className="bg-white group   max-w-[20%] rounded-e-none "
 							><span class="text-xl text-black group-hover:text-white"><Previous /></span></Button
 						> -->
-						<Button
-							type="submit"
-							disabled={isLoading || success}
-							className="min-w-[80%] text-center"
-							>{#if isLoading}
-								<span class="inline-flex load"></span>
-							{:else if success}
-								<span
-									class="inline-flex items-center gap-x-1 rounded-full bg-green-600/20 px-2.5 py-1 text-sm font-semibold leading-5 text-green-600"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-5 w-5"
-										viewBox="0 0 24 24"
-										stroke-width="2"
-										stroke="currentColor"
-										fill="none"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+							<Button
+								type="submit"
+								disabled={isLoading || success}
+								className="min-w-[80%] text-center"
+								>{#if isLoading}
+									<span class="inline-flex load"></span>
+								{:else if success}
+									<span
+										class="inline-flex items-center gap-x-1 rounded-full bg-green-600/20 px-2.5 py-1 text-sm font-semibold leading-5 text-green-600"
 									>
-										<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-										<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
-										<path d="M9 12l2 2l4 -4"></path>
-									</svg>
-									Success
-								</span>
-							{:else}
-								submit
-							{/if}</Button
-						>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											class="h-5 w-5"
+											viewBox="0 0 24 24"
+											stroke-width="2"
+											stroke="currentColor"
+											fill="none"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										>
+											<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+											<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+											<path d="M9 12l2 2l4 -4"></path>
+										</svg>
+										Success
+									</span>
+								{:else}
+									submit
+								{/if}</Button
+							>
+						</div>
 					</div>
-				</div>
-			{/if}
-		</form>
-	{/if}
+				{/if}
+			</form>
+		{/if}
+	</div>
 </div>
 
 <style>

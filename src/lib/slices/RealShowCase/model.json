@@ -1,0 +1,76 @@
+{
+  "id": "real_show_case",
+  "type": "SharedSlice",
+  "name": "RealShowCase",
+  "description": "RealShowCase",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "heading": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Heading",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "heading3,heading4,heading5,heading6"
+          }
+        },
+        "switchable_divs": {
+          "type": "Group",
+          "config": {
+            "label": "Switchable Divs",
+            "repeat": true,
+            "fields": {
+              "description": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Description",
+                  "placeholder": "",
+                  "allowTargetBlank": true,
+                  "single": "paragraph,preformatted"
+                }
+              },
+              "image": {
+                "type": "Image",
+                "config": {
+                  "label": "Image",
+                  "constraint": {},
+                  "thumbnails": []
+                }
+              },
+              "icon_image": {
+                "type": "Image",
+                "config": {
+                  "label": "Icon Image",
+                  "constraint": {},
+                  "thumbnails": []
+                }
+              },
+              "label": {
+                "type": "Select",
+                "config": {
+                  "label": "label",
+                  "placeholder": "",
+                  "options": [
+                    "Hiring",
+                    "Payroll",
+                    "Training",
+                    "Compliance",
+                    "software"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

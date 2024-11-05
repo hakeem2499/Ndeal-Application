@@ -71,7 +71,7 @@
 
 <Bounded>
 	
-	<div class="ml-0 gap-8 items-center mx-auto">
+	<div class="ml-0  gap-8 items-center mx-auto">
 		<div>
 			{#each sections as section, index}
 

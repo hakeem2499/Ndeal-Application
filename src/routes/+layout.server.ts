@@ -9,6 +9,7 @@ export const load: LayoutServerLoad = async ({ fetch, cookies }) => {
 
 	// Define the type for the Prismic settings document
 	const settings: PrismicDocument = await client.getSingle('settings');
+	console.log("🚀 ~ constload:LayoutServerLoad= ~ settings:", settings)
 
 	return {
 		settings,

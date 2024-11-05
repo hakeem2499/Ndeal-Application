@@ -1,6 +1,9 @@
 {
 	"format": "page",
 	"id": "tools",
+	"label": "Tools",
+	"repeatable": true,
+	"status": true,
 	"json": {
 		"Main": {
 			"uid": {
@@ -9,12 +12,52 @@
 					"label": "UID"
 				}
 			},
-			"slices": {
+			"tool": {
+				"type": "StructuredText",
 				"config": {
-					"choices": {}
-				},
+					"label": "Tool",
+					"placeholder": "",
+					"allowTargetBlank": true,
+					"single": "heading2,heading1,heading3"
+				}
+			},
+			"description": {
+				"type": "StructuredText",
+				"config": {
+					"label": "Description",
+					"placeholder": "",
+					"allowTargetBlank": true,
+					"single": "paragraph,preformatted,strong,em"
+				}
+			},
+			"tool_link": {
+				"type": "Link",
+				"config": {
+					"label": "tool link",
+					"placeholder": "",
+					"allowTargetBlank": true,
+					"select": null,
+					"allowText": true
+				}
+			},
+			"image": {
+				"type": "Image",
+				"config": {
+					"label": "Image",
+					"constraint": {},
+					"thumbnails": []
+				}
+			},
+			"slices": {
+				"type": "Slices",
 				"fieldset": "Slice Zone",
-				"type": "Slices"
+				"config": {
+					"choices": {
+						"rich_text": {
+							"type": "SharedSlice"
+						}
+					}
+				}
 			}
 		},
 		"SEO & Metadata": {
@@ -44,8 +87,5 @@
 				"type": "Image"
 			}
 		}
-	},
-	"label": "Tools",
-	"repeatable": true,
-	"status": true
+	}
 }

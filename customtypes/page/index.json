@@ -62,7 +62,32 @@
 				"type": "Slices",
 				"fieldset": "Slice Zone",
 				"config": {
-					"choices": {}
+					"choices": {
+						"testimonials": {
+							"type": "SharedSlice"
+						},
+						"real_show_case": {
+							"type": "SharedSlice"
+						},
+						"bento": {
+							"type": "SharedSlice"
+						},
+						"hero": {
+							"type": "SharedSlice"
+						},
+						"products": {
+							"type": "SharedSlice"
+						},
+						"tools": {
+							"type": "SharedSlice"
+						},
+						"onboarding": {
+							"type": "SharedSlice"
+						},
+						"sectors": {
+							"type": "SharedSlice"
+						}
+					}
 				}
 			}
 		},

@@ -63,7 +63,7 @@
   <input
     type="text"
     value={selectedOptionLabel || searchQuery} 
-    class="peer mt-2 h-fit w-full  border-b-2 border-r-background border-l-background border-t-background bg-background rounded-sm hover:border-b-black px-2 py-3 focus:border-none focus:outline-none"
+    class="peer mt-2 h-fit w-full  border-b-2 border-r-transparent border-l-transparent border-t-transparent bg-transparent rounded-sm hover:border-b-black px-2 py-3 focus:border-none focus:outline-none"
     {placeholder}
     on:focus={handleFocus}
     on:input={handleInput}
@@ -72,7 +72,7 @@
   <!-- Select element, only shown when the input is focused or query is changing -->
   {#if showSelect}
     <select
-      class={clsx("mt-16   absolute right-0 z-40 w-full max-w-md  bg-white border-t border-gray-300 rounded-md px-2 py-3 focus:outline-none", className)}
+      class={clsx("mt-16   absolute right-0 z-40 w-full max-w-md  bg-white border-t border-gray-300 rounded-md py-3 focus:outline-none", className)}
       on:change={handleSelect}
       bind:value={selected}
       size={Math.min(filteredOptions.length, 5)}

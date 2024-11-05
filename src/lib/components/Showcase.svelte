@@ -4,19 +4,48 @@
 	import Bounded from './Bounded.svelte';
 	import ButtonLink from './ButtonLink.svelte';
 	import AnchorLink from './ReusableComponents/AnchorLink.svelte';
+	import gsap from 'gsap';
+	import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 	import YoutubeVideoEmbed from './YoutubeVideoEmbed.svelte';
 	import RegistrationSection from './RegistrationSection.svelte';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		if (prefersReducedMotion) return;
+
+		gsap.registerPlugin(ScrollTrigger);
+
+		gsap.fromTo(
+			'.showcase__heading',
+			{
+				y: 70
+			},
+			{
+				y: 0,
+				ease: 'power2.inOut',
+				duration: 1,
+				scrollTrigger: {
+					trigger: '.showcase__heading',
+					start: 'top bottom-=80%',
+					toggleActions: 'play pause resume reverse'
+				}
+			}
+		);
+	});
 </script>
 
 <Bounded>
+	
 	<div class="flex ml-0 mx-auto gap-4 justify-start flex-col items-start">
 		<h2 class="text-2xl">What we do</h2>
 
-		<p class="">What is your name</p>
+		<p class="text-4xl max-w-3xl"> ipsum dolor sit amet consectetur adipisicing elit. Vitae impedit quia quos pariatur. Optio quos of your name</p>
 		<ButtonLink>Learn More about our services</ButtonLink>
 	</div>
 	<div
-		class="mt-16 grid max-w-7xl text-white grid-rows-[auto_auto_auto] gap-8 md:grid-cols-2 lg:grid-cols-4 md:gap-2 lg:gap-4"
+		class="mt-16 grid max-w-7xl text-white grid-rows-[auto_auto_auto] gap-8 md:grid-cols-2 lg:grid-cols-4 md:gap-2 lg:gap-2"
 	>
 		<div
 			class="card hover:-translate-y-1 active:-translate-y-1 duration-500 md:py-4 p-6 md:px-8 row-span-4 grid grid-rows-subgrid gap-2 md:gap-6 rounded-[5px] bg-[#171717]"
@@ -42,7 +71,7 @@
 	</div> -->
 
 	<h2
-		class="hero_heading max-w-3xl mt-16 md:mt-20 mx-auto text-center text-balance text-4xl font-medium md:text-7xl"
+		class="hero_heading max-w-3xl mt-16 md:mt-20 mx-auto text-center text-balance text-3xl font-medium md:text-5xl"
 	>
 		Streamline Operations, Simplify Tasks, Maximize Productivity
 	</h2>
@@ -51,11 +80,11 @@
 			<img
 				class="rounded-lg border-4"
 				src={DisplayImage}
-				alt="A beautiful sunset over the mountains"
+				alt="Ndeal HR Dashboard "
 				loading="lazy"
 			/>
-			<RegistrationSection />
 		</picture>
+		
 	</Bounded>
 </Bounded>
 

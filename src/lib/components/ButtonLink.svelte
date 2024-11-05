@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Icon from '~icons/ph/arrow-square-right'
+	import Icon from '~icons/ph/arrow-right-light';
 	import clsx from 'clsx';
+	import { PrismicLink } from '@prismicio/svelte';
 
-	export let tag: keyof HTMLElementTagNameMap = 'a'; // Ensure tag is a valid HTML tag
 	export let iconCheck: boolean = false; // Prop to control whether the icon should be rendered
-	export let href: string = '#';
+
 	export let target: string = '_self';
 	export let rel: string | undefined = undefined;
 
@@ -15,27 +15,67 @@
 	/** @type {string | undefined} */
 	let className = undefined;
 	export { className as class };
-
-	// Dynamic props type depending on the tag
-	let dynamicProps: any = { ...$$restProps };
-
-	if (tag === 'a') {
-		dynamicProps.href = href;
-		dynamicProps.target = target;
-		dynamicProps.rel = rel;
-	}
 </script>
 
-<svelte:element
-	this={tag}
-	{...dynamicProps}
-	class={clsx(
-		'relative inline-flex gap-2 items-center group h-fit  w-fit rounded-5px border border-gray-950 bg-transparent px-4 py-2 text-black active:bg-black active:text-orange-300 outline-none ring-orange-300 transition-colors hover:border-violet-100/20 hover:text-orange-300 hover:bg-black focus:ring-2',
-		className
-	)}
+<PrismicLink
+	field={$$restProps.field}
+	document={$$restProps.document}
+	{...$$restProps}
+	class={clsx(' group inline-flex gap-4 w-fit h-fit items-center', className)}
 >
-	<slot />
-	{#if !iconCheck}
-		<Icon class="text-black   group-hover:text-orange-300 duration-500  group-hover:translate-x-2  text-xl mr-2" />
-	{/if}
-</svelte:element>
+	<span class="inline-flex gap-2 gradient-border-button">
+		<slot />
+		{#if !iconCheck}
+			<Icon
+				class="text-primary   group-hover:text-orange-900 duration-500  group-hover:translate-x-2  text-xl mr-2"
+			/>
+		{/if}
+	</span>
+</PrismicLink>
+
+<style>
+	.gradient-border-button {
+		padding: 10px 20px;
+		font-size: 16px;
+		color: var(--color-primary); /* Text color */
+		background-color: white; /* Button background */
+		border-radius: 9999px; /* Rounded corners */
+		position: relative;
+		z-index: 1;
+		cursor: pointer;
+		transition: color 0.4s ease;
+		background-clip: padding-box; /* Ensures the background doesn’t cover the border */
+	}
+
+	.gradient-border-button::before {
+		content: '';
+		position: absolute;
+		top: -2px;
+		left: -2px;
+		right: -2px;
+		bottom: -2px;
+		background: linear-gradient(45deg, #ff6a00, #057828); /* Gradient border */
+		z-index: -1;
+		border-radius: 9999px; /* Match button's border radius */
+	}
+
+	.gradient-border-button::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: white; /* Button background color */
+		z-index: -1;
+		border-radius: 9999px;
+	}
+
+	.gradient-border-button:hover {
+		color: #ff6a00; /* Text color on hover */
+	}
+
+	.gradient-border-button:focus {
+		outline: none; /* Remove focus outline */
+	}
+</style>

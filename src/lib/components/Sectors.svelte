@@ -273,104 +273,134 @@
 	import Image from '$lib/images/heroimage.webp';
 	import BgNoise from '$lib/images/education.jpg';
 	import Bounded from './Bounded.svelte';
+	import svg from '../images/growth.svg';
 </script>
 
-<div class="flex md:mx-6 flex-col gap-4 md:gap-10 lg:gap-20 justify-between md:flex-row">
-	<div class="sectors max-w-[90dvw] m-2 mx-auto md:m-0 md:w-[50dvw] flex-1">
-		<Bounded
-			class="sector-element h-fit    rounded-md m-4 border-t-8  border-primary   text-white  justify-between transition-colors duration-500 "
-			style="background-image: url({BgNoise})"
+<div class="flex my-10 md:my-16 lg:my-20 flex-col gap-20">
+	<h2
+		class="showcase__heading max-w-3xl md:max-w-5xl text-balance mx-auto text-center text-4xl font-medium lg:text-5xl"
+	>
+		Pioneering Fair Employment and Ethical Practices
+	</h2>
+
+	<div class="flex md:mx-6 flex-col gap-4 md:gap-10 lg:gap-20 justify-between md:flex-row">
+		<div class="sectors max-w-[90dvw] m-2 mx-auto md:m-0 md:w-[50dvw] flex-1">
+			<div
+				class="sector-element h-fit relative rounded-md m-4 border-t-8 border-primary text-white justify-between"
+			>
+				<img src={BgNoise} class="h-full absolute -z-10 w-full" alt="" />
+				<div class="p-2 md:p-4 gap-2 flex flex-col items-center">
+					<h3 class=" text-xl ">Some heaeding 3 Text</h3>
+					<div class="image-wrapper m-2 md:m-4 relative">
+
+						<img class="header p-1 relative" src={Image} alt="" />
+					</div>
+
+					<p class="text-xs lg:text-[.95rem] prose prose-lg text-slate-200">
+						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil ducimus fugit pariatur,
+						velit debitis nesciunt blanditiis beatae neque molestias corporis sunt nemo adipisci
+						quas. Voluptas nihil maiores fugit recusandae. Nihil.
+					</p>
+					<p class=" text-xs lg:text-[.95rem] prose prose-lg text-slate-200">
+						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil ducimus fugit pariatur,
+						velit debitis nesciunt blanditiis beatae neque molestias corporis sunt nemo adipisci
+						quas. Voluptas nihil maiores fugit recusandae. Nihil.
+					</p>
+					<a href="">Learn More</a>
+				</div>
+			</div>
+			<Bounded class="sector-element">
+				<h3>Some heaeding 3 Text</h3>
+				<img src={Image} alt="" />
+				<p>
+					Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis, quia
+					dolores voluptatibus numquam quod impedit neque modi veritatis quis autem beatae explicabo
+					dolore unde sint suscipit! Facere, earum voluptate!
+				</p>
+				<a href="">Expan</a>
+			</Bounded>
+			<div class="sector-element">
+				<h3>Some heaeding 3 Text</h3>
+				<img src={Image} alt="" />
+				<p>
+					Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis, nemo accusantium
+					aspernatur nostrum tenetur quod nesciunt nobis ut ipsa perferendis. Quis ab itaque nulla
+					recusandae. Suscipit incidunt beatae consequuntur! Necessitatibus!
+				</p>
+				<a href="">Expand</a>
+			</div>
+			<div class="sector-element">
+				<h3>Some heaeding 3 Text</h3>
+				<img class="rounded-lg p-4 border-4" src={Image} alt="" />
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate voluptates eveniet et,
+					debitis at fugit aliquid enim doloremque quasi accusamus aperiam perspiciatis saepe labore
+					eligendi hic tempora repudiandae maiores ex!
+				</p>
+				<a href="">Expand</a>
+			</div>
+			<div class="sector-element">
+				<h3>Some heaeding 3 Text</h3>
+				<img src={Image} alt="" />
+				<p>
+					Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab placeat unde eligendi odio
+					nisi
+				</p>
+				<a href="">Expand</a>
+			</div>
+		</div>
+		<div
+			class="flex flex-col md:max-h-[90dvh] md:h-full flex-1 items-center gap-4 md:mt-4 md:w-[30dvw]"
 		>
-			<h3>Some heaeding 3 Text</h3>
-			<img src={Image} alt="" />
-			<p>
-				Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil ducimus fugit pariatur,
-				velit debitis nesciunt blanditiis beatae neque molestias corporis sunt nemo adipisci quas.
-				Voluptas nihil maiores fugit recusandae. Nihil.
-			</p>
-			<a href="">Expand</a>
-		</Bounded>
-		<Bounded class="sector-element">
-			<h3>Some heaeding 3 Text</h3>
-			<img src={Image} alt="" />
-			<p>
-				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis, quia
-				dolores voluptatibus numquam quod impedit neque modi veritatis quis autem beatae explicabo
-				dolore unde sint suscipit! Facere, earum voluptate!
-			</p>
-			<a href="">Expan</a>
-		</Bounded>
-		<div class="sector-element">
-			<h3>Some heaeding 3 Text</h3>
-			<img src={Image} alt="" />
-			<p>
-				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis, nemo accusantium aspernatur
-				nostrum tenetur quod nesciunt nobis ut ipsa perferendis. Quis ab itaque nulla recusandae.
-				Suscipit incidunt beatae consequuntur! Necessitatibus!
-			</p>
-			<a href="">Expand</a>
-		</div>
-		<div class="sector-element">
-			<h3>Some heaeding 3 Text</h3>
-			<img src={Image} alt="" />
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate voluptates eveniet et,
-				debitis at fugit aliquid enim doloremque quasi accusamus aperiam perspiciatis saepe labore
-				eligendi hic tempora repudiandae maiores ex!
-			</p>
-			<a href="">Expand</a>
-		</div>
-		<div class="sector-element">
-			<h3>Some heaeding 3 Text</h3>
-			<img src={Image} alt="" />
-			<p>
-				Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab placeat unde eligendi odio nisi
-			</p>
-			<a href="">Expand</a>
-		</div>
-	</div>
-	<div class="flex flex-col  md:max-h-[90dvh] md:h-full flex-1  items-center gap-4 md:mt-4 md:w-[30dvw]">
-		<div class="div">
-			<h3>Lorem ipsum dolor</h3>
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio consectetur architecto
-			</p>
-		</div>
-		<div class="div">
-			<h3>Lorem ipsum dolor sit</h3>
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio consectetur architecto
-			</p>
-		</div>
-		<div class="div">
-			<h3>Lorem ipsum dolor, sit</h3>
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio consectetur architecto
-			</p>
+			<div
+				class="div ring-1 w-[80dvw] h-fit group flex items-center justify-between md:min-h-[25dvh] text-sm md:font-normal md:w-full ring-primary my-1 md:m-0"
+			>
+				<img src={svg} class="h-auto p-2 max-w-[25%]" alt="" />
+				<div
+					class="flex m-2 lg:m-0 p-4 gap-4 group-hover:bg-primary group-hover:text-background rounded-ss-2xl flex-col"
+				>
+					<h3 class="text-xl md:text-2xl font-poppins">Lorem ipsum dolor</h3>
+					<p class="text-sm md:text-base">
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio consectetur
+						architecto
+					</p>
+				</div>
+			</div>
+			<div class="div">
+				<h3>Lorem ipsum dolor sit</h3>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio consectetur architecto
+				</p>
+			</div>
+			<div class="div">
+				<h3>Lorem ipsum dolor, sit</h3>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio consectetur architecto
+				</p>
+			</div>
 		</div>
 	</div>
 </div>
 
 <style>
 	.div {
-		padding: 1rem;
-		border-radius: 0.125rem;
+		border-radius: 1rem 0;
 		transform: scaleX(100%);
 		transition: transform 500ms ease-in-out;
 		transform-origin: right;
 		background-color: var(--color-background);
 		border: 4rem;
-		@apply ring-1 w-[90dvw] h-fit  max-h-[15dvh] md:min-h-[25dvh] text-sm md:font-normal  md:w-full ring-primary m-1 md:m-0;
-		color: var(--color-primary);
 	}
 
 	.div :nth-child(2) {
 		@apply justify-self-end;
 	}
 
-	.div:hover,
-	.div:focus-within {
+	.div:hover {
 		transform: scaleX(110%);
+	}
+	.div:focus-within {
+		transform: scale(110%);
 		background-color: var(--color-primary);
 		color: var(--color-background);
 	}
@@ -409,14 +439,30 @@
 		background: var(--color-primary);
 	}
 
-	.sector-element > img {
-		inline-size: 100%;
-		aspect-ratio: 1;
-		object-fit: cover;
+	.sector-element > h3,
+	p,
+	a {
+		padding: 1rem;
 	}
 
 	.snaps-inline {
 		scroll-snap-type: inline mandatory;
 		scroll-padding-inline: var(--_spacer, 1rem);
 	}
+
+	.image-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -.75rem;
+    bottom: 0;
+	height:102%;
+    width: 100%; /* Adjust this to control the width of the cut effect */
+    background: #fff; /* Adjust this to match your desired color */
+    transform: skew(5deg); /* Create the diagonal cut */
+    transform-origin: top left;
+    z-index: -1; /* Ensure it appears above the image */
+    pointer-events: none; /* Prevents interactions with the overlay */
+}
+
 </style>
