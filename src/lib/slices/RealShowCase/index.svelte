@@ -11,48 +11,51 @@
 	// Array of service options
 	const serviceOptions = ['Hiring', 'Training', 'Compliance', 'Payroll', 'Software'];
 	let sliderRef: HTMLDivElement;
-	let activeIndex = 0;
 
-	// Updates the slider position based on the active button
+	// Runs every time `serviceType` changes
 	const updateSliderPosition = () => {
-		const activeButton = document.querySelector(`button[data-service="${get(serviceType)}"]`) as HTMLElement;
-		if (sliderRef && activeButton) {
-			const buttonRect = activeButton.getBoundingClientRect();
-			const parentRect = sliderRef.parentElement?.getBoundingClientRect();
+		if (!sliderRef) return;
 
-			// Calculate slider width and position
-			sliderRef.style.width = `${buttonRect.width}px`;
-			sliderRef.style.left = `${buttonRect.left - (parentRect?.left || 0)}px`;
+		// Cache button and parent container positions
+		const activeButton = document.querySelector(
+			`button[data-service="${get(serviceType)}"]`
+		) as HTMLElement;
+		const parentRect = sliderRef.parentElement?.getBoundingClientRect();
+
+		if (activeButton && parentRect) {
+			const buttonRect = activeButton.getBoundingClientRect();
+
+			// Use `requestAnimationFrame` to optimize animation
+			requestAnimationFrame(() => {
+				sliderRef.style.transform = `translateX(${buttonRect.left - parentRect.left}px)`;
+				sliderRef.style.width = `${buttonRect.width}px`;
+			});
 		}
 	};
 
-	// Ensures updateSliderPosition only runs on the client
-	onMount(() => {
-		// Initial slider position
-		updateSliderPosition();
+	// Watch changes in `serviceType` using reactive stores
+	$: serviceType.subscribe(() => updateSliderPosition());
 
-		// Re-run updateSliderPosition when serviceType changes
-		serviceType.subscribe(async () => {
-			await tick(); // Wait for DOM to update
-			updateSliderPosition();
-		});
-	});
+	// Trigger initial positioning after mount
+	onMount(() => updateSliderPosition());
 </script>
 
 <Bounded data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
-	<h2 class="my-10 max-w-3xl md:max-w-4xl md:text-5xl text-balance mx-auto text-center text-2xl font-medium lg:text-6xl">
+	<h2
+		class="my-10 max-w-3xl md:max-w-4xl md:text-5xl text-balance mx-auto text-center text-2xl font-medium lg:text-6xl"
+	>
 		<PrismicText field={slice.primary.heading} />
 	</h2>
 	<div class="flex justify-center relative">
-		<div class="rounded-full border border-slate-950 relative overflow-hidden">
+		<div class=" border border-slate-950 relative overflow-hidden">
 			<div bind:this={sliderRef} class="slider"></div>
 			<div class="flex text-xs lg:text-lg font-semibold font-poppins leading-5">
 				{#each serviceOptions as service}
 					<button
 						data-service={service}
 						on:click={() => serviceType.set(service)}
-						class="relative z-10 rounded-full px-2 py-1 md:py-4 transition-all duration-500 md:px-8 lg:px-16 focus:outline-none
-							{$serviceType === service ? 'bg-green-900 text-white' : 'text-black hover:text-gray-700'}"
+						class="relative z-10  px-2 py-1 md:py-4 transition-all duration-500 md:px-8 lg:px-16 focus:outline-none
+							{$serviceType === service ? 'bg-secondary text-black' : 'text-black hover:text-gray-700'}"
 					>
 						{service}
 					</button>
@@ -90,8 +93,10 @@
 	.slider {
 		position: absolute;
 		height: 100%;
-		background-color: #064e3b;
-		transition: width 0.3s ease, left 0.3s ease;
+		background-color: var(--color-secondary);
+		transition:
+			width 0.3s ease,
+			left 0.3s ease;
 		border-radius: 5px;
 		z-index: -1;
 	}

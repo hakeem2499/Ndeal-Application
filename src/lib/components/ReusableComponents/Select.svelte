@@ -2,6 +2,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import clsx from 'clsx';
+  import Arrow from '~icons/ph/caret-down-bold';
 
   // Define a type for the options
    type Option = {
@@ -13,7 +14,7 @@
   export let className: string | undefined = undefined;
   export let options: Option[] = []; // Array of Option objects
   export let selected: string = ''; // Selected option's value
-  export let placeholder: string = 'Search...'; // Placeholder for the search input
+  export let placeholder: string  = 'Search...'; // Placeholder for the search input
 
   let searchQuery: string = ''; // The query used for filtering
   let showSelect: boolean = false; // Whether to show the select dropdown
@@ -58,12 +59,12 @@
   }
 </script>
 
-<div class="relative">
+<div class="relative flex justify-center ">
   <!-- Input for filtering options or displaying selected label -->
   <input
     type="text"
     value={selectedOptionLabel || searchQuery} 
-    class="peer mt-2 h-fit w-full  border-b-2 border-r-transparent border-l-transparent border-t-transparent bg-transparent rounded-sm hover:border-b-black px-2 py-3 focus:border-none focus:outline-none"
+    class="peer mt-2 h-fit w-full my-2 border-0 focus:border focus:border-primary  bg-slate-400/40 rounded-md   px-2 focus:ring-0"
     {placeholder}
     on:focus={handleFocus}
     on:input={handleInput}
@@ -83,6 +84,7 @@
       {/each}
     </select>
   {/if}
+  
 </div>
 
 <style>

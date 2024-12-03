@@ -6,8 +6,11 @@
 	import { page } from '$app/stores';
 	import { PrismicPreview } from '@prismicio/svelte/kit';
 
+
 	
 </script>
+
+
 
 <svelte:head>
 	<title>{$page.data.title}</title>
@@ -24,12 +27,7 @@
 </svelte:head>
 
 <div class="app">
-	<Header settings={$page.data.settings} />
-
 	<main>
 		<slot />
 	</main>
-
-	<Footer settings={$page.data.settings} />
 </div>
-

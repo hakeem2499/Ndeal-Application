@@ -2,24 +2,13 @@
 	import type { Content } from '@prismicio/client';
 	import { PrismicRichText } from '@prismicio/svelte';
 	import Label from './Label.svelte';
+	import Bounded from '$lib/components/Bounded.svelte';
 
 	export let slice: Content.RichTextSlice;
 </script>
 
-<section class="container text-4xl">
-	<PrismicRichText
-		field={slice.primary.content}
-		components={{
-			label: Label
-		}}
-	/>
-</section>
-
-<style>
-	.container {
-		max-width: 600px;
-		margin: 6em auto;
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
-			'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-	}
-</style>
+<Bounded>
+	<div class="prose prose-lg prose-slate prose-invert w-full">
+		<PrismicRichText field={slice.primary.content} />
+	</div>
+</Bounded>

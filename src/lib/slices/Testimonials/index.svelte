@@ -46,7 +46,7 @@
 							<div
 								class="flex font-poppins w-full gap-2 max-w-md flex-col rounded-xl px-8 ring-1 ring-slate-300 glass-container text-slate-200 py-4 ring-slate-300/20 xl:px-10"
 							>
-								<div class="w-40 flex flex-col gap-4  items-start md:w-64">
+								<div class="w-[60dvw] grid  gap-4  items-start md:w-80">
 									<div class="flex gap-2 items-center justify-center">
 										<PrismicImage
 											class="h-12 object-contain rounded-full border  w-12"
@@ -59,10 +59,10 @@
 									<p class="prose prose-invert leading-2 text-xs  md:text-sm lg:text-base">
 										<PrismicText field={item.comment} />
 									</p>
+									<p class="text-accent text-base">
+										<PrismicText field={item.position} />
+									</p>
 								</div>
-								<p class="text-accent text-base">
-									<PrismicText field={item.position} />
-								</p>
 							</div>
 						{/each}
 					</div>

@@ -1,0 +1,150 @@
+{
+	"format": "page",
+	"id": "signup",
+	"label": "signup",
+	"repeatable": false,
+	"status": true,
+	"json": {
+		"Main": {
+			"heading": {
+				"type": "StructuredText",
+				"config": {
+					"label": "Heading",
+					"placeholder": "",
+					"allowTargetBlank": true,
+					"multi": "heading1,heading2"
+				}
+			},
+			"subheading": {
+				"type": "StructuredText",
+				"config": {
+					"label": "subheading",
+					"placeholder": "",
+					"allowTargetBlank": true,
+					"multi": "paragraph,strong"
+				}
+			},
+			"image": {
+				"type": "Image",
+				"config": {
+					"label": "image",
+					"constraint": {},
+					"thumbnails": []
+				}
+			},
+			"subsection": {
+				"type": "Group",
+				"config": {
+					"label": "subsection",
+					"repeat": true,
+					"fields": {
+						"heading": {
+							"type": "StructuredText",
+							"config": {
+								"label": "Heading",
+								"placeholder": "",
+								"allowTargetBlank": true,
+								"single": "heading5,strong"
+							}
+						},
+						"body": {
+							"type": "StructuredText",
+							"config": {
+								"label": "Body",
+								"placeholder": "",
+								"allowTargetBlank": true,
+								"single": "paragraph,em,strong"
+							}
+						}
+					}
+				}
+			},
+			"question": {
+				"type": "StructuredText",
+				"config": {
+					"label": "Question",
+					"placeholder": "",
+					"allowTargetBlank": true,
+					"single": "paragraph,strong"
+				}
+			},
+			"buttons": {
+				"type": "Group",
+				"config": {
+					"label": "buttons",
+					"repeat": true,
+					"fields": {
+						"image": {
+							"type": "Image",
+							"config": {
+								"label": "image",
+								"constraint": {},
+								"thumbnails": []
+							}
+						},
+						"header": {
+							"type": "StructuredText",
+							"config": {
+								"label": "Header",
+								"placeholder": "",
+								"allowTargetBlank": true,
+								"single": "paragraph"
+							}
+						},
+						"body": {
+							"type": "StructuredText",
+							"config": {
+								"label": "Body",
+								"placeholder": "",
+								"allowTargetBlank": true,
+								"single": "paragraph"
+							}
+						},
+						"usertype": {
+							"type": "Select",
+							"config": {
+								"label": "userType",
+								"placeholder": "",
+								"options": ["Professional", "Company", "Partner"]
+							}
+						}
+					}
+				}
+			},
+			"slices": {
+				"type": "Slices",
+				"fieldset": "Slice Zone",
+				"config": {
+					"choices": {}
+				}
+			}
+		},
+		"SEO & Metadata": {
+			"meta_title": {
+				"config": {
+					"label": "Meta Title",
+					"placeholder": "A title of the page used for social media and search engines"
+				},
+				"type": "Text"
+			},
+			"meta_description": {
+				"config": {
+					"label": "Meta Description",
+					"placeholder": "A brief summary of the page"
+				},
+				"type": "Text"
+			},
+			"meta_image": {
+				"config": {
+					"constraint": {
+						"height": 1260,
+						"width": 2400
+					},
+					"label": "Meta Image",
+					"thumbnails": []
+				},
+				"type": "Image"
+			}
+		}
+	}
+}

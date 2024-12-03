@@ -6,9 +6,18 @@
 	import PrismicButtonLink from '$lib/components/ReusableComponents/PrismicButtonLink.svelte';
 	import type { Content } from '@prismicio/client';
 	import { PrismicImage, PrismicLink, PrismicRichText, PrismicText } from '@prismicio/svelte';
+	import clsx from 'clsx';
+	import { writable } from 'svelte/store';
 
 	export let slice: Content.ProductsSlice;
 	export let products: Content.ProductDocument[] = [];
+
+	// Track which product's paragraph should be visible
+	let showParagraph = writable<number | null>(null);
+
+	function toggleParagraph(index: number) {
+		showParagraph.update((current) => (current === index ? null : index));
+	}
 </script>
 
 <Bounded data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
@@ -16,7 +25,7 @@
 		<div class="text-xl md:text-2xl">
 			{slice.primary.title}
 		</div>
-		<h2 class=" text-3xl md:text-5xl text-balance  max-w-5xl">
+		<h2 class=" text-3xl md:text-5xl text-balance max-w-5xl">
 			<PrismicText field={slice.primary.heading} />
 		</h2>
 		<p class="prose prose-base max-w-6xl">
@@ -26,29 +35,44 @@
 		<ButtonLink field={slice.primary.link_to_products}>{slice.primary.link_label}</ButtonLink>
 	</div>
 	<div
-		class="mt-16 grid max-w-7xl text-white grid-rows-[auto_auto_auto] gap-8 grid-cols-2 lg:grid-cols-4 md:gap-2 lg:gap-2"
+		class="mt-16 grid max-w-7xl text-white grid-rows-[auto_auto_auto] gap-4 grid-cols-2 lg:grid-cols-4 md:gap-2 justify-items-center lg:gap-2"
 	>
 		{#each products as product, index}
 			<div
-				class="card hover:-translate-y-1 active:-translate-y-1 text-sm duration-500 md:py-4 px-2 py-6 md:px-8 row-span-4 grid grid-rows-subgrid gap-2 md:gap-6 rounded-[5px] bg-[#171717]"
+				role="button"
+				tabindex="0"
+				on:click={() => toggleParagraph(index)}
+				class="card hover:-translate-y-1 active:-translate-y-1 text-sm duration-500 md:py-4 px-2 md:px-4 py-2 row-span-3 grid grid-rows-subgrid md:gap-4 rounded-[5px] justify-items-center bg-[#171717]"
 			>
-				<div class=" text-balance flex flex-col gap-4 items-center prose">
-					<h3
-						class="card-heading font-poppins relative text-sm text-center mt-2 text-white md:text-2xl"
-					>
-						<PrismicText field={product.data.product} />
-					</h3>
-					<p class="prose text-white text-pretty">
-						<PrismicRichText field={product.data.description} />
-					</p>
-				</div>
-				<div class="max-h-42 max-w-sm">
-					<PrismicImage field={product.data.image} />
-				</div>
-				<ButtonLinkBlack document={product} class="z-10  md:hidden">Expand</ButtonLinkBlack>
-				<ButtonLinkBlack document={product} class="z-10 hidden md:flex"
-					>Learn More About EOR</ButtonLinkBlack
+				<h3
+					class="card-heading font-poppins relative text-xs md:text-base text-center mt-2 text-white md:font-semibold"
 				>
+					<PrismicText field={product.data.product} />
+				</h3>
+
+				<div class="relative">
+					<p
+						class={clsx(
+							'prose text-center text-sm text-white text-pretty',
+							$showParagraph === index
+								? 'absolute animate-fadeIn md:animate-none md:static'
+								: 'hidden  md:animate-none md:flex'
+						)}
+					>
+						<PrismicText field={product.data.description} />
+					</p>
+					<div
+						class={clsx('max-w-sm', $showParagraph === index ? 'opacity-20 transition-opacity duration-300 md:opacity-100' : '')}
+					>
+						<PrismicImage field={product.data.image} />
+					</div>
+				</div>
+				<ButtonLinkBlack document={product} class="z-10 w-full scale-90 md:hidden">
+					Expand <span>{product.data.initials}</span>
+				</ButtonLinkBlack>
+				<ButtonLinkBlack document={product} class="z-10 w-full hidden md:flex">
+					Learn More About <span>{product.data.initials}</span>
+				</ButtonLinkBlack>
 			</div>
 		{/each}
 	</div>
@@ -57,11 +81,10 @@
 		class="hero_heading max-w-3xl mt-16 md:mt-20 mx-auto text-center text-balance text-3xl font-medium md:text-5xl"
 	>
 		<PrismicText field={slice.primary.subheading} />
-		
 	</h3>
 
 	<div class="w-fit glass-container mt-10">
-		<PrismicImage class="rounded-lg border-4" field={slice.primary.dashboard_image} /> 
+		<PrismicImage class="rounded-lg border-4" field={slice.primary.dashboard_image} />
 	</div>
 </Bounded>
 
@@ -79,8 +102,9 @@
 		transform-origin: left;
 	}
 
-	.card:hover .card-heading::after {
+	.card:hover > h3 {
 		transform: scaleX(1);
+		text-shadow: 0 0 12px rgba(76, 81, 191, 0.8); /* Stronger glow */
 	}
 
 	@media (prefers-reduced-motion: reduce) {

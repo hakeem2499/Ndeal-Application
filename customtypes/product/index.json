@@ -38,11 +38,31 @@
 					"thumbnails": []
 				}
 			},
+			"body": {
+				"type": "StructuredText",
+				"config": {
+					"label": "Body",
+					"placeholder": "",
+					"allowTargetBlank": true,
+					"single": "paragraph,strong,em"
+				}
+			},
+			"initials": {
+				"type": "Select",
+				"config": {
+					"label": "Initials",
+					"placeholder": "",
+					"options": ["EOR", "PEO", "ERT", "CSO"]
+				}
+			},
 			"slices": {
 				"type": "Slices",
 				"fieldset": "Slice Zone",
 				"config": {
 					"choices": {
+						"switch": {
+							"type": "SharedSlice"
+						},
 						"rich_text": {
 							"type": "SharedSlice"
 						}

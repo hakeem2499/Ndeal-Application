@@ -9,8 +9,32 @@ export default {
 			},
 			keyframes: {
 				fadeIn: {
-					'0%': { opacity: '0', transform: 'translateX(100%)' },
-					'100%': { opacity: '1', transform: 'translateX(0)' }
+					'0%': {
+						opacity: '0',
+						transform: 'translateX(100%)',
+						willChange: 'opacity, transform'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateX(0)',
+						willChange: 'opacity, transform'
+					}
+				},
+				fadeOut: {
+					'0%': {
+						opacity: '1',
+						transform: 'translateY(0)',
+						willChange: 'opacity, transform'
+					},
+					'100%': {
+						opacity: '0',
+						transform: 'translateY(-100%)',
+						willChange: 'opacity, transform'
+					}
+				},
+				simpleFadeIn: {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
 				},
 				fadeInUp: {
 					'0%': {
@@ -67,7 +91,9 @@ export default {
 				}
 			},
 			animation: {
-				fadeIn: 'fadeIn 0.5s ease-in-out',
+				fadeIn: 'fadeIn 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards',
+				fadeOut: 'fadeOut 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards',
+				S_fadeIn: 'simpleFadeIn 0.15s ease-in-out',
 				flipInY: 'flipInY 0.75s ease-in-out',
 				flipOutY: 'flipOutY 0.75s ease-in-out',
 				spin: 'spin 1.5s cubic-bezier(1, 0.1, 0.25, 1) infinite',

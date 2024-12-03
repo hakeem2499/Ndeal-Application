@@ -30,16 +30,6 @@
 					"single": "paragraph,preformatted,strong,em"
 				}
 			},
-			"tool_link": {
-				"type": "Link",
-				"config": {
-					"label": "tool link",
-					"placeholder": "",
-					"allowTargetBlank": true,
-					"select": null,
-					"allowText": true
-				}
-			},
 			"image": {
 				"type": "Image",
 				"config": {
@@ -48,11 +38,23 @@
 					"thumbnails": []
 				}
 			},
+			"body": {
+				"type": "StructuredText",
+				"config": {
+					"label": "Body",
+					"placeholder": "",
+					"allowTargetBlank": true,
+					"single": "paragraph,strong"
+				}
+			},
 			"slices": {
 				"type": "Slices",
 				"fieldset": "Slice Zone",
 				"config": {
 					"choices": {
+						"switch": {
+							"type": "SharedSlice"
+						},
 						"rich_text": {
 							"type": "SharedSlice"
 						}

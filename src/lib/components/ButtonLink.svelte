@@ -35,7 +35,7 @@
 
 <style>
 	.gradient-border-button {
-		padding: 10px 20px;
+		padding: 8px 16px;
 		font-size: 16px;
 		color: var(--color-primary); /* Text color */
 		background-color: white; /* Button background */

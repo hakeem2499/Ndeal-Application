@@ -8,15 +8,21 @@ export let formChecker: boolean = false;
 type ValidFields = {
     [key: string]: boolean;
 };
-type ErrorMessages = {
+// Define the structure of error messages
+export interface ErrorMessages {
     [key: string]: string;
-};
+}
+
 export let errorMessages = writable<ErrorMessages>({
+    displayname: '',
     firstName: '',
     lastName: '',
     email: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    password: ''
 });
+
+
 
 
 
@@ -50,23 +56,29 @@ export function validateInput(
     switch (field) {
         case 'firstName':
         case 'lastName':
+        case 'displayname':
             isValid = value.trim().length > 0;
             errorMessage = isValid ? '' : 'This field is required';
             break;
         case 'email':
             isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-            errorMessage = isValid ? '' : 'please enter a valid email';
+            errorMessage = isValid ? '' : 'Please enter a valid email';
             break;
         case 'phoneNumber':
             isValid = /^[0-9]+$/.test(value) && value.trim().length > 9;
-            errorMessage = isValid ? '' : 'Please enter a valid Phone Number';
+            errorMessage = isValid ? '' : 'Please enter a valid phone number';
+            break;
+        case 'password':
+            isValid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(value);
+            errorMessage = isValid ? '' : 'Password must be at least 8 characters, include uppercase, lowercase, and a number';
             break;
         default:
             isValid = false;
-            errorMessage = 'invalid input';
+            errorMessage = 'Invalid input';
     }
     return { valid: isValid, errorMessage };
 }
+
 
 export function updateProgress(formStore: Writable<any>) {
     const form = get(formStore);
@@ -80,6 +92,20 @@ export function updateProgress(formStore: Writable<any>) {
         formChecker = true;
     }
     console.log(filledCount / totalFields);
+}
+
+// Function to handle input changes, validate, and update error messages
+export function dealInsightHandleInput(field: string, value: string, errorMessagesFields: Writable<ErrorMessages>) {
+    // Get validation result
+    const { valid, errorMessage } = validateInput(value, field);
+
+    // Update error messages store
+    errorMessagesFields.update(current => ({
+        ...current,
+        [field]: errorMessage // Set error message for the specific field
+    }));
+
+    return valid; // Return validation status if needed for further logic
 }
 
 export function handleInput(e: Event, step: string, field: string, formStore: Writable<any>) {
@@ -104,13 +130,12 @@ export function handleInput(e: Event, step: string, field: string, formStore: Wr
                 return fields;
             });
 
-            errorMessages.update((err) => {
-                err[field] = errorMessage;
-                console.log('Updated errorMessages:', err);
-                return err;
-            });
+            // Update error messages store
+            errorMessages.update(current => ({
+                ...current,
+                [field]: errorMessage // Set error message for the specific field
+            }));
 
-            updateProgress(formStore);
         }
         validFields.subscribe((value) => console.log('validFields:', value));
         errorMessages.subscribe((value) => console.log('errorMessages:', value));

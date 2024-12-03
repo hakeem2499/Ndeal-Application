@@ -3,85 +3,48 @@
 	import AnchorLinkFooter from './ReusableComponents/AnchorLinkFooter.svelte';
 	import SocialLinks from './SocialLinks.svelte';
 	import CopyWright from '~icons/ph/copyright-light';
-	import { PrismicLink } from '@prismicio/svelte';
+	import { PrismicLink, SliceZone } from '@prismicio/svelte';
 	// Import the type for SettingsDocument from Prismic
 	import type { Content } from '@prismicio/client';
+	import { filterSlicesByHeadings, insightsAndTools, insightsAndToolsFooter, whoWeAre } from '../../store/HomeStore';
+	import { components } from '$lib/slices';
+	import Bounded from './Bounded.svelte';
 
 	// Define the prop with the correct type
 	export let settings: Content.SettingsDocument;
+	console.log("🚀 ~ settings:For footer", settings)
 </script>
 
 <footer>
-	<div class="flex flex-col py-20  gap-4 text-sm bg-[#171717] text-[#f1efe7] items-center">
-		<nav class=" grid  grid-cols-2 w-[90dvw] gap-4 md:w-full mx-auto justify-items-between md:grid-cols-3">
-			<div class="flex md:items-center flex-col">
-				<ul class="flex flex-col p-2 gap-4">
-					<h5 class="text-2xl font-semibold md:text-4xl">
-						<span class="text-green-900 ">N</span>deal.
-					</h5>
-					<!-- <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-						<AnchorLinkFooter href="/">privacy policy</AnchorLinkFooter>
-					</li>
-					<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-						<AnchorLinkFooter href="/about">cookie policy</AnchorLinkFooter>
-					</li>
-					<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-						<AnchorLinkFooter href="/sverdle">Terms of service</AnchorLinkFooter>
-					</li>
-					<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-						<AnchorLinkFooter href="/sverdle">Blog</AnchorLinkFooter>
-					</li> -->
-					{#each settings.data.policies_navigation as item (item.policy_label)}
-						<li>
-							<AnchorLinkFooter class="anchor-link" field={item.policy_link}>
-								{item.policy_label}
-							</AnchorLinkFooter>
-						</li>
-					{/each}
+	<Bounded class="flex flex-col py-20   gap-4 text-sm bg-[#171717] text-[#f1efe7] items-center">
+		<nav class=" grid  grid-cols-2 w-full gap-4  mx-auto justify-items-center md:grid-cols-3">
+			<div class="flex items-start  flex-col">
+				<h5 class="text-2xl font-semibold pl-6 md:text-4xl">
+					<span class="text-green-900 ">N</span>deal.
+				</h5>
+				<ul class="flex flex-col md:gap-10 justify-between">
+					<SliceZone
+						slices={filterSlicesByHeadings(settings.data.slices, whoWeAre)}
+						{components}
+					/>
 				</ul>
 			</div>
-			<div class="flex md:items-center  flex-col">
-				<ul class="flex flex-col  p-2 gap-4">
-					<h5 class="text-xl md:text-3xl">Resources</h5>
-					<!-- <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-						<AnchorLinkFooter href="/">privacy policy</AnchorLinkFooter>
-					</li>
-					<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-						<AnchorLinkFooter href="/about">cookie policy</AnchorLinkFooter>
-					</li>
-					<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-						<AnchorLinkFooter href="/sverdle">Terms of service</AnchorLinkFooter>
-					</li>
-					<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-						<AnchorLinkFooter href="/sverdle">Blog</AnchorLinkFooter>
-					</li> -->
-					<!-- {#each settings.data.grouped_navigation as item (item.nav_link)}
-						<li>
-							<AnchorLinkFooter field={item.nav_link}>
-								{item.nav_label}
-							</AnchorLinkFooter>
-						</li>
-					{/each} -->
+			<div class="flex text-white  flex-col">
+				<h5 class="text-xl pl-8 md:text-3xl">Resources</h5>
+				<ul class="flex text-white flex-col lg:flex-row   p-2 gap-4">
+					<SliceZone
+								slices={filterSlicesByHeadings(settings.data.slices, insightsAndToolsFooter)}
+								{components}
+							/>
 				</ul>
 			</div>
-			<div class="flex md:items-center flex-col">
-				<ul class="flex flex-col p-2 gap-4">
-					<h5 class="text-xl md:text-3xl">Legal</h5>
-					<!-- <li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-						<AnchorLinkFooter href="/">privacy policy</AnchorLinkFooter>
-					</li>
-					<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
-						<AnchorLinkFooter href="/about">cookie policy</AnchorLinkFooter>
-					</li>
-					<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-						<AnchorLinkFooter href="/sverdle">Terms of service</AnchorLinkFooter>
-					</li>
-					<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-						<AnchorLinkFooter href="/sverdle">Blog</AnchorLinkFooter>
-					</li> -->
-					{#each settings.data.policies_navigation as item (item.policy_label)}
+			<div class="flex mt-8 px-8 ml-4  md:mt-0 md:ml-auto mx-auto flex-col">
+				<h5 class="text-xl   md:text-3xl">Legal</h5>
+				<ul class="flex flex-col mt-4 md:mt-14 gap-4">
+					
+					{#each settings.data.policies as item}
 						<li>
-							<AnchorLinkFooter class="anchor-link" field={item.policy_link}>
+							<AnchorLinkFooter class="anchor-link font-Just_sans_medium text-base" field={item.policy_link}>
 								{item.policy_label}
 							</AnchorLinkFooter>
 						</li>
@@ -89,13 +52,13 @@
 				</ul>
 			</div>
 		</nav>
-		<div class="flex flex-col justify-between"></div>
+		<div class="flex flex-col border-t border-gray-500 w-full mt-10 md:mt-16 py-4 justify-between"></div>
 
 		<SocialLinks />
 		<span class="flex mt-4 items-center gap-1"
 			><CopyWright /> copyright 2024. All rights reserved</span
 		>
-	</div>
+	</Bounded>
 </footer>
 
 <style>

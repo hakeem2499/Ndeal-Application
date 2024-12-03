@@ -77,7 +77,7 @@
 			maxlength={maxLength}
 			{pattern}
 			class={clsx(
-				'peer mt-2 w-full border-b-2  border-r-transparent  border-l-transparent border-t-transparent  bg-transparent rounded-sm hover:border-b-black  px-2 py-3 focus:outline-offset-0 focus:outline-0 focus:border-none focus:outline-none',
+				'peer mt-2 w-full bg-transparent border-0 border-b focus:border-b-2  border-primary focus:border-black focus:ring-0',
 				className
 			)}
 			on:input={onInput}
@@ -98,7 +98,7 @@
 			maxlength={maxLength}
 			{pattern}
 			class={clsx(
-				'peer mt-2 w-full rounded-sm hover:border-primary hover:border-1 focus:border-1 px-2 py-3 focus:border-primary focus:outline-none',
+				'peer mt-2 w-full   border-0 border-b focus:border-b-2 bg-transparent border-primary focus:border-black focus:ring-0',
 				className
 			)}
 			on:input={onInput}
@@ -119,7 +119,7 @@
 			maxlength={maxLength}
 			{pattern}
 			class={clsx(
-				'peer mt-2 w-full rounded-sm hover:border-primary hover:border-1 focus:border-none px-2 py-3  focus:outline-none',
+				'peer mt-2 w-full border-0 border-b focus:border-b-2 bg-background border-primary focus:border-black focus:ring-0',
 				className
 			)}
 			on:input={onInput}

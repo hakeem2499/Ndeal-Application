@@ -28,25 +28,26 @@
 					"thumbnails": []
 				}
 			},
-			"policies_navigation": {
+			"policies": {
 				"type": "Group",
 				"config": {
-					"label": "Policies Navigation",
+					"label": "Policies",
 					"repeat": true,
 					"fields": {
 						"policy_link": {
 							"type": "Link",
 							"config": {
-								"label": "Policy link",
+								"label": "policy_link",
 								"placeholder": "",
 								"allowTargetBlank": true,
-								"select": null
+								"select": null,
+								"allowText": false
 							}
 						},
 						"policy_label": {
 							"type": "Text",
 							"config": {
-								"label": "policy_label",
+								"label": "policy label",
 								"placeholder": ""
 							}
 						}

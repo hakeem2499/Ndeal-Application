@@ -14,7 +14,12 @@
 	import AnchorLinkFooter from './ReusableComponents/AnchorLinkFooter.svelte';
 	import { get } from 'svelte/store'; // To access the $page store programmatically
 	import { SliceZone } from '@prismicio/svelte';
-	import type { KeyTextField } from '@prismicio/types';
+
+	import PopupShow from './ReusableComponents/PopupShow.svelte';
+	import DotSquare from '~icons/mdi/square-inc';
+	import Button from './ReusableComponents/Button.svelte';
+	import Back from '~icons/ph/arrow-left-fill'
+	import { filterSlicesByHeadings } from '../../store/HomeStore';
 
 	// Define the prop with the correct type
 	export let settings: Content.SettingsDocument;
@@ -28,64 +33,13 @@
 	// Define the function that filters slices by headings
 	// Define a more general Slice interface to include all fields
 	// Define a type for the Slice
-	interface Slice {
-		primary: {
-			navigation_heading: KeyTextField;
-			// Other fields of the slice
-			[key: string]: any;
-		};
-		slice_type: string;
-		id: string;
-	}
+	
 
-	// Cache to store filtered results
-	const sliceCache: Record<string, Slice[]> = {};
+
+	let showPopup: boolean = false;
 
 	// Function to categorize slices by their headings
-	function categorizeSlicesByHeadings(slices: Slice[]): Record<string, Slice[]> {
-		return slices.reduce(
-			(acc, slice) => {
-				const heading = slice.primary.navigation_heading || '';
-				if (!heading) return acc;
-
-				// Initialize array for this heading if it doesn't exist
-				if (!acc[heading]) {
-					acc[heading] = [];
-				}
-
-				// Push the slice into the appropriate heading category
-				acc[heading].push(slice);
-				return acc;
-			},
-			{} as Record<string, Slice[]>
-		);
-	}
-
-	// Function to filter slices by a list of target headings
-	function filterSlicesByHeadings(slices: Slice[], headings: string[]): Slice[] {
-		const cacheKey = headings.join(',');
-
-		// Check the cache first
-		if (sliceCache[cacheKey]) {
-			return sliceCache[cacheKey];
-		}
-
-		// Create a Set for fast lookups
-		const headingSet = new Set(headings);
-
-		// Categorize slices by their headings
-		const categorizedSlices = categorizeSlicesByHeadings(slices);
-
-		// Collect slices matching the target headings
-		const filteredSlices = Object.keys(categorizedSlices)
-			.filter((heading) => headingSet.has(heading))
-			.flatMap((heading) => categorizedSlices[heading]);
-
-		// Cache the result for future reuse
-		sliceCache[cacheKey] = filteredSlices;
-
-		return filteredSlices;
-	}
+	
 
 	let isOpen = false;
 	let openDropdownId: number | null = null; // Track which dropdown is currently open, null means none
@@ -93,6 +47,11 @@
 	// Function to toggle dropdown, accepting a dropdown id
 	const toggleDropdown = (id: number): void => {
 		openDropdownId = openDropdownId === id ? null : id; // Toggle between opening and closing the dropdown
+		showPopup = true;
+	};
+	const closeDropdown = (): void => {
+		openDropdownId = null; //  and closing the dropdown
+		showPopup = false;
 	};
 
 	// Close dropdown if clicked outside
@@ -123,15 +82,6 @@
 	const toggleOpen = () => {
 		isOpen = !isOpen;
 		handleOverflow();
-	};
-
-	const close = () => {
-		isOpen = false;
-		handleOverflow();
-	};
-
-	const openLoginModal = () => {
-		dispatch('openLoginModal');
 	};
 
 	const handleOverflow = () => {
@@ -169,9 +119,15 @@
 				<img src={logo} alt="Ndeal" />
 			</a>
 			<div class=" lg:hidden">
-				<button aria-expanded={isOpen} type="button" class="button z-50" on:click={toggleOpen}>
-					<span class={clsx('burger hidden  burger-3', isOpen ? 'is-closed' : '')}></span>
-				</button>
+				{#if openDropdownId != null}
+					<Button className="bg-transparent hover:bg-transparent mr-2" onClick={closeDropdown}>
+						<span class="rotate-90 text-black text-3xl "><Back /></span>
+					</Button>
+				{:else}
+					<button aria-expanded={isOpen} type="button" class="button z-50" on:click={toggleOpen}>
+						<span class={clsx('burger hidden  burger-3', isOpen ? 'is-closed' : '')}></span>
+					</button>
+				{/if}
 			</div>
 		</div>
 
@@ -179,40 +135,136 @@
 		<div
 			class={clsx(
 				'fixed items-end justify-between inset-0  z-40 flex  flex-col custom-gradient to-primary pr-4 pt-6 transition-transform duration-300 ease-in-out lg:hidden',
-				isOpen ? ' animate-fadeIn' : 'translate-y-[-100%]'
+				isOpen ? ' animate-fadeIn' : 'animate-fadeOut'
 			)}
 		>
 			<ul class="grid first:pt-12 justify-items-end text-xl gap-8">
-				<!-- {#each settings.data.navigation as item (item.nav_link)}
-					<li>
-						<PrismicButtonLink field={item.nav_link}>
-							{item.nav_label}
-						</PrismicButtonLink>
-					</li>
-				{/each} -->
-				<!-- <button class="flex relative items-center group gap-2" on:click={toggleDropdown}>
-					Insights and Tools <span
-						class={clsx(
-							'text-primary transition-transform',
-							isDropdownOpen ? 'rotate-0' : 'rotate-180'
-						)}><Arrow /></span
+				<li aria-current={$page.url.pathname.startsWith('/whatwedo') ? 'page' : undefined}>
+					<button
+						class="anchor-link dropdown-toggle flex items-center gap-2 relative"
+						on:click={() => toggleDropdown(1)}
+						aria-expanded={openDropdownId === 1 ? 'true' : 'false'}
+						aria-controls="dropdown1-menu"
 					>
-					{#if isDropdownOpen}
-						<ul
-							class="absolute top-0 flex items-end gap-4 justify-end flex-col right-0 py-10 min-w-[90dvw]"
+						<span
+							class={clsx(
+								openDropdownId === 1
+									? 'bg-gradient-to-br from-orange-900 via-primary to-yellow-600 bg-clip-text italic text-transparent font-semibold'
+									: 'text-primary'
+							)}
 						>
-							{#each settings.data.grouped_navigation as item (item.nav_link)}
-								<li class="flex items-center">
-									<PrismicButtonLink field={item.nav_link}>
-										{item.nav_label}
-									</PrismicButtonLink><span><Dot /></span>
-								</li>
-							{/each}
-						</ul>
-					{/if}
-				</button> -->
+							What we do
+						</span>
+						<span
+							class={clsx(
+								'text-primary transition-transform',
+								openDropdownId === 1 ? 'rotate-0 ' : 'rotate-180'
+							)}
+						>
+							<DotSquare />
+						</span>
+					</button>
+				</li>
+				<!-- Dropdown 2 -->
+				<li aria-current={$page.url.pathname.startsWith('/Who We are') ? 'page' : undefined}>
+					<button
+						class="anchor-link dropdown-toggle flex items-center gap-2 relative"
+						on:click={() => toggleDropdown(2)}
+						aria-expanded={openDropdownId === 2 ? 'true' : 'false'}
+						aria-controls="dropdown2-menu"
+					>
+						<span
+							class={clsx(
+								openDropdownId === 2
+									? 'bg-gradient-to-br from-orange-900 via-primary to-yellow-600 bg-clip-text italic text-transparent font-semibold'
+									: 'text-primary'
+							)}
+						>
+							Who we are
+						</span>
+						<span
+							class={clsx(
+								'text-primary transition-transform',
+								openDropdownId === 2 ? 'rotate-0 ' : 'rotate-180'
+							)}
+						>
+							<DotSquare />
+						</span>
+					</button>
+				</li>
+				<!-- Dropdown 3 -->
+				<li aria-current={$page.url.pathname.startsWith('/insightsandtools') ? 'page' : undefined}>
+					<button
+						class="anchor-link dropdown-toggle flex items-center gap-2 relative"
+						on:click={() => toggleDropdown(3)}
+						aria-expanded={openDropdownId === 3 ? 'true' : 'false'}
+						aria-controls="dropdown3-menu"
+					>
+						<span
+							class={clsx(
+								openDropdownId === 3
+									? 'bg-gradient-to-br from-orange-900 via-primary to-yellow-600 bg-clip-text italic text-transparent font-semibold'
+									: 'text-primary'
+							)}
+						>
+							Insights and Tools
+						</span>
+						<span
+							class={clsx(
+								'text-primary transition-transform',
+								openDropdownId === 3 ? 'rotate-0 ' : 'rotate-180'
+							)}
+						>
+							<DotSquare />
+						</span>
+					</button>
+				</li>
+				<li aria-current={$page.url.pathname.startsWith('/What we think') ? 'page' : undefined}>
+					<PrismicButtonLink href="/founder">What we think</PrismicButtonLink>
+				</li>
+				<li>
+					<div class="flex bg-black mt-4 rounded-full mx-auto mr-0 scale-75">
+						<SocialLinks />
+					</div>
+				</li>
 			</ul>
-			<SocialLinks />
+
+			<div>
+				{#if openDropdownId === 1}
+					<PopupShow id="dropdown1-menu" class="mb-4 items-start bg-white " bind:showPopup>
+						<ul class="flex flex-col md:flex-row md:gap-10 justify-between">
+							<SliceZone
+								slices={filterSlicesByHeadings(settings.data.slices, whatWeDo)}
+								{components}
+							/>
+						</ul>
+					</PopupShow>
+				{/if}
+				{#if openDropdownId === 2}
+					<PopupShow id="dropdown2-menu" class="border-2 bg-white" bind:showPopup>
+						<ul class="flex flex-col md:flex-row md:gap-10 justify-between">
+							<SliceZone
+								slices={filterSlicesByHeadings(settings.data.slices, whoWeAre)}
+								{components}
+							/>
+						</ul>
+					</PopupShow>
+				{/if}
+				{#if openDropdownId === 3}
+					<PopupShow
+						id="dropdown3-menu"
+						class="dropdown-menu h-fit overflow-auto bg-white"
+						bind:showPopup
+					>
+						<ul class="flex flex-col md:flex-row md:gap-10 justify-between">
+							<SliceZone
+								slices={filterSlicesByHeadings(settings.data.slices, insightsAndTools)}
+								{components}
+							/>
+						</ul>
+					</PopupShow>
+				{/if}
+			</div>
 		</div>
 
 		<!-- DesktopNav -->
@@ -221,7 +273,7 @@
 			<!-- Dropdown 1 -->
 			<li aria-current={$page.url.pathname.startsWith('/whatwedo') ? 'page' : undefined}>
 				<button
-					class="anchor-link dropdown-toggle  flex items-center gap-2 relative"
+					class="anchor-link dropdown-toggle flex items-center gap-2 relative"
 					on:click={() => toggleDropdown(1)}
 					aria-expanded={openDropdownId === 1 ? 'true' : 'false'}
 					aria-controls="dropdown1-menu"
@@ -341,7 +393,7 @@
 						id="dropdown3-menu"
 						class="dropdown-menu border-gray-950/50 animate-fadeInUp bg-background items-start border-2 min-h-[20rem]"
 					>
-						<ul class="flex justify-between min-w-[600px] ">
+						<ul class="flex justify-between min-w-[600px]">
 							<SliceZone
 								slices={filterSlicesByHeadings(settings.data.slices, insightsAndTools)}
 								{components}
@@ -464,7 +516,7 @@
 	.burger.burger-3.is-closed::after {
 		transform: rotate(45deg) translate(-4px, 2px);
 	}
-	.anchor-link{
+	.anchor-link {
 		padding-top: 1.5rem;
 		padding-bottom: 1.5rem;
 	}
@@ -500,6 +552,4 @@
 			var(--color-primary) 90%
 		);
 	}
-
-	
 </style>

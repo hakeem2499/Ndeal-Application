@@ -4,7 +4,7 @@
 	import Newsletter from './ReusableComponents/Newsletter.svelte';
 </script>
 
-<div class="spikes relative w-full md:px-10 md:py-10  bg-accent h-fit lg:min-h-[700px]">
+<div class="spikes relative w-full md:px-10 md:py-10  bg-secondary h-fit lg:min-h-[700px]">
 	<Bounded class="   gap-10">
 		<div class="flex flex-col items-center lg:w-[70dvw] md:gap-12 gap-6">
 			<div class="lg:max-w-[50dvw] space-y-8">

@@ -2,24 +2,28 @@
 
 import Bento from './Bento/index.svelte';
 import Hero from './Hero/index.svelte';
+import Navigation from './Navigation/index.svelte';
 import NavigationHeading from './NavigationHeading/index.svelte';
 import Onboarding from './Onboarding/index.svelte';
 import Products from './Products/index.svelte';
 import RealShowCase from './RealShowCase/index.svelte';
 import RichText from './RichText/index.svelte';
 import Sectors from './Sectors/index.svelte';
+import Switch from './Switch/index.svelte';
 import Testimonials from './Testimonials/index.svelte';
 import Tools from './Tools/index.svelte';
 
 export const components = {
 	bento: Bento,
 	hero: Hero,
+	navigation: Navigation,
 	navigation_heading: NavigationHeading,
 	onboarding: Onboarding,
 	products: Products,
 	real_show_case: RealShowCase,
 	rich_text: RichText,
 	sectors: Sectors,
+	switch: Switch,
 	testimonials: Testimonials,
 	tools: Tools
 };

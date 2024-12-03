@@ -24,7 +24,7 @@
 		<FormSubmitted bind:showModal />
 		<!-- <button on:click={handleOpenFormSubmittedModal}>open</button> -->
 		<div
-			class=" border border-primary bg-white min-w-fit mx-auto max-w-md rounded-md md:rounded-sm h-fit shadow-xl"
+			class=" border border-primary bg-secondary min-w-fit mx-auto max-w-md rounded-md md:rounded-md h-fit shadow-xl"
 		>
 			<RegisterForm on:openFormSubmittedModal={handleOpenFormSubmittedModal} />
 		</div>

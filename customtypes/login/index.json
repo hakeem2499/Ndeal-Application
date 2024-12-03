@@ -1,0 +1,77 @@
+{
+	"format": "page",
+	"id": "login",
+	"label": "login",
+	"repeatable": false,
+	"status": true,
+	"json": {
+		"Main": {
+			"image": {
+				"type": "Image",
+				"config": {
+					"label": "image",
+					"constraint": {},
+					"thumbnails": []
+				}
+			},
+			"logo": {
+				"type": "Image",
+				"config": {
+					"label": "logo",
+					"constraint": {},
+					"thumbnails": []
+				}
+			},
+			"another_image": {
+				"type": "Image",
+				"config": {
+					"label": "another image",
+					"constraint": {},
+					"thumbnails": []
+				}
+			},
+			"background_image": {
+				"type": "Image",
+				"config": {
+					"label": "Background Image",
+					"constraint": {},
+					"thumbnails": []
+				}
+			},
+			"slices": {
+				"type": "Slices",
+				"fieldset": "Slice Zone",
+				"config": {
+					"choices": {}
+				}
+			}
+		},
+		"SEO & Metadata": {
+			"meta_title": {
+				"config": {
+					"label": "Meta Title",
+					"placeholder": "A title of the page used for social media and search engines"
+				},
+				"type": "Text"
+			},
+			"meta_description": {
+				"config": {
+					"label": "Meta Description",
+					"placeholder": "A brief summary of the page"
+				},
+				"type": "Text"
+			},
+			"meta_image": {
+				"config": {
+					"constraint": {
+						"height": 1260,
+						"width": 2400
+					},
+					"label": "Meta Image",
+					"thumbnails": []
+				},
+				"type": "Image"
+			}
+		}
+	}
+}

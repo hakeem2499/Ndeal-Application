@@ -11,7 +11,7 @@
 	// Initialize variables with type annotations
 	let currentSectionIndex: number = 0;
 	let progressWidth: number = 0;
-	const duration: number = 15000; // duration for each section in ms
+	const duration: number = 10000; // duration for each section in ms
 	let startTime: number | null = null;
 	let animationFrameId: number;
 
@@ -105,7 +105,6 @@
 				</div>
 			{/each}
 		</div>
-		<PrismicImage class="md:w-[50%] rounded-2xl h-auto" field={slice.primary.image} />
+		<PrismicImage class="md:w-[50%]  h-auto" field={slice.primary.image} />
 	</div>
-	<RegistrationSection bind:showForm />
 </Bounded>

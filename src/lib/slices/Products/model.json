@@ -69,6 +69,19 @@
                     "product"
                   ]
                 }
+              },
+              "initials": {
+                "type": "Select",
+                "config": {
+                  "label": "Initials",
+                  "placeholder": "",
+                  "options": [
+                    "EOR",
+                    "PEO",
+                    "ERT",
+                    "CSO"
+                  ]
+                }
               }
             }
           }

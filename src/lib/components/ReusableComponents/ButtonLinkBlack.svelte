@@ -23,11 +23,11 @@
 	{...$$restProps}
 	class={clsx(' group inline-flex  w-fit h-fit items-center', className)}
 >
-	<span class="inline-flex items-center gap-2 gradient-border-button">
+	<span class="inline-flex items-center justify-center gap-2 gradient-border-button">
 		<slot />
 		{#if !iconCheck}
 			<Icon
-				class="text-accent   group-hover:text-orange-100 duration-500  group-hover:translate-x-2  text-xl mr-2"
+				class="text-accent   group-hover:text-orange-100 duration-500  group-hover:translate-x-2 text-sm  md:text-xl mr-2"
 			/>
 		{/if}
 	</span>
@@ -35,12 +35,12 @@
 
 <style>
 	.gradient-border-button {
-		padding: 8px 16px;
-		font-size: 16px;
+		@apply text-xs md:text-base px-2 py-1  md:py-2 md:px-4;
 		color: var(--color-accent); /* Text color */
 		background-color: white; /* Button background */
 		border-radius: 9999px; /* Rounded corners */
 		position: relative;
+		width: 100%;
 		z-index: 1;
 		cursor: pointer;
 		transition: color 0.4s ease;

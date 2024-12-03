@@ -65,6 +65,14 @@
             "label": "label",
             "placeholder": ""
           }
+        },
+        "dealinsight_image": {
+          "type": "Image",
+          "config": {
+            "label": "dealInsight Image",
+            "constraint": {},
+            "thumbnails": []
+          }
         }
       },
       "items": {}

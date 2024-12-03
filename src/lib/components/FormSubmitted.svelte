@@ -21,7 +21,7 @@
 	<div class="modal-overlay" on:click={closeShowModal}>
 		<!-- Modal Content -->
 		<div
-			class="modal-content glass-container w-[90%] md:w-[60%] h-fit bg-slate-950 transition-opacity duration-300"
+			class="modal-content glass-container w-[90%] md:w-[60%] h-fit bg-[#171717]/95 transition-opacity duration-300"
 			on:click|stopPropagation
 		>
 			<div

@@ -7,6 +7,10 @@
 	import Button from '../../../lib/components/ReusableComponents/Button.svelte';
 	import RegistrationSection from '../../components/RegistrationSection.svelte';
 	import clsx from 'clsx';
+	import { showSwitchableButton, userType } from '../../../store/HomeStore';
+	import Back from '~icons/ph/arrow-left-fill';
+	import PopupShow from '$lib/components/ReusableComponents/PopupShow.svelte';
+	import RegisterForm from '$lib/components/RegisterForm.svelte';
 
 	export let slice: Content.HeroSlice;
 	const dispatch = createEventDispatcher();
@@ -14,9 +18,19 @@
 		dispatch('openLoginModal');
 	};
 	let showForm = false;
+	let showPopup = false;
 
-	const handleOpenFormModal = () => {
+	const handleOpenFormModalProfessional = () => {
 		showForm = true;
+		showSwitchableButton.set(false);
+		userType.set('Professional');
+		showPopup = true;
+	};
+	const handleOpenFormModalCompany = () => {
+		showForm = true;
+		showPopup = true; // Show popup when form is open
+		showSwitchableButton.set(false);
+		userType.set('Company');
 	};
 	const closeOpenFormModal = () => {
 		showForm = false;
@@ -24,10 +38,23 @@
 </script>
 
 {#if showForm}
-	<div class="modal-overlay" on:click={closeOpenFormModal}>
-		<div class={clsx(showForm ? 'animate-flipInY' : 'animate-flipOutY')} on:click|stopPropagation>
-			<RegistrationSection bind:showForm />
+	<div class="hidden md:flex">
+		<div class="modal-overlay" on:click={closeOpenFormModal}>
+			<div class={clsx(showForm ? 'animate-flipInY' : 'animate-flipOutY')} on:click|stopPropagation>
+				<RegistrationSection bind:showForm />
+			</div>
 		</div>
+	</div>
+	<div class="modal-mobile">
+		<PopupShow bind:showPopup class="animate-S_fadeIn z-100  bg-secondary md:hidden">
+			<Button
+				className=" max-w-10 absolute  left-4  top-0 md:left-20 hover:bg-transparent bg-transparent"
+				onClick={closeOpenFormModal}
+			>
+				<span class="text-primary text-3xl"><Back /></span>
+			</Button>
+			<RegisterForm />
+		</PopupShow>
 	</div>
 {/if}
 <div class="lg:relative">
@@ -62,9 +89,9 @@
 				<ul class="space-y-2">
 					{#each slice.primary.points as point}
 						<li>
-							<div class=" text-pretty  max-w-5xl list-item justify-start text-lg py-1">
+							<div class=" text-pretty max-w-5xl list-item justify-start text-lg py-1">
 								<CheckList class="text-lg text-green-700 text-nowrap w-auto h-auto" />
-								<p class="prose ">
+								<p class="prose">
 									<PrismicRichText field={point.point} />
 								</p>
 							</div>
@@ -75,11 +102,11 @@
 		</div>
 	</Bounded>
 	<div
-		class="flex w-[80dvw] mt-8 lg:mt-auto lg:px-6 lg:ml-24 lg:absolute lg:-bottom-8 px-4 lg:w-[50%] justify-between lg:justify-evenly items-center mx-auto gap-6"
+		class="flex w-[100dvw] mt-8 lg:mt-auto lg:px-6 lg:ml-24 lg:absolute lg:-bottom-8 px-4 lg:w-[50%] justify-between lg:justify-evenly items-center mx-auto gap-6"
 	>
 		<Button
-			className="rounded-sm px-2 text-sm text-start  flex items-center justify-center gap-2 md:gap-4 md:text-xl h-full"
-			onClick={handleOpenFormModal}
+			className="rounded-md px-2 text-sm text-start  flex items-center justify-center gap-2 md:gap-4 md:text-xl  h-full"
+			onClick={handleOpenFormModalCompany}
 			><span
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -307,8 +334,8 @@
 			> Schedule a demo</Button
 		>
 		<Button
-			onClick={handleOpenFormModal}
-			className="rounded-sm px-2 flex text-sm items-center justify-center gap-2 md:gap-4 md:text-xl h-full"
+			onClick={handleOpenFormModalProfessional}
+			className="rounded-md px-2 flex text-sm items-center justify-center gap-2 md:gap-4 md:text-xl h-full"
 		>
 			<span
 				><svg
@@ -448,5 +475,10 @@
 		justify-content: center;
 		align-items: center;
 		z-index: 1000;
+	}
+
+	.modal-mobile{
+		z-index: 1000;
+		position: fixed;
 	}
 </style>

@@ -14,7 +14,7 @@
 	data-slice-variation={slice.variation}
 >
 	{#if slice.primary.navigation_heading}
-		<div  class="heading-div pl-6 uppercase  text-gray-800 relative">
+		<div  class="heading-div pl-6 uppercase  text-invert relative">
 			{slice.primary.navigation_heading}
 		</div>
 	{/if}
@@ -23,7 +23,7 @@
 		 <div class="flex flex-col    gap-4">
 			 {#each slice.primary.navigation as item}
 				 {#if item.nav_link}
-					 <PrismicLink class="prose prose-md   font-Just_sans_medium text-neutral-900   cursor-pointer hover:underline no-underline rounded-sm py-1 hover:bg-accent px-6" field={item.nav_link} />
+					 <PrismicLink class="prose prose-md   font-Just_sans_medium text-inherit hover:text-black   cursor-pointer hover:underline no-underline rounded-sm py-1 hover:bg-accent px-6" field={item.nav_link} />
 				 {/if}
 			 {/each}
 		 </div>

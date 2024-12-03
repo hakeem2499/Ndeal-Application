@@ -1,0 +1,89 @@
+{
+  "id": "navigation",
+  "type": "SharedSlice",
+  "name": "Navigation",
+  "description": "Navigation",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "heading": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Heading",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "multi": "heading4,heading5,heading6,strong"
+          }
+        },
+        "body": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Body",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "paragraph,strong"
+          }
+        },
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "access_to": {
+          "type": "Group",
+          "config": {
+            "label": "access to",
+            "repeat": true,
+            "fields": {
+              "points": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "points",
+                  "placeholder": "",
+                  "allowTargetBlank": true,
+                  "single": "paragraph"
+                }
+              }
+            }
+          }
+        },
+        "link": {
+          "type": "Link",
+          "config": {
+            "label": "link",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "select": null,
+            "allowText": false
+          }
+        },
+        "subheading": {
+          "type": "StructuredText",
+          "config": {
+            "label": "subheading",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "multi": "paragraph,strong"
+          }
+        },
+        "label": {
+          "type": "Text",
+          "config": {
+            "label": "label",
+            "placeholder": ""
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

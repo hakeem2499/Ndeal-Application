@@ -93,8 +93,8 @@
 					type="email"
 					placeholder="Enter a valid email"
 					class={clsx(
-						'peer mt-2 w-full border-b-2 border-r-transparent border-l-transparent border-t-transparent bg-transparent rounded-sm hover:border-b-black px-2 py-3 focus:outline-offset-0 focus:outline-0 focus:border-none focus:outline-none',
-						validateEmail(email) ? 'focus:border-green-700' : ' focus:border-rose-500'
+						'peer mt-2 w-full focus:ring-0 border-0 border-b-2 bg-transparent rounded-sm hover:border-b-black px-2 py-3  focus:outline-0  focus:outline-none',
+						validateEmail(email) ? 'focus:border-green-700' : ' focus:border-primary'
 					)}
 					disabled={isLoading}
 					on:input={() => {
