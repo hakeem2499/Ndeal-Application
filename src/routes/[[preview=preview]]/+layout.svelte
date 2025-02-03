@@ -3,12 +3,6 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
-	import { SvelteToast } from '@zerodevx/svelte-toast';
-	const options = {
-		reversed: true,
-		intro: { y: 192 }
-	};
-
 
 	injectSpeedInsights();
 </script>
@@ -28,32 +22,11 @@
 </svelte:head>
 
 <main>
-
 	<Header settings={$page.data.settings} />
 	<slot />
-	<div class="wrap">
-		<SvelteToast {options} />
-	</div>
-	<Footer settings={$page.data.settings} />
 
+	<Footer settings={$page.data.settings} />
 </main>
 
 <style>
-	.wrap {
-	  --toastContainerTop: auto;
-	  --toastContainerRight: auto;
-	  --toastContainerBottom: 0.5rem;
-	  --toastContainerLeft: auto;
-	  --toastWidth: 100%;
-	  --toastMinHeight: 2rem;
-	  --toastPadding: 0 0.5rem;
-	  font-size: 0.875rem;
-	}
-	@media (min-width: 40rem) {
-	  .wrap {
-		--toastContainerRight: 25%;
-		--toastContainerLeft: 25%;
-		--toastWidth: 100%;
-	  }
-	}
 </style>

@@ -1,4 +1,4 @@
-type Option = {
+export type Options = {
     value: string;
     label: string;
 };
@@ -7,58 +7,9 @@ export const Points: string[] = ['From recruitment to employee relations, we off
     'Our targeted programs connect graduates with meaningful job opportunities, helping to reduce unemployment rates and build a skilled workforce.',
     'Every individual deserves to be compensated fairly for their work. We advocate for fair wages and work tirelessly to eliminate underpayment and wage inequality.'];
 
-export const Professions: string[] = [
-    "Doctor/Surgeon",
-    "Nurse/Midwife",
-    "Pharmacist",
-    "Medical Laboratory Scientist",
-    "Lawyer/Barrister",
-    "Judge/Magistrate",
-    "Petroleum Engineer",
-    "Civil Engineer",
-    "Electrical Engineer",
-    "Mechanical Engineer",
-    "Lecturer/Professor",
-    "Teacher/Educator",
-    "Accountant",
-    "Banker",
-    "Entrepreneur",
-    "Manager/Administrator",
-    "Artist/Graphic Designer",
-    "Musician",
-    "Writer/Journalist",
-    "Actor/Actress",
-    "Software Developer",
-    "Data Analyst/Scientist",
-    "IT Specialist",
-    "Cybersecurity Expert",
-    "Politician",
-    "Civil Servant",
-    "Diplomat",
-];
 
-export const ProfessionsReverse: string[] = [
-    "Farmer",
-    "Agricultural Engineer",
-    "Veterinary Doctor",
-    "Hotel Manager",
-    "Chef/Cook",
-    "Travel Agent/Tour Operator",
-    "Athlete",
-    "Coach",
-    "Sports Manager",
-    "Soldier",
-    "Police Officer",
-    "Security Guard",
-    "Architect",
-    "Quantity Surveyor",
-    "Estate Surveyor",
-    "Town Planner",
-    "Geologist",
-    "Environmental Scientist"
-];
 
-export const jobTitlesOptions: Option[] = [
+export const jobTitlesOptions: Options[] = [
     { "value": "accountant", "label": "Accountant" },
     { "value": "actuary", "label": "Actuary" },
     { "value": "administrativeAssistant", "label": "Administrative Assistant" },
@@ -120,7 +71,7 @@ export const jobTitlesOptions: Option[] = [
     { "value": "webDeveloper", "label": "Web Developer" }
 ]
 
-export const organizationNameOptions: Option[] = [
+export const organizationNameOptions: Options[] = [
     { value: 'agriculture', label: 'Agriculture' },
     { value: 'miningAndQuarrying', label: 'Mining and Quarrying' },
     { value: 'manufacturing', label: 'Manufacturing' },
@@ -143,7 +94,7 @@ export const organizationNameOptions: Option[] = [
     { value: 'energyAndUtilities', label: 'Energy and Utilities' }
 ];
 
-export const companyHeadquatersOptions: Option[] = [
+export const companyHeadquatersOptions: Options[] = [
     { value: 'abuja', label: 'Abuja' },
     { value: 'abia', label: 'Abia' },
     { value: 'adamawa', label: 'Adamawa' },
@@ -183,14 +134,14 @@ export const companyHeadquatersOptions: Option[] = [
     { value: 'zamfara', label: 'Zamfara' }
 ];
 
-export const companySizeOptions: Option[] = [
+export const companySizeOptions: Options[] = [
     { value: 'SMALL', label: '1 - 10' },
     { value: 'MEDIUM', label: '11 - 50' },
     { value: 'LARGE', label: '51 - 200' },
     { value: 'ENTERPRISE', label: '200+' }
 ];
 
-export const queryResponseOptions: Option[] = [
+export const queryResponseOptions: Options[] = [
     { value: 'absolutely', label: 'Absolutely' },
     { value: 'probably', label: 'Probably' },
     { value: 'Maybe', label: 'Maybe' },

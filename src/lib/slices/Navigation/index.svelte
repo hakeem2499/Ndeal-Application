@@ -28,8 +28,8 @@
 				{#each slice.primary.access_to as point}
 					<li>
 						<div class=" text-pretty">
-							<p class="prose gap-2 items-center inline-flex ">
-								<span><CheckList class="text-lg mb-8 text-green-700 text-nowrap w-auto h-auto" /></span>
+							<p class="prose gap-2 items-start inline-flex ">
+								<span><CheckList class="text-lg  text-green-700 text-nowrap w-auto h-auto" /></span>
 								<PrismicText field={point.points} />
 							</p>
 						</div>

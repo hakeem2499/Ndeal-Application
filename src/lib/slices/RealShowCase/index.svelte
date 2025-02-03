@@ -82,7 +82,7 @@
 
 				<PrismicImage
 					field={item.image}
-					class="shadow-2xl lg:col-span-2 lg:pt-0 lg:-order-1 lg:translate-x-[-10%]"
+					class="shadow-2xl  lg:col-span-2 lg:pt-0 lg:-order-1 lg:translate-x-[-10%]"
 				/>
 			</div>
 		{/if}

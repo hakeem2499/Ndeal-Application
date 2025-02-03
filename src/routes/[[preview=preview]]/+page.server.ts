@@ -9,11 +9,9 @@ export async function load({ fetch, cookies }) {
     const page = await client.getByUID('page', 'home');
     
 
-    console.log("Page data:", page);
     
 
     const slices = await mapSliceZone(page.data.slices, mappers, { client });
-    console.log("Mapped slices:", slices);
 
     return {
       slices,

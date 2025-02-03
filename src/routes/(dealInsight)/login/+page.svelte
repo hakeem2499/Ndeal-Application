@@ -6,18 +6,27 @@
 	import Linkedin from '~icons/logos/linkedin-icon';
 	import CopyWright from '~icons/ph/copyright-light';
 	import Register from './Register.svelte';
+	import Cancel from '~icons/ph/x-thin';
 	import clsx from 'clsx';
-	import { SvelteToast } from '@zerodevx/svelte-toast';
-	
+
 	import { errorMessage, login } from '../auth';
 	import { string } from 'zod';
-	import { dealInsightHandleInput, errorMessages } from '$lib/components/Forms/validation';
+	import { dealInsightHandleInput } from '$lib/components/Forms/validation';
 	import { goto } from '$app/navigation';
-	import { errorMessagesLogin } from '../../../store/HomeStore';
+	import { API_URL, errorMessagesLogin, type Api } from '../../../store/HomeStore';
+	import PopupInputForm from '$lib/components/ReusableComponents/PopupInputForm.svelte';
+	import Button from '$lib/components/ReusableComponents/Button.svelte';
 	export let data;
 	let email = '';
 	let password = '';
 	let isLoading: boolean = false;
+	let showEmailForm: boolean = false;
+	let api : Api = "/auth/password/reset/"
+
+	function handleForgotPassword(){
+		showEmailForm = true;
+	}
+	
 
 	async function handleSubmit(
 		event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }
@@ -38,7 +47,7 @@
 		}
 		// Close the form if registration is successful (errorMessage will be null)
 		if (!errorMessage) {
-			goto('/dealInsight')
+			goto('/dealInsight');
 		}
 	}
 
@@ -51,21 +60,27 @@
 		showRegistrationForm = false;
 	};
 	const options = {};
+
+
+	function closeEmailForm(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
+		showEmailForm = false;
+	}
 </script>
 
-<SvelteToast {options} />
 <svelte:head>
 	<title>dealInsight</title>
 	<meta name="Ndeal's dealInsight" content="Leading HR software" />
 </svelte:head>
 
-<PrismicImage class="absolute -z-10   h-full w-full" field={data.login.data.background_image} />
-<div class="absolute flex-col -z-10 lg:z-auto md:px-4  md:flex-row inset-0 flex justify-between items-center w-full">
+<PrismicImage class="absolute -z-10   h-screen w-full" field={data.login.data.background_image} />
+<div
+	class="absolute flex-col -z-10 lg:z-auto md:px-4 md:flex-row inset-0 flex justify-between items-center w-full"
+>
 	<PrismicImage class=" h-80 w-auto" field={data.login.data.image} />
 	<PrismicImage class=" h-80 w-auto" field={data.login.data.another_image} />
 </div>
 
-<Bounded >
+<Bounded class="h-screen">
 	{#if showRegistrationForm}
 		<div class="modal-overlay" on:click={closeOpenFormModal}>
 			<div
@@ -81,80 +96,96 @@
 	>
 		<PrismicImage class="h-10  w-auto object-cover" field={data.login.data.logo} />
 
-		<div class="div relative flex flex-col md:flex-row">
-			<div class="p-4 text-base prose prose-invert gap-4 flex md:w-[50%] flex-col">
-				<p class="text-sm">
-					By continuing,you indicate that you agree with Ndeal's
-					<a class="link" href="/terms" target="_blank">Terms of Service</a> and
-					<a class="link" href="/policy" target="_blank">Privacy Policy</a>.
-				</p>
+		<div class="{showEmailForm ? '' :  "div"} relative flex flex-col md:flex-row">
+			{#if showEmailForm}
+				<div
+					class={clsx(' w-full bg-primary  h-full min-h-60', showEmailForm ? 'animate-S_fadeIn' : '')}
+					
+				>
+					<PopupInputForm className="bg-primary" {api} {showEmailForm} />
+					<button on:click={closeEmailForm} class="absolute left-4 top-3 md:top-4"
+						><span class="md:text-2xl text-xl text-secodary"><Cancel /></span></button
+					>
+				</div>
+			{:else}
+				<div class="p-4 text-base animate-fadeIn prose prose-invert gap-4 flex md:w-[50%] flex-col">
+					<p class="text-sm">
+						By continuing,you indicate that you agree with Ndeal's
+						<a class="link" href="/terms" target="_blank">Terms of Service</a> and
+						<a class="link" href="/policy" target="_blank">Privacy Policy</a>.
+					</p>
 
-				<a
-					class="p-3 border items-center text-gray-300 no-underline hover:text-primary hover:bg-gray-200 gap-4 flex border-gray-500"
-					href=""><Google />Signin with Google</a
-				>
-				<a
-					class="p-3 border text-gray-300 items-center no-underline hover:text-primary hover:bg-background gap-4 flex border-gray-500"
-					href=""><Linkedin />Signin with Linkedin</a
-				>
-				<button
-					on:click={handleOpenFormModal}
-					class="bg-transparent rounded-full p-2 text-gray-300 hover:bg-gray-300/10"
-					>Signup with email</button
-				>
-			</div>
-			<div class="flex p-4 md:w-[50%] gap-4 flex-col">
-				<div class="liner text-gray-300 text-lg font-Just_sans_medium">Login</div>
-				<form on:submit|preventDefault={handleSubmit} action="">
-					<div class="flex mt-4 flex-col w-full gap-2">
-						<div class="form-group">
-							<label for="email"> Email </label>
-							<input
-								id="email"
-								bind:value={email}
-								placeholder="email address"
-								on:input={() => dealInsightHandleInput('email', email, errorMessagesLogin)}
-								type="email"
-								class="input-group"
-								required
-							/>
-							{#if $errorMessagesLogin.email}
-								<p class="error-text">{$errorMessagesLogin.email}</p>
-							{/if}
+					<button
+						on:click={() => (window.location.href = `${API_URL}/social/google/login/`)}
+						class="p-3 border items-center text-gray-300 no-underline hover:text-primary hover:bg-gray-200 gap-4 flex border-gray-500"
+						><Google />Signin with Google</button
+					>
+					<button
+						class="p-3 border text-gray-300 items-center no-underline hover:text-primary hover:bg-background gap-4 flex border-gray-500"
+						on:click={() => (window.location.href = `${API_URL}/social/linkedin_oauth2/login/`)}
+						><Linkedin />Signin with Linkedin</button
+					>
+					<button
+						on:click={handleOpenFormModal}
+						class="bg-transparent rounded-full p-2 text-gray-300 hover:bg-gray-300/10"
+						>Signup with email</button
+					>
+				</div>
+				<div class="flex p-4 md:w-[50%] gap-4 flex-col">
+					<div class="liner text-gray-300 text-lg font-Just_sans_medium">Login</div>
+					<form on:submit|preventDefault={handleSubmit} action="">
+						<div class="flex mt-4 flex-col w-full gap-2">
+							<div class="form-group">
+								<label class="ml-2" for="email"> Email </label>
+								<input
+									id="email"
+									bind:value={email}
+									placeholder="email address"
+									on:input={() => dealInsightHandleInput('email', email, errorMessagesLogin)}
+									type="email"
+									class="input-group"
+									required
+								/>
+								{#if $errorMessagesLogin.email}
+									<p class="error-text">{$errorMessagesLogin.email}</p>
+								{/if}
+							</div>
+							<div class=" form-group">
+								<label class="ml-2" for="password"> Password </label>
+								<input
+									id="password"
+									on:input={() => dealInsightHandleInput('password', password, errorMessagesLogin)}
+									bind:value={password}
+									placeholder="password"
+									class="input-group"
+									type="password"
+									required
+								/>
+								{#if $errorMessagesLogin.password}
+									<p class="error-text mt-1 leading-4">{$errorMessagesLogin.password}</p>
+								{/if}
+							</div>
+							<div class="flex w-full my-4 items-center h-10 md:h-16 justify-between">
+								<Button onClick={handleForgotPassword}  className="hover:underline bg-transparent hover:bg-transparent text-sm text-gray-300">forgot password?</Button>
+								<button
+									type="submit"
+									class="rounded-md inline-flex items-center justify-center w-16 p-2 text-gray-300 bg-brand hover:bg-teal-800"
+									>{#if isLoading}
+										<div class="max-h-5 mx-auto inset-0 load"></div>
+									{:else}
+										Login
+									{/if}</button
+								>
+							</div>
 						</div>
-						<div class=" form-group">
-							<label for="password"> Password </label>
-							<input
-								id="password"
-								on:input={() => dealInsightHandleInput('password', password, errorMessagesLogin)}
-								bind:value={password}
-								placeholder="password"
-								class="input-group"
-								type="password"
-								required
-							/>
-							{#if $errorMessagesLogin.password}
-								<p class="error-text mt-1 leading-4">{$errorMessagesLogin.password}</p>
-							{/if}
-						</div>
-						<div class="flex w-full my-4 items-center h-10 md:h-16 justify-between">
-							<a href="" class="hover:underline text-sm text-gray-300">forgot password?</a>
-							<button type="submit" class="rounded-sm p-2 text-gray-300 bg-primary hover:bg-black"
-								>{#if isLoading}
-									<div class="max-h-5 max-w-5 load"></div>
-								{:else}
-									Login
-								{/if}</button
-							>
-						</div>
-					</div>
-				</form>
-			</div>
+					</form>
+				</div>
+			{/if}
 		</div>
 		<div class="liner w-full p-2"></div>
 		<div>
 			<ul class="flex text-xs items-center gap-4">
-				{#each data.settings.data.policies as item }
+				{#each data.settings.data.policies as item}
 					<li>
 						<AnchorLinkFooter class="anchor-link text-xs" field={item.policy_link}>
 							{item.policy_label}
@@ -176,10 +207,6 @@
 		@apply flex h-20 flex-col text-gray-300;
 	}
 
-	.input-group {
-		@apply bg-primary;
-	}
-
 	.div::after {
 		content: '';
 		position: absolute;
@@ -188,7 +215,7 @@
 		width: 0.07rem;
 		left: 50%;
 		background-color: var(--color-accent);
-		@apply hidden md:flex;
+		@apply  hidden md:flex;
 	}
 
 	.liner {
@@ -219,6 +246,5 @@
 
 	.error-text {
 		@apply text-red-500 text-xs;
-		
 	}
 </style>

@@ -7,6 +7,8 @@
 	import clsx from 'clsx';
 	import { writable } from 'svelte/store';
 	import MoveUp from '~icons/ph/arrow-line-up-right-fill';
+	import DealLogo from '$lib/components/DealLogo.svelte';
+
 	export let slice: Content.ToolsSlice;
 	export let tools: Content.ToolsDocument[] = [];
 
@@ -52,14 +54,14 @@
 
 					<p
 						class={clsx(
-							'max-w-md z-20 hidden absolute lg:flex md:pt-8 text-sm md:text-base leading-6 prose-base -bottom-4 lg:absolute lg:translate-x-[150%] lg:group-hover:translate-x-[100] duration-300 group-hover:block prose text-[#f8f8f8] text-pretty'
+							'max-w-md z-20 hidden absolute animate-fadeInUp lg:group-hover:flex md:pt-8 text-sm md:text-base leading-6 prose-base -bottom-4    duration-300 group-hover:block prose text-[#f8f8f8] text-pretty'
 						)}
 					>
 						<PrismicText field={tool.data.description} />
 					</p>
 
 					<div
-						class="md:h-full group-hover:opacity-20 relative group-hover:mix-blend-multiply w-full"
+						class="md:h-full group-hover:opacity-20 transition-opacity duration-300 relative group-hover:mix-blend-multiply w-full"
 					>
 						<PrismicImage class="group-hover:mix-blend-multiply" field={tool.data.image} />
 					</div>
@@ -74,18 +76,17 @@
 	</div>
 </Bounded>
 
-<Bounded class="lg:h-screen  mx-auto h-[50dvh] ">
-	<PrismicImage class="absolute  h-86 lg:h-full w-auto" field={slice.primary.dealinsight_image} />
+<Bounded
+	class="aspect w-[80%] md:w-[20%] my-28 group border border-secondary mx-auto  bg-transparent hover:bg-brand focus-within:bg-brand  transition-colors duration-700 rounded-md   h-[25dvh] "
+>
+	<a
+		href="/login"
+		class="button md:scale-100 scale-75 transition-all duration-300 group-hover:before:opacity-100 group-hover:before:scale-[20] group-hover:after:transition-transform group-hover:after:duration-500 mx-auto  justify-start items-center inline-flex gap-2 px-4  py-2   "
+		><span></span>
+		<DealLogo />
 
-	<div>
-		<a
-			href="/dealInsight"
-			class="button scale-50 md:scale-100 mx-auto mt-10 ml-4 justify-start items-center inline-flex gap-2 px-4 md:px-8 py-2 border-4 font-Orlean font-semibold text-2xl border-slate-400 rounded-[5px] text-orange-700 leading-4 md:text-3xl"
-			><span></span>
-			dealInsight<MoveUp />
-			<span></span>
-		</a>
-	</div>
+		<span></span>
+	</a>
 </Bounded>
 
 <style>
@@ -198,7 +199,7 @@
 	.button:hover,
 	.button:focus-within,
 	.button:focus-visible {
-		background: var(--color-primary);
+		background: var(--color-secondary);
 	}
 
 	.button:hover,
@@ -212,7 +213,7 @@
 		z-index: -1;
 		width: 33.333%;
 		height: 100%;
-
+		@apply group-hover:bg-secondary;
 		background: transparent;
 		opacity: 0.5;
 	}
@@ -241,15 +242,6 @@
 
 		transition:
 			transform 1500ms,
-			opacity 500ms;
-	}
-
-	.button:hover::before,
-	.button:focus-within::before {
-		transform: scale(20);
-		opacity: 1;
-		transition:
-			transform 1000ms,
 			opacity 500ms;
 	}
 </style>

@@ -1,5 +1,6 @@
 import type { Handle } from '@sveltejs/kit';
 import { z } from 'zod';
+import cookie from 'cookie';
 
 const allowedOrigin = import.meta.env.VITE_ALLOWED_ORIGIN ?? '*'; // Use a fallback if not defined
 
@@ -26,11 +27,17 @@ const UserDataSchema = z.object({
         .optional(),
 });
 
+const checkCookieConsent = (cookies: Record<string, string>) => {
+    const cookieConsent = cookies['cookie-consent'];
+    return cookieConsent === 'accepted';
+};
+
 export const handle: Handle = async ({ event, resolve }) => {
     const { pathname } = event.url;
     const method = event.request.method;
+    const cookiesHeader = event.request.headers.get('cookie') ?? ''; // Get cookie header, or default to an empty string
+    const cookies = cookie.parse(cookiesHeader); // Parse the cookies into an object
 
-    // Handle CORS preflight (OPTIONS) requests
     if (method === 'OPTIONS') {
         return new Response(null, {
             status: 204,
@@ -40,6 +47,12 @@ export const handle: Handle = async ({ event, resolve }) => {
                 'Access-Control-Allow-Headers': 'Content-Type',
             },
         });
+    }
+
+    // Check cookie consent (localStorage or cookie)
+    if (!checkCookieConsent(cookies)) {
+        // If not accepted, show cookie consent message (you might redirect or display the component in frontend)
+        console.log('Cookie consent not accepted');
     }
 
     // Handle routes and process user data
@@ -57,8 +70,7 @@ export const handle: Handle = async ({ event, resolve }) => {
             const response = await resolve(event);
             response.headers.append(
                 'Set-Cookie',
-                `user-data=${encodeURIComponent(userData)}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${
-                    60 * 60 * 24 * 7
+                `user-data=${encodeURIComponent(userData)}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${60 * 60 * 24 * 7
                 }`
             );
             response.headers.append('Access-Control-Allow-Origin', allowedOrigin); // Ensure CORS headers are set in response

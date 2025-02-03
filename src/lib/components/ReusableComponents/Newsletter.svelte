@@ -2,6 +2,7 @@
 	import clsx from 'clsx';
 	import RightArrow from '~icons/subway/right-arrow';
 	import Button from './Button.svelte';
+	import { API_URL, submitForm } from '../../../store/HomeStore';
 
 	let email: string = '';
 	let errorPrompt: string = '';
@@ -37,7 +38,7 @@
 	// Send email function with correct event typing
 	const sendEmail = async (event: SubmitEvent) => {
 		event.preventDefault();
-		
+
 		if (!validateEmail(email)) {
 			errorPrompt = 'Please enter a valid email address';
 			return;
@@ -52,20 +53,7 @@
 		const formData = { email: sanitizedEmail };
 
 		try {
-			const response = await fetch('/api/newsletter', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(formData)
-			});
-
-			if (!response.ok) {
-				const errorBody = await response.text();
-				console.error('HTTP Status Code:', response.status);
-				console.error('Response Body:', errorBody);
-				throw new Error('Failed to submit form data');
-			}
+			const response = await submitForm(`/signup/newsletter/`, formData);
 
 			// On success
 			successMessage = 'Subscription successful! Check your email for confirmation.';
@@ -80,14 +68,23 @@
 	};
 </script>
 
-<div class="flex lg:p-6 flex-col items-center md:items-start justify-center gap-8 mb-10 md:mb-0 md:gap-2 lg:gap-16 h-full md:flex-row">
-	<h4 class="text-2xl font-Orlean  px-4 md:px-2 md:pt-6 md:w-[50dvw] lg:w-full md:text-4xl max-w-3xl">
+<div
+	class="flex lg:p-6 flex-col items-center md:items-start justify-center gap-8 mb-10 md:mb-0 md:gap-2 lg:gap-16 h-full md:flex-row"
+>
+	<h4
+		class="text-2xl  font-Orlean px-4 md:px-2 md:pt-6 md:w-[50dvw] lg:w-full md:text-4xl max-w-3xl"
+	>
 		Get the latest insights on today's world of work delivered straight to your inbox.
 	</h4>
 
-	<form class="flex flex-col pt-4 mt-2 gap-1" on:submit|preventDefault={(event) => throttleSubmission(sendEmail, event, 1000)}>
+	<form
+		class="flex flex-col pt-4 mt-2 gap-1"
+		on:submit|preventDefault={(event) => throttleSubmission(sendEmail, event, 1000)}
+	>
 		<div class="self-start max-h-14">
-			<div class="flex gap-4 min-w-[300px] md:min-w[350px] lg:min-w-[500px] flex-1 py-2 items-center">
+			<div
+				class="flex gap-4 min-w-[300px] md:min-w[350px] lg:min-w-[500px] flex-1 py-2 items-center"
+			>
 				<input
 					bind:value={email}
 					type="email"
@@ -104,22 +101,31 @@
 					}}
 				/>
 
-				<Button className="rounded-none mt-2 max-w-fit p-4 bg-background" type="submit" disabled={isLoading}>
-					<span>
-						<RightArrow
-							class={clsx(
-								'tranform duration-200',
-								validateEmail(email) ? 'rotate-0' : '-rotate-45'
-							)}
-						/>
-					</span>
+				<Button
+					className="rounded-none inline-flex text-background	text-sm gap-2 mt-2 max-w-fit p-4 bg-primary"
+					type="submit"
+					disabled={isLoading}
+				>
+					{#if isLoading}
+						<span class="load inline-flex"></span>
+					{:else}
+						subscribe
+						<span class="text-background">
+							<RightArrow
+								class={clsx(
+									'tranform duration-200',
+									validateEmail(email) ? 'rotate-0' : '-rotate-45'
+								)}
+							/>
+						</span>
+					{/if}
 				</Button>
 			</div>
 			{#if errorPrompt}
 				<p class="text-xs duration-400 text-red-600">{errorPrompt}</p>
 			{/if}
 			{#if successMessage}
-				<p class="text-xs duration-400 text-green-600">{successMessage}</p>
+				<p class="text-xs duration-400 text-brand">{successMessage}</p>
 			{/if}
 		</div>
 	</form>

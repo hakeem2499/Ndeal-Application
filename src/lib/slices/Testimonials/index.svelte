@@ -4,8 +4,9 @@
 	import Bounded from '$lib/components/Bounded.svelte';
 	import MoveLeft from '~icons/ph/arrow-circle-left-fill';
 	import MoveRight from '~icons/ph/arrow-circle-right-fill';
-	import { PrismicImage, PrismicRichText, PrismicText } from '@prismicio/svelte';
+	import { PrismicImage, PrismicLink, PrismicRichText, PrismicText } from '@prismicio/svelte';
 	import GoldText from '$lib/components/GoldText.svelte';
+	import Contact from '$lib/components/ReusableComponents/Contact.svelte';
 
 	export let slice: Content.TestimonialsSlice;
 	let scrollableDiv: any;
@@ -44,24 +45,47 @@
 						<!-- cards -->
 						{#each slice.primary.testimonials as item}
 							<div
-								class="flex font-poppins w-full gap-2 max-w-md flex-col rounded-xl px-8 ring-1 ring-slate-300 glass-container text-slate-200 py-4 ring-slate-300/20 xl:px-10"
+								class="flex font-poppins w-[60dvw] md:w-[500px] gap-2 flex-col items-center rounded-ss-2xl rounded-ee-2xl px-2 md:px-8 ring-1 ring-slate-300 text-slate-200 py-4 ring-slate-300/20 xl:px-10"
 							>
-								<div class="w-[60dvw] grid  gap-4  items-start md:w-80">
-									<div class="flex gap-2 items-center justify-center">
+								<div
+									class=" md:grid flex flex-col items-center md:grid-cols-3 w-full grid-row-subgrid md:place-items-center gap-4 md:gap-8 md:justify-items-between"
+								>
+									<div
+										class="flex col-span-1 flex-col grayscale w-full items-center justify-center gap-6"
+									>
 										<PrismicImage
-											class="h-12 object-contain rounded-full border  w-12"
+											class="md:h-40 h-20 w-20 md:w-30 lg:w-40 object-cover rounded-md  border-none "
 											field={item.image}
 										/>
-										<p class="text-base md:text-lg text-block font-semibold leading-8">
-											<PrismicText field={item.name} />
+										<PrismicLink field={item.linkedin_link}>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="30"
+												height="30"
+												fill="currentColor"
+												class="bi bi-linkedin"
+												viewBox="0 0 16 16"
+												xml:space="preserve"
+											>
+												<path
+													d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"
+													fill="currentColor"
+												></path>
+											</svg>
+										</PrismicLink>
+									</div>
+									<div class="col-span-2 flex flex-col gap-2 md:gap-4 h-full items-center w-full">
+										<p
+											class="prose md:text-start text-center prose-invert leading-2 text-xs md:text-sm lg:text-base"
+										>
+											<PrismicText field={item.comment} />
+										</p>
+										<p
+											class=" text-center text-brand text-sm font-Just_sans_medium uppercase md:text-base"
+										>
+											<PrismicText field={item.position} />
 										</p>
 									</div>
-									<p class="prose prose-invert leading-2 text-xs  md:text-sm lg:text-base">
-										<PrismicText field={item.comment} />
-									</p>
-									<p class="text-accent text-base">
-										<PrismicText field={item.position} />
-									</p>
 								</div>
 							</div>
 						{/each}
@@ -79,6 +103,9 @@
 						on:click={leftScroll}><MoveRight /></button
 					>
 				</div>
+			</div>
+			<div class="bg-transparent px-2 ring-1 ring-slate-100/20 md:px-6 rounded-md py-8">
+				<Contact />
 			</div>
 		</Bounded>
 	</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { writable } from 'svelte/store';
-	import { dealInsightHandleInput, errorMessages } from '../../../lib/components/Forms/validation'; // Import validation utilities
+	import { dealInsightHandleInput } from '../../../lib/components/Forms/validation'; // Import validation utilities
 	import { register, errorMessage } from '../auth';
 	import { errorMessagesRegister } from '../../../store/HomeStore';
 
@@ -24,12 +24,12 @@
 
 		// Check if passwords match
 		if (password1 !== password2) {
-			errorMessages.update((current) => ({
+			errorMessagesRegister.update((current) => ({
 				...current,
 				password: 'Passwords do not match'
 			}));
 		} else {
-			errorMessages.update((current) => ({
+			errorMessagesRegister.update((current) => ({
 				...current,
 				password: ''
 			}));
@@ -73,7 +73,7 @@
 			<div class="flex mt-4 items-center flex-col w-full gap-2">
 				<div class="flex w-full gap-4 flex-col md:flex-row justify-between">
 					<div class="form-group">
-						<label for="displayname">Name</label>
+						<label class="label" for="displayname">Name</label>
 						<input
 							id="displayname"
 							bind:value={displayname}
@@ -88,7 +88,7 @@
 						{/if}
 					</div>
 					<div class="form-group">
-						<label for="email">Email</label>
+						<label class="label" for="email">Email</label>
 						<input
 							id="email"
 							bind:value={email}
@@ -104,7 +104,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="password1">Password</label>
+					<label class="label" for="password1">Password</label>
 					<input
 						id="password1"
 						bind:value={password1}
@@ -119,7 +119,7 @@
 					{/if}
 				</div>
 				<div class="form-group">
-					<label for="password2">Confirm Password</label>
+					<label class="label" for="password2">Confirm Password</label>
 					<input
 						id="password2"
 						bind:value={password2}
@@ -137,10 +137,10 @@
 					<button
 						disabled={isLoading}
 						type="submit"
-						class="rounded-sm p-2 w-full md:w-fit text-gray-300 bg-primary bg-blue-900 hover:bg-black"
+						class="rounded-md p-2 w-full md:w-fit inline-flex justify-center items-center min-w-16 text-gray-300  bg-brand hover:bg-teal-800"
 					>
 						{#if isLoading}
-							<div class="max-h-5 max-w-5 load"></div>
+							<div class="max-h-5 load"></div>
 						{:else}
 							Register
 						{/if}
@@ -164,12 +164,14 @@
 		@apply flex flex-col h-24 text-gray-300 w-full;
 	}
 
-	.input-group {
-		@apply focus:text-background text-background focus:bg-gray-800 bg-primary p-2 rounded-sm;
+	
+	.label{
+		@apply ml-2;
 	}
 
 	.error-text {
 		@apply text-red-500;
 		font-size: 0.875rem;
 	}
+	
 </style>

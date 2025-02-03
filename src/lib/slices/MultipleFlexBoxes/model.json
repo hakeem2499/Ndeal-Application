@@ -1,0 +1,36 @@
+{
+  "id": "multiple_flex_boxes",
+  "type": "SharedSlice",
+  "name": "MultipleFlexBoxes",
+  "description": "MultipleFlexBoxes",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "heading": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Heading",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "single": "heading1,heading2,heading3,heading4"
+          }
+        },
+        "boxes": {
+          "type": "Group",
+          "config": {
+            "label": "Boxes",
+            "repeat": true,
+            "fields": {}
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

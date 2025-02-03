@@ -15,7 +15,7 @@
 	{type}
 	on:click={onClick}
 	class={clsx(
-		"bg-primary font-Just_sans_medium h-12 items-center text-lg text-center hover:bg-black w-full text-white py-3 rounded-md",
+		" font-Just_sans_medium h-12 items-center text-lg text-center  w-full rounded   py-3 ",
 		className
 	)}
 	disabled = {disabled}

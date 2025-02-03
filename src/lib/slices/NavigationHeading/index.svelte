@@ -37,7 +37,7 @@
 		bottom: -0.5rem;
 		margin-left: 1.5rem;
 		left: 0;
-		background-color: rgba(108, 108, 108, 0.229);
+		background-color: #6c6c6c3a;
 		height: 1px;
 		width: 100%; /* Underlines the full width of the heading */
 	}

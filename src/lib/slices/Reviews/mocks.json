@@ -1,0 +1,66 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"heading": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "heading2",
+						"content": {
+							"text": "Related"
+						}
+					}
+				]
+			},
+			"review_boxes": {
+				"__TYPE__": "GroupContentType",
+				"value": [
+					{
+						"__TYPE__": "GroupItemContent",
+						"value": [
+							[
+								"review",
+								{
+									"__TYPE__": "StructuredTextContent",
+									"value": [
+										{
+											"type": "paragraph",
+											"content": {
+												"text": "Reprehenderit ex proident tempor ullamco aute consequat mollit esse nisi voluptate id."
+											}
+										}
+									]
+								}
+							],
+							[
+								"reviewer",
+								{
+									"__TYPE__": "StructuredTextContent",
+									"value": [
+										{
+											"type": "paragraph",
+											"content": {
+												"text": "Id ea aliqua mollit amet aliqua ea ea ipsum. Aliqua tempor deserunt minim eiusmod ipsum deserunt pariatur aliqua ut dolore do anim amet. Dolor ut amet non fugiat et est magna."
+											}
+										}
+									]
+								}
+							],
+							[
+								"background_color",
+								{
+									"__TYPE__": "FieldContent",
+									"value": "#FF9A00",
+									"type": "Select"
+								}
+							]
+						]
+					}
+				]
+			}
+		},
+		"items": []
+	}
+]

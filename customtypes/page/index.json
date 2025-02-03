@@ -13,24 +13,6 @@
 					"placeholder": ""
 				}
 			},
-			"title": {
-				"type": "StructuredText",
-				"config": {
-					"label": "Title",
-					"placeholder": "",
-					"allowTargetBlank": true,
-					"single": "heading1,heading2,heading3,heading4,heading5"
-				}
-			},
-			"description": {
-				"type": "StructuredText",
-				"config": {
-					"label": "Description",
-					"placeholder": "",
-					"allowTargetBlank": true,
-					"multi": "paragraph,preformatted,rtl,strong,em"
-				}
-			},
 			"sections": {
 				"type": "Group",
 				"config": {
@@ -58,11 +40,56 @@
 					}
 				}
 			},
+			"title": {
+				"type": "StructuredText",
+				"config": {
+					"label": "Title",
+					"placeholder": "",
+					"allowTargetBlank": true,
+					"single": "heading1,heading2,heading3,heading4"
+				}
+			},
+			"description": {
+				"type": "StructuredText",
+				"config": {
+					"label": "description",
+					"placeholder": "",
+					"allowTargetBlank": true,
+					"single": "paragraph,strong"
+				}
+			},
+			"displayheading": {
+				"type": "Boolean",
+				"config": {
+					"label": "displayheading",
+					"placeholder_false": "false",
+					"placeholder_true": "true",
+					"default_value": true
+				}
+			},
 			"slices": {
 				"type": "Slices",
 				"fieldset": "Slice Zone",
 				"config": {
 					"choices": {
+						"statistics": {
+							"type": "SharedSlice"
+						},
+						"hero_statistics": {
+							"type": "SharedSlice"
+						},
+						"bottom_cta": {
+							"type": "SharedSlice"
+						},
+						"video_hero": {
+							"type": "SharedSlice"
+						},
+						"press": {
+							"type": "SharedSlice"
+						},
+						"reviews": {
+							"type": "SharedSlice"
+						},
 						"navigation": {
 							"type": "SharedSlice"
 						},

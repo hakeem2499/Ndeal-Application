@@ -1,0 +1,54 @@
+{
+  "id": "hero_statistics",
+  "type": "SharedSlice",
+  "name": "HeroStatistics",
+  "description": "HeroStatistics",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "statistic": {
+          "type": "Group",
+          "config": {
+            "label": "Statistic",
+            "repeat": true,
+            "fields": {
+              "number": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Number",
+                  "placeholder": "",
+                  "allowTargetBlank": true,
+                  "single": "heading6,strong,heading5,paragraph"
+                }
+              },
+              "body": {
+                "type": "StructuredText",
+                "config": {
+                  "label": "Body",
+                  "placeholder": "",
+                  "allowTargetBlank": true,
+                  "single": "paragraph"
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

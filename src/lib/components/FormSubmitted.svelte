@@ -21,12 +21,12 @@
 	<div class="modal-overlay" on:click={closeShowModal}>
 		<!-- Modal Content -->
 		<div
-			class="modal-content glass-container w-[90%] md:w-[60%] h-fit bg-[#171717]/95 transition-opacity duration-300"
+			class="modal-content glass-container w-[90%] max-w-md h-fit bg-[#171717]/95 transition-opacity duration-300"
 			on:click|stopPropagation
 		>
 			<div
 				id="player "
-				class="flex text-sm text-balance gap-2 md:gap-4 md:text-base flex-col py-8 lg:px-10 rounded-lg items-center justify-center text-white"
+				class="flex text-sm text-balance gap-2 md:gap-4 md:text-base flex-col p-16 lg:px-10 rounded-lg items-center justify-center text-white"
 				style="width: 100%; height: 100%;"
 			>
 				{#if $isError['login-successful']}

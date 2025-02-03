@@ -9,7 +9,7 @@ export const authToken = writable<string | null>(null);
 export const refreshToken = writable<string | null>(null);
 export const errorMessage = writable<string | null>(null);
 
-const API_BASE_URL = `${API_URL}auth`;
+const API_BASE_URL = `${API_URL}/auth`;
 const GOOGLE_AUTH_URL = "http://localhost:8000/accounts/google/login/";
 
 const isClient = typeof window !== 'undefined';
@@ -98,7 +98,7 @@ export async function authFetch(url: string, options: RequestInit = {}) {
 // Login Function
 export async function login(email: string, password: string) {
     try {
-        const res = await fetch(`${API_BASE_URL}/users/login/`, {
+        const res = await fetch(`${API_BASE_URL}/login/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
@@ -182,7 +182,7 @@ export async function refreshAuthToken(): Promise<boolean> {
     }
 
     try {
-        const res = await fetch(`${API_BASE_URL}/users/token/refresh/`, {
+        const res = await fetch(`${API_BASE_URL}/token/refresh/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ refresh: storedRefreshToken }),

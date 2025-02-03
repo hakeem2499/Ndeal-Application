@@ -10,4 +10,17 @@ const authStore = writable<AuthStore>({
     isAuthenticated: false,
 });
 
-export default authStore;
+type AuthStoreType = {
+    isAuthenticated: boolean;
+    user: any | null;
+    sessionID: string | null;
+  };
+  
+  // Initialize the store with the proper type
+  export const cookieauthstore = writable<AuthStoreType>({
+    isAuthenticated: false,
+    user: null,
+    sessionID: null,
+  });
+
+export default {};

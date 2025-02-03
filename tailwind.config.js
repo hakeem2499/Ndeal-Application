@@ -39,7 +39,7 @@ export default {
 				fadeInUp: {
 					'0%': {
 						opacity: '0',
-						transform: 'translate3d(0, 100%, 0)'
+						transform: 'translate3d(0, -20px, 0);'
 					},
 					'100%': {
 						opacity: '1',
@@ -97,13 +97,14 @@ export default {
 				flipInY: 'flipInY 0.75s ease-in-out',
 				flipOutY: 'flipOutY 0.75s ease-in-out',
 				spin: 'spin 1.5s cubic-bezier(1, 0.1, 0.25, 1) infinite',
-				fadeInUp: 'fadeInUp 0.5s ease-out',
+				fadeInUp: 'fadeInUp 0.5s ease-out forwards',
 				fadeHero: 'fadeHero 3s cubic-bezier(0.42, 0, 0.58, -0.5) forwards'
 			},
 			colors: {
 				primary: '#171717;',
 				secondary: '#d1cdc2',
 				accent: '#ffe5b4',
+				brand: '#00592e',
 				background: '#f4f4f4',
 				text: '#333',
 				'text-light': '#777',

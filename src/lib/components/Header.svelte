@@ -10,16 +10,20 @@
 	import PrismicButtonLink from './ReusableComponents/PrismicButtonLink.svelte';
 	import Dot from '~icons/ph/dot-duotone';
 	import Arrow from '~icons/ph/caret-down-bold';
+	import { gsap } from 'gsap';
 	import SocialLinks from './SocialLinks.svelte';
 	import AnchorLinkFooter from './ReusableComponents/AnchorLinkFooter.svelte';
-	import { get } from 'svelte/store'; // To access the $page store programmatically
-	import { SliceZone } from '@prismicio/svelte';
+	import { get, writable } from 'svelte/store'; // To access the $page store programmatically
+	import { PrismicLink, SliceZone } from '@prismicio/svelte';
+	import Logo from '$lib/images/Ndealsvg.svg';
+	import MenuOpenIcon from '~icons/tabler/menu-deep';
 
 	import PopupShow from './ReusableComponents/PopupShow.svelte';
 	import DotSquare from '~icons/mdi/square-inc';
 	import Button from './ReusableComponents/Button.svelte';
-	import Back from '~icons/ph/arrow-left-fill'
+	import Back from '~icons/ph/arrow-left-fill';
 	import { filterSlicesByHeadings } from '../../store/HomeStore';
+
 
 	// Define the prop with the correct type
 	export let settings: Content.SettingsDocument;
@@ -33,13 +37,13 @@
 	// Define the function that filters slices by headings
 	// Define a more general Slice interface to include all fields
 	// Define a type for the Slice
-	
 
-
+	let scrollPosition = 0;
+	let header: HTMLElement | null = null;
+	let lastScroll = 0;
 	let showPopup: boolean = false;
 
 	// Function to categorize slices by their headings
-	
 
 	let isOpen = false;
 	let openDropdownId: number | null = null; // Track which dropdown is currently open, null means none
@@ -52,6 +56,11 @@
 	const closeDropdown = (): void => {
 		openDropdownId = null; //  and closing the dropdown
 		showPopup = false;
+	};
+
+	const closeAllDropdowns = (): void => {
+		closeDropdown();
+		isOpen = false;
 	};
 
 	// Close dropdown if clicked outside
@@ -68,8 +77,42 @@
 		// Check if running in the browser before using document
 		if (typeof window !== 'undefined') {
 			document.addEventListener('click', handleClickOutside);
+			window.addEventListener('scroll', throttleScroll); // Ensure this is added correctly
 		}
+
+		return () => {
+			window.removeEventListener('scroll', throttleScroll);
+		};
 	});
+
+	// Throttled scroll handler
+	function throttleScroll() {
+		const currentScroll = window.scrollY;
+		console.log('scroll is triggered');
+		handleScroll();
+	}
+
+	const handleScroll = (): void => {
+		const currentScroll = window.scrollY;
+
+		// Only trigger if the scroll change is significant (e.g., 10px)
+		if (Math.abs(currentScroll - lastScroll) > 10) {
+			lastScroll = currentScroll;
+			if (currentScroll > 100) {
+				console.log('greater than 50');
+				// Check if the header exists before applying GSAP animation
+				if (header) {
+					gsap.to(header, { backgroundColor: 'white', duration: 1 });
+				}
+				gsap.to('#cta-link', { opacity: 1, duration: 1, autoAlpha: 1 });
+			} else {
+				if (header) {
+					gsap.to(header, { backgroundColor: 'var(--color-accent)', duration: 1 });
+				}
+				gsap.to('#cta-link', { opacity: 0, duration: 1, autoAlpha: 0 });
+			}
+		}
+	};
 
 	onDestroy(() => {
 		if (typeof window !== 'undefined') {
@@ -77,11 +120,8 @@
 		}
 	});
 
-	const dispatch = createEventDispatcher();
-
 	const toggleOpen = () => {
 		isOpen = !isOpen;
-		handleOverflow();
 	};
 
 	const handleOverflow = () => {
@@ -89,24 +129,12 @@
 			document.body.classList.toggle('overflow-hidden', isOpen);
 		}
 	};
-
-	onMount(() => {
-		handleOverflow();
-		window.addEventListener('scroll', handleScroll);
-		return () => {
-			window.removeEventListener('scroll', handleScroll);
-		};
-	});
-
-	let showButton = false;
-
-	// Event listener for scroll events
-	const handleScroll = () => {
-		showButton = window.scrollY > 50; // Adjust the scroll threshold as needed
-	};
 </script>
 
-<header class=" sticky top-0 z-1000 bg-white lg:h-22 h-20 z-50 lg:items-center text-black">
+<header
+	bind:this={header}
+	class=" sticky w-full top-0 z-1000 bg-accent lg:h-22 h-20 z-50 lg:items-center text-black"
+>
 	<nav
 		class="mx-auto flex max-w-7xl mb-0 lg:relative flex-col justify-between py-2 md:py-0 font-medium lg:flex-row lg:items-center"
 		aria-label="main"
@@ -116,17 +144,24 @@
 				class="mt-2 scale-75 transition-all duration-300 lg:scale-100 md:px-0 md:py-4 md:mt-0"
 				href="/"
 			>
-				<img src={logo} alt="Ndeal" />
+				<img src={Logo} alt="" />
 			</a>
 			<div class=" lg:hidden">
 				{#if openDropdownId != null}
 					<Button className="bg-transparent hover:bg-transparent mr-2" onClick={closeDropdown}>
-						<span class="rotate-90 text-black text-3xl "><Back /></span>
+						<span class="rotate-90 text-black text-3xl"><Back /></span>
 					</Button>
 				{:else}
-					<button aria-expanded={isOpen} type="button" class="button z-50" on:click={toggleOpen}>
-						<span class={clsx('burger hidden  burger-3', isOpen ? 'is-closed' : '')}></span>
-					</button>
+					<div class="flex items-center">
+						<a
+							id="cta-link"
+							class="rounded-full px-4 text-center text-accent py-2 opacity-0 bg-primary text-sm"
+							href="/signup">Request a demo</a
+						>
+						<button aria-expanded={isOpen} type="button" class="button z-50" on:click={toggleOpen}>
+							<span class={clsx('burger hidden  burger-3', isOpen ? 'is-closed' : '')}></span>
+						</button>
+					</div>
 				{/if}
 			</div>
 		</div>
@@ -134,8 +169,10 @@
 		<!-- MobileNav -->
 		<div
 			class={clsx(
-				'fixed items-end justify-between inset-0  z-40 flex  flex-col custom-gradient to-primary pr-4 pt-6 transition-transform duration-300 ease-in-out lg:hidden',
-				isOpen ? ' animate-fadeIn' : 'animate-fadeOut'
+				'fixed items-end justify-between inset-0  z-40 flex  flex-col  bg-background pr-4 pt-6 transition-transform duration-300 ease-in-out lg:hidden',
+				isOpen
+					? ' translate-x-[0%] transition-transform duration-200'
+					: 'translate-x-[100%] transition-transform duration-500'
 			)}
 		>
 			<ul class="grid first:pt-12 justify-items-end text-xl gap-8">
@@ -220,11 +257,31 @@
 					</button>
 				</li>
 				<li aria-current={$page.url.pathname.startsWith('/What we think') ? 'page' : undefined}>
-					<PrismicButtonLink href="/founder">What we think</PrismicButtonLink>
+					<PrismicButtonLink on:click={closeAllDropdowns} href="/what_we_think"
+						>What we think</PrismicButtonLink
+					>
 				</li>
 				<li>
 					<div class="flex bg-black mt-4 rounded-full mx-auto mr-0 scale-75">
 						<SocialLinks />
+					</div>
+				</li>
+				<li>
+					<div
+						class=" border-2 group border-secondary w-fit top-full animate-S_fadeIn m-0 bg-white pt-6 right-0 gap-8 justify-end items-end min-w-[18rem] flex flex-col rounded-ee-2xl rounded-ss-2xl p-6"
+					>
+						<a on:click={close} href="/signup">Book a demo</a>
+						<a href="/signup">contact sales</a>
+						<a
+							aria-current={$page.url.pathname.startsWith('/founder') ? 'page' : undefined}
+							class=""
+							href="/founder">Become a Partner</a
+						>
+						<a class="font-medium group-hover:animate-pulse duration-700" href="/login"
+							><span class="text-brand font-Just_sans_medium"
+								>Find out how much you could earn
+							</span></a
+						>
 					</div>
 				</li>
 			</ul>
@@ -232,22 +289,28 @@
 			<div>
 				{#if openDropdownId === 1}
 					<PopupShow id="dropdown1-menu" class="mb-4 items-start bg-white " bind:showPopup>
-						<ul class="flex flex-col md:flex-row md:gap-10 justify-between">
+						<button
+							on:click={closeAllDropdowns}
+							class="flex flex-col md:flex-row md:gap-10 justify-between"
+						>
 							<SliceZone
 								slices={filterSlicesByHeadings(settings.data.slices, whatWeDo)}
 								{components}
 							/>
-						</ul>
+						</button>
 					</PopupShow>
 				{/if}
 				{#if openDropdownId === 2}
 					<PopupShow id="dropdown2-menu" class="border-2 bg-white" bind:showPopup>
-						<ul class="flex flex-col md:flex-row md:gap-10 justify-between">
+						<button
+							on:click={closeAllDropdowns}
+							class="flex flex-col md:flex-row md:gap-10 justify-between"
+						>
 							<SliceZone
 								slices={filterSlicesByHeadings(settings.data.slices, whoWeAre)}
 								{components}
 							/>
-						</ul>
+						</button>
 					</PopupShow>
 				{/if}
 				{#if openDropdownId === 3}
@@ -256,12 +319,15 @@
 						class="dropdown-menu h-fit overflow-auto bg-white"
 						bind:showPopup
 					>
-						<ul class="flex flex-col md:flex-row md:gap-10 justify-between">
+						<button
+							on:click={closeAllDropdowns}
+							class="flex flex-col md:flex-row md:gap-10 justify-between"
+						>
 							<SliceZone
 								slices={filterSlicesByHeadings(settings.data.slices, insightsAndTools)}
 								{components}
 							/>
-						</ul>
+						</button>
 					</PopupShow>
 				{/if}
 			</div>
@@ -300,7 +366,7 @@
 				{#if openDropdownId === 1}
 					<div
 						id="dropdown1-menu"
-						class="dropdown-menu border-gray-950/50 animate-fadeInUp bg-background items-start border-2 min-h-[20rem]"
+						class="dropdown-menu animate-fadeInUp bg-background items-start border-none min-h-[20rem]"
 					>
 						<ul class="flex justify-between min-w-[600px]">
 							<!-- {#each settings.data.grouped_navigation as item (item.nav_link)}
@@ -349,7 +415,7 @@
 				{#if openDropdownId === 2}
 					<div
 						id="dropdown2-menu"
-						class="dropdown-menu border-gray-950/50 animate-fadeInUp bg-background items-start border-2 min-h-[20rem]"
+						class="dropdown-menu animate-fadeInUp bg-background items-start min-h-[20rem]"
 					>
 						<ul class="flex justify-between min-w-[600px]">
 							<SliceZone
@@ -391,7 +457,7 @@
 				{#if openDropdownId === 3}
 					<div
 						id="dropdown3-menu"
-						class="dropdown-menu border-gray-950/50 animate-fadeInUp bg-background items-start border-2 min-h-[20rem]"
+						class="dropdown-menu animate-fadeInUp bg-background items-start min-h-[20rem]"
 					>
 						<ul class="flex justify-between min-w-[600px]">
 							<SliceZone
@@ -403,14 +469,39 @@
 				{/if}
 			</li>
 			<li aria-current={$page.url.pathname.startsWith('/What we think') ? 'page' : undefined}>
-				<PrismicButtonLink href="/founder">What we think</PrismicButtonLink>
+				<PrismicButtonLink href="/what_we_think">What we think</PrismicButtonLink>
+			</li>
+			<li class="in-line flex ">
+				<a
+					id="cta-link"
+					class="rounded-full px-8 py-3  opacity-0 md:text-sm lg:text-base bg-accent border transition-transform duration-300 hover:border-secondary "
+					href="/signup">Request a demo</a
+				>
+				<div class="hidden lg:flex relative">
+					<button on:mouseenter={() => toggleDropdown(4)}>
+						<span class="text-2xl"><MenuOpenIcon /></span>
+					</button>
+					{#if openDropdownId === 4}
+						<div
+							class="absolute border-2 group border-secondary w-fit top-full animate-S_fadeIn m-0 bg-white pt-6 right-0 gap-6 justify-end items-end min-w-[18rem] flex flex-col rounded-ee-2xl rounded-ss-2xl p-6"
+						>
+							<a href="/signup">Book a demo</a>
+							<a href="/signup">contact sales</a>
+							<a
+								aria-current={$page.url.pathname.startsWith('/founder') ? 'page' : undefined}
+								class="hidden mb-1 lg:flex"
+								href="/founder">Become a Partner</a
+							>
+							<a class="font-medium group-hover:animate-pulse duration-700" href="/login"
+								><span class="text-brand font-Just_sans_medium"
+									>Find out how much you could earn
+								</span></a
+							>
+						</div>
+					{/if}
+				</div>
 			</li>
 		</ul>
-		<ButtonLink
-			aria-current={$page.url.pathname.startsWith('/founder') ? 'page' : undefined}
-			class="hidden mb-1  lg:flex"
-			href="/founder">Become a Partner</ButtonLink
-		>
 	</nav>
 </header>
 
@@ -427,7 +518,9 @@
 		align-items: center;
 		z-index: -2;
 	}
-
+	.menu-button {
+		position: relative;
+	}
 	/* Dropdown styles */
 	.dropdown-menu {
 		position: absolute;
@@ -443,7 +536,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-		border-radius: 0.125rem;
+		@apply rounded-ss-3xl transition-colors hover:bg-accent duration-700 rounded-ee-3xl;
 		box-shadow: 0 4px 8px rgba(16, 13, 13, 0.2);
 	}
 	.button {

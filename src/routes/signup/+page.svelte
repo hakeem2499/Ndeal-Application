@@ -11,6 +11,7 @@
 	import Back from '~icons/ph/arrow-left-fill';
 	import PopupShow from '$lib/components/ReusableComponents/PopupShow.svelte';
 	export let data;
+	
 	let showSignupForm: boolean = false;
 	let showPopup: boolean = false;
 	console.log('🚀 ~ showSignupForm:', showSignupForm);
@@ -25,8 +26,8 @@
 	}
 </script>
 
-<div class="lg:max-h-screen flex-col lg:flex-row flex">
-	<Bounded class="h-full bg-secondary lg:bg-[#191719] lg:w-1/2">
+<div class="lg:min-h-screen flex-col h-full lg:flex-row flex">
+	<Bounded class="h-full bg-gradient-to-b max-md:from-secondary max-md:to-background  lg:bg-[#191719] lg:w-1/2">
 		<PrismicImage class="h-fit w-full" field={data.signup.data.image} />
 		<div class="space-y-4 py-4 h-full">
 			<h1
@@ -51,7 +52,7 @@
 				>
 					<span class="text-primary text-3xl"><Back /></span>
 				</Button>
-				<div class="shadow-2xl border-2 border-secondary my-auto p-4">
+				<div class="  my-auto p-4">
 					<RegisterForm />
 				</div>
 			</div>
@@ -82,22 +83,20 @@
 			</div>
 			<div class="w-full">
 				<div
-					class="grid gap-24 md:grid-cols-3 md:gap-4 max-w-[90%] mx-auto justify-items-center w-fit"
+					class="grid gap-8 md:grid-cols-3 md:gap-4 max-w-[90%] mx-auto justify-items-center w-fit"
 				>
 					{#each data.signup.data.buttons as item}
 						<ButtonDiv onClick={() => handleUserTypeButtonClick(item.usertype)}>
 							<div slot="Image">
 								<PrismicImage
-									class="h-fit md:h-60 max-h-66 w-fit rounded-t-xl"
+									class="h-fit  max-h-66 w-fit "
 									field={item.image}
 								/>
 							</div>
 							<div slot="header">
 								<PrismicText field={item.header} />
 							</div>
-							<div slot="body">
-								<PrismicText field={item.body} />
-							</div>
+							
 						</ButtonDiv>
 					{/each}
 				</div>

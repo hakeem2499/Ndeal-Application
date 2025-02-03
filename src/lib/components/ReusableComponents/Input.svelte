@@ -1,7 +1,7 @@
 <script lang="ts">
 	import clsx from 'clsx';
 	import { createEventDispatcher } from 'svelte';
-	import {handleInput} from '../Forms/validation';
+	import { handleInput, type ErrorMessages, type ValidFields } from '../Forms/validation';
 	import type { Writable } from 'svelte/store';
 
 	// Props
@@ -22,6 +22,8 @@
 	export let step: string;
 	export let field: string;
 	export let formStore: Writable<any>;
+	export let validFieldsStore: Writable<ValidFields>;
+	export let errorMessagesStore: Writable<ErrorMessages>;
 
 	// Event dispatcher
 	const dispatch = createEventDispatcher();
@@ -40,7 +42,7 @@
 	// };
 
 	function onInput(event: Event) {
-		handleInput(event, step, field, formStore);
+		handleInput(event, step, field, formStore, validFieldsStore, errorMessagesStore);
 		dispatch('input', event);
 	}
 
@@ -63,7 +65,7 @@
 	};
 </script>
 
-<div class="relative">
+<div class="relative h-24">
 	{#if type === 'text' || 'email'}
 		<input
 			{id}
@@ -77,7 +79,7 @@
 			maxlength={maxLength}
 			{pattern}
 			class={clsx(
-				'peer mt-2 w-full bg-transparent border-0 border-b focus:border-b-2  border-primary focus:border-black focus:ring-0',
+				'peer mt-2 w-full h-16 rounded-e-xl md:rounded-e-3xl border-0 focus-within:bg-transparent focus:bg-transparent border-b focus:border-b-2 bg-transparent border-gray-400 focus:border-gray-200 focus:ring-0 p-2', // Added padding
 				className
 			)}
 			on:input={onInput}
@@ -119,7 +121,7 @@
 			maxlength={maxLength}
 			{pattern}
 			class={clsx(
-				'peer mt-2 w-full border-0 border-b focus:border-b-2 bg-background border-primary focus:border-black focus:ring-0',
+				'peer mt-2 w-full border-0 border-b focus:border-b-2 bg-background border-primary focus:border-black focus:ring-0 p-2', // Added padding
 				className
 			)}
 			on:input={onInput}
@@ -132,15 +134,16 @@
 	<label
 		for={id}
 		class={clsx(
-			'pointer-events-none absolute top-0 left-0 origin-left -translate-y-1/2 transform text-sm text-black opacity-75 transition-all duration-300 ease-in-out peer-placeholder-shown:top-2/3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-[30%] peer-focus:text-[0.7rem]  peer-focus:text-gray-800 px-2',
+			'pointer-events-none absolute left-0  transform translate-y-2 md:-translate-y-[70%] text-sm text-black opacity-75 transition-all duration-300 ease-in-out peer-placeholder-shown:top-2/3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:top-0 md:peer-focus:top-6 peer-focus:text-[0.75rem] peer-focus:text-gray-800 px-2',
 			labelClass
 		)}
 	>
 		{label}
 	</label>
 </div>
+
 <style>
-	input:focus{
+	input:focus {
 		outline: none !important;
 	}
 </style>

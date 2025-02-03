@@ -101,7 +101,7 @@
 
 {#if showForm}
 	<div
-		class=" bg-primary rounded-md justify-between glass-container p-2 pt-8 md:pt-10 h-screen md:h-[600px] md:px-0 flex md:w-[700px] w-[100dvw] flex-col items-center"
+		class=" bg-primary rounded-md justify-between glass-container p-2 pt-16 md:pt-10 h-screen md:h-[600px] md:px-0 flex md:w-[700px] w-[100dvw] flex-col items-center"
 	>
 		<div class="flex gap-1 py-2 items-center justify-between w-full">
 			<button
@@ -109,7 +109,7 @@
 				class={clsx(
 					'w-1/2  border-0 h-12 py-4 mb-0 rounded-sm  text-background',
 					$PostType === 'Share Insight'
-						? 'border-b-4 border-teal-700'
+						? 'border-b-4 border-brand'
 						: 'hover:bg-gray-300/10 border-b border-gray-600/40'
 				)}
 				>Share Insight
@@ -119,7 +119,7 @@
 				class={clsx(
 					'w-1/2 border-0 h-12 mb-0 py-4 rounded-sm text-background',
 					$PostType === 'Ask a Question'
-						? 'border-b-4 border-teal-700'
+						? 'border-b-4 border-brand'
 						: 'hover:bg-gray-300/10 border-b border-gray-600/40'
 				)}
 				>Ask a Question
@@ -166,7 +166,7 @@
 						disabled={!validFields && $isSubmitting}
 						type="submit"
 						class={clsx(
-							'bg-teal-900 h-10  text-secondary font-semibold px-4 rounded-full border border-secondary'
+							'bg-brand h-10  text-secondary font-semibold px-4 rounded-full border border-secondary'
 						)}
 					>
 						{#if $isSubmitting}
@@ -215,7 +215,7 @@
 						disabled={!validFields}
 						type="submit"
 						class={clsx(
-							'bg-teal-900 h-10 text-secondary w-full md:w-auto font-semibold px-4 rounded-full border border-secondary'
+							'bg-brand h-10 text-secondary w-full md:w-auto font-semibold px-4 rounded-full border border-secondary'
 						)}
 					>
 						Ask Question

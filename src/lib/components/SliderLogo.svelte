@@ -1,85 +1,115 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 	import Bounded from './Bounded.svelte';
 
-	const images = import.meta.glob(['$lib/images/*.jpg', '$lib/images/*.png', '$lib/images/*.svg'], {
-		eager: true,
-		as: 'url'
-	});
-
-	let logoUrls = [
-		'/src/lib/images/chippper.svg',
-		'/src/lib/images/fluttterwave.svg',
-		'/src/lib/images/GEEPEE.svg',
-		'/src/lib/images/holb.svg',
-		'/src/lib/images/irokosmall.svg',
-		'/src/lib/images/jumia.svg',
-		'/src/lib/images/konga.svg',
-		'/src/lib/images/kudsm.svg',
-		'/src/lib/images/moniep.svg',
-		'/src/lib/images/sspecs.svg',
-	];
-
-	let scrollers: any = [];
+	let reviewsContainer: HTMLElement;
+	let reviews: HTMLElement;
 
 	onMount(() => {
-		scrollers = document.querySelectorAll('.scroller');
-
+		console.log('slider mounteed')
 		if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-			addAnimation();
+			initScroller();
+			console.log("init scroller")
 		}
 	});
 
-	function addAnimation() {
-		scrollers.forEach((scroller: any) => {
-			scroller.setAttribute('data-animated', true);
+	function initScroller() {
+		// Register ScrollTrigger plugin for GSAP
+		gsap.registerPlugin(ScrollTrigger);
+		console.log('scrolling has started')
 
-			const scrollerInner = scroller.querySelector('.scroller__inner');
-			const scrollerContent = Array.from(scrollerInner.children);
-
-			scrollerContent.forEach((item: any) => {
-				const duplicatedItem = item.cloneNode(true);
-				duplicatedItem.setAttribute('aria-hidden', true);
-				scrollerInner.appendChild(duplicatedItem);
-			});
+		// Create an animation for the scroller
+		gsap.to('review-content', {
+			xPercent: -100,
+			repeat: -1,
+			duration: 20,
+			ease: 'linear',
+			modifiers: {
+				xPercent: (x) => x % 100
+			},
+			// scrollTrigger: {
+			// 	trigger: reviewsContainer,
+			// 	start: 'top top',
+			// 	end: 'bottom bottom',
+			// 	scrub: 1,
+			// 	pin: true,
+			// 	markers: true
+			// }
 		});
 	}
 </script>
 
 <Bounded>
-	<p class="text-gray-600 text-center">WE ARE IN TOUCH WITH THIS COMPANIES</p>
-	<div class="scroller" data-animated="true">
-		<div class="tag-list scroller__inner">
-			{#each logoUrls as logoUrl (logoUrl)}
-				<img src={images[logoUrl]} alt="Company Logo" />
-			{/each}
+	<div data-animated="true" class="scroller w-[90dvw] lg:max-w-6xl">
+		<div bind:this={reviewsContainer} class="scroller__inner flex">
+			<div class="review-content" bind:this={reviews}>
+				<h1>You are the the king</h1>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum temporibus amet ad
+					nihil ipsum sed, eius aperiam nam incidunt deserunt molestias quidem odio ab, neque eos
+					excepturi optio explicabo ex!
+				</p>
+			</div>
+			<div class="review-content">
+				<h1>You are the king</h1>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum temporibus amet ad
+					nihil ipsum sed, eius aperiam nam incidunt deserunt molestias quidem odio ab, neque eos
+					excepturi optio explicabo ex!
+				</p>
+			</div>
+			<div class="review-content">
+				<h1>You are the king</h1>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum temporibus amet ad
+					nihil ipsum sed, eius aperiam nam incidunt deserunt molestias quidem odio ab, neque eos
+					excepturi optio explicabo ex!
+				</p>
+			</div>
+			<div class="review-content">
+				<h1>You are the king</h1>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum temporibus amet ad
+					nihil ipsum sed, eius aperiam nam incidunt deserunt molestias quidem odio ab, neque eos
+					excepturi optio explicabo ex!
+				</p>
+			</div>
+			<div class="review-content">
+				<h1>You are the king</h1>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum temporibus amet ad
+					nihil ipsum sed, eius aperiam nam incidunt deserunt molestias quidem odio ab, neque eos
+					excepturi optio explicabo ex!
+				</p>
+			</div>
 		</div>
 	</div>
 </Bounded>
 
 <style>
-	.scroller {
-		max-width: 8	0dvw;
-	}
-
 	.scroller__inner {
 		padding-block: 1rem;
 		display: flex;
-		flex-wrap: wrap;
 		gap: 1rem;
+		white-space: nowrap; /* Ensure the scroller doesn't wrap to the next line */
+		will-change: transform; /* Improve performance */
 	}
 
 	.scroller[data-animated='true'] {
 		overflow: hidden;
-		-webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
-		mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+		position: relative;
 	}
 
 	.scroller[data-animated='true'] .scroller__inner {
-		width: max-content;
+		display: flex;
 		flex-wrap: nowrap;
-		animation: scroll var(--_animation-duration, 40s) var(--_animation-direction, forwards) linear
-			infinite;
+	}
+
+	.review-content {
+		min-width: 100%; /* Each review takes up full width initially */
+		flex-shrink: 0; /* Prevent reviews from shrinking */
 	}
 
 	.scroller[data-direction='right'] {
@@ -98,31 +128,8 @@
 		--_animation-duration: 60s;
 	}
 
-	@keyframes scroll {
-		to {
-			transform: translate(calc(-50% - 0.5rem));
-		}
-	}
-
-	/* general styles */
-
-	:root {
-		--clr-neutral-100: hsl(0, 0%, 100%);
-		--clr-primary-100: hsl(205, 15%, 58%);
-		--clr-primary-400: hsl(215, 25%, 27%);
-		--clr-primary-800: hsl(217, 33%, 17%);
-		--clr-primary-900: hsl(218, 33%, 9%);
-	}
-
-	.tag-list {
-		margin: 0;
-		padding-inline: 0;
-		list-style: none;
-	}
-
-	.tag-list img {
-		scale: 2;
-		filter: grayscale(100%);
-		image-rendering: crisp-edges;
+	/* For testing */
+	.scroller__inner {
+		border: 1px solid red;
 	}
 </style>

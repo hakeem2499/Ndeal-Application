@@ -76,7 +76,7 @@
 {#if showForm}
 	<div class="modal-overlay" on:click={closePostForm}>
 		<div
-			class={clsx('relative h-fit md:max-w-5xl', showForm ? 'animate-fadeInUp' : '')}
+			class={clsx('relative h-fit md:max-w-5xl', showForm ? 'animate-S_fadeIn' : '')}
 			on:click|stopPropagation
 		>
 			<PostForm bind:showForm />
@@ -230,6 +230,6 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		z-index: 1000;
+		index: 1000;
 	}
 </style>

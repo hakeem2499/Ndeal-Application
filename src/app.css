@@ -32,7 +32,6 @@
 	src: url('/fonts/grillagesbold-webfont.woff2') format('woff2');
 	font-weight: normal;
 	font-style: normal;
-
 }
 
 @font-face {
@@ -42,9 +41,19 @@
 
 body {
 	font-family: 'DM Sans Variable', sans-serif;
-	@apply grid bg-[--color-background] bg-repeat text-[#171717];
+	@apply grid bg-background bg-repeat h-full  text-[#171717];
 	font-weight: normal;
 	line-height: 1.6;
+}
+
+body {
+	scrollbar-width: none; /* For Firefox */
+	-ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+/* Hide scrollbars for WebKit browsers (Chrome, Safari, etc.) */
+body::-webkit-scrollbar {
+	display: none; /* For Chrome, Safari, and WebKit-based browsers */
 }
 
 h1 {
@@ -57,14 +66,12 @@ h1 {
 }
 
 p {
-	font-size: 1.125rem;
+	font-size: 1rem;
 	/* 18px */
-
 }
 
-h2{
+h2 {
 	font-family: 'Just Sans', sans-serif;
-
 }
 
 h3,
@@ -72,16 +79,9 @@ h4 {
 	font-family: 'Just Sans Medium', sans-serif;
 }
 
-
 h5 {
-	font-family:  sans-serif;
+	font-family: sans-serif;
 }
-
-
-
-
-
-
 
 h4 {
 	font-size: 1.5rem;
@@ -101,10 +101,12 @@ h4 {
 	--rotation: 0deg;
 	@apply h-[40px] w-[1.5px] bg-gradient-to-t md:h-[7.5px] md:w-[30px] lg:w-[40px] xl:w-[50px];
 	background-color: hsla(0, 100%, 40%, 0.1);
-	background-image: linear-gradient(var(--rotation),
-			rgba(255, 255, 255, 0) 50%,
-			#51e5f9 50%,
-			rgba(255, 255, 255, 0) 70%);
+	background-image: linear-gradient(
+		var(--rotation),
+		rgba(255, 255, 255, 0) 50%,
+		#51e5f9 50%,
+		rgba(255, 255, 255, 0) 70%
+	);
 	background-size: 500% 500%;
 }
 
@@ -125,7 +127,8 @@ h4 {
 
 .anchor-link-white {
 	padding-top: 1.5rem;
-	padding-bottom: 1.5rem;
+	padding-bottom: 1.0rem;
+	position: relative;
 }
 
 .anchor-link-white::after {
@@ -181,11 +184,15 @@ h4 {
 	animation-timing-function: linear;
 }
 
-.svg-icon{
+.svg-icon {
 	@apply scale-75 transition-transform lg:scale-100;
 }
 
 .svg-icon:hover path {
 	@apply fill-orange-700;
 	transition-duration: 200ms;
+}
+
+.input-group {
+	@apply focus:ring-0 border-b-2 autofill:bg-transparent focus-within:bg-transparent border-brand bg-transparent focus:border-brand border-0 text-inherit focus:bg-transparent  p-2 rounded-sm;
 }
