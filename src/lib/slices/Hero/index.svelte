@@ -38,7 +38,7 @@
 
 			<div class="flex w-full max-md:items-center lg:w-2/5   flex-col gap-4">
 				<h1
-					class="text-black max-w-4xl flex text-3xl font-Just_sans_medium  md:text-4xl text-balance font-semibold flex-col"
+					class="text-black max-w-4xl flex text-3xl   md:text-4xl text-balance font-semibold flex-col"
 				>
 					<PrismicRichText field={slice.primary.heading} components={{ em: StyleText, heading1: Heading1 }} />
 				</h1>

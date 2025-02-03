@@ -104,7 +104,7 @@
 					>
 				</div>
 			</div>
-			<div class="bg-transparent px-2 ring-1 ring-slate-100/20 md:px-6 rounded-md py-8">
+			<div class="bg-[#c9e4ca] lg:w-full px-2 ring-1 ring-slate-100/20 md:px-6 rounded-2xl py-8">
 				<Contact />
 			</div>
 		</Bounded>

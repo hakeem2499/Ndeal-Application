@@ -133,7 +133,7 @@
 		left: 12px;
 		transform: translateY(-50%);
 		font-size: 14px;
-		color: var(--color-secondary);
+		color: var(--color-primary);
 		background: transparent;
 		padding: 0 4px;
 		transition: all 0.2s ease;
@@ -144,19 +144,23 @@
 	.input-container:has(input:not(:placeholder-shown)) .input-label {
 		top: 0;
 		font-size: 12px;
-		color: var(--color-accent);
+		color: var(--color-primary);
 		transform: translateY(0);
 	}
 
 	.input-group {
 		width: 100%;
 		padding: 12px;
-		border: 1px solid #ccc;
+		border: 1px solid var(--color-primary);
 		border-radius: 4px;
 		font-size: 14px;
+		color:var(--color-primary);
 	}
 
 	.input-group.input-error {
+		border-color: #020617;
+	}
+	.input-group.input-error:focus {
 		border-color: var(--color-accent);
 	}
 

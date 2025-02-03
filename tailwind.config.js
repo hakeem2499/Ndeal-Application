@@ -107,7 +107,7 @@ export default {
 				brand: '#00592e',
 				background: '#f4f4f4',
 				text: '#333',
-				'text-light': '#777',
+				textLight: '#777',
 				border: '#ddd',
 				success: '#2ecc71',
 				warning: '#f39c12',

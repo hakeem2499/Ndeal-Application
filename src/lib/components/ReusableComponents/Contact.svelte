@@ -82,11 +82,15 @@
 	};
 </script>
 
-<div class=" p-1 md:p-2 space-y-8">
-	<h4 class="text-background text-3xl md:text-4xl px-2 max-w-lg">
-		Let's Take the First Step Together
-	</h4>
-	<form class="w-full text-background" on:submit={handleSubmit}>
+<div class=" p-1 md:p-2 flex flex-col md:flex-row md:items-start items-center  md:justify-between gap-4">
+	<div class="flex flex-col  p-4 max-w-xl lg:w-1/2 lg:gap-4  gap-2">
+		<h4 class="text-primary  text-3xl md:text-4xl  md:mt-8 max-w-lg">
+			Let's Take the First Step Together
+		</h4>
+		<p class="lg:text-lg">Complete the form and an Ndeal expert will contact you shortly.</p>
+	</div>
+    
+	<form class="w-full lg:w-1/2 text-background" on:submit={handleSubmit}>
 		<div class="flex flex-col items-center justify-between gap-4">
 			<div class="flex w-full items-center gap-2">
 				<StandardInput
@@ -111,7 +115,7 @@
 				required={true}
 				validator={(val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)}
 			/>
-			<div class="flex flex-col gap-2">
+			<div class="flex flex-col w-full gap-2">
 				<TextArea
 					label="Message"
 					placeholder="Send us a message"
@@ -119,7 +123,7 @@
 				/>
 			</div>
 			<button
-				class="bg-transparent py-2 md:px-8 px-4 mx-auto mr-0 text-white border border-black hover:bg-black rounded-md disabled:opacity-80 disabled:cursor-not-allowed"
+				class="bg-transparent py-2 md:px-8 px-4 mx-auto mr-0 text-primary border border-black hover:bg-black rounded-full disabled:opacity-80 disabled:cursor-not-allowed"
 				type="submit"
 				disabled={!isFormValid || isLoading}
 			>
@@ -131,7 +135,7 @@
 	<!-- Pop-up Message -->
 	{#if showPopup}
 		<div
-			class="fixed bottom-4 right-4 p-4 rounded-md text-background {popupType === 'success'
+			class="fixed bottom-4 right-4 p-4 rounded-md text-primary {popupType === 'success'
 				? 'bg-green-900/90 '
 				: 'bg-red-500'}"
 			transition:fade

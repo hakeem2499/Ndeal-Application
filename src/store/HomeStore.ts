@@ -7,7 +7,7 @@ export const userType = writable<UserType>("Professional");// 'Professional' or 
 export let showSwitchableButton = writable(true);
 export type Api = "/auth/registration/resend-email/" | "/auth/password/reset/";
 export type InputType = "text" | "email" | "password";
-export const API_URL = "http://127.0.0.1:8000/api";
+export const API_URL = "https://ndealbackend.onrender.com/api";
   // API Endpoints
 export const COUNTRY_CODES_API = 'https://countriesnow.space/api/v0.1/countries/codes';
 export const STATES_API = 'https://countriesnow.space/api/v0.1/countries/states';
